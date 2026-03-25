@@ -1,26 +1,37 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Calendar, Users, Video, Clock, MapPin, X, Check, ExternalLink, Lock, Presentation } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Calendar,
+  Users,
+  Video,
+  Clock,
+  MapPin,
+  X,
+  Check,
+  ExternalLink,
+  Lock,
+  Presentation,
+} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 interface Meeting {
-  id: string
-  title: string
-  instructor: string
-  datetime: string
-  audience: "Students" | "Instructors" | "Families"
-  meetLink: string
-  status: "scheduled" | "live" | "completed"
+  id: string;
+  title: string;
+  instructor: string;
+  datetime: string;
+  audience: "Students" | "Instructors" | "Families";
+  meetLink: string;
+  status: "scheduled" | "live" | "completed";
 }
 
 interface AdminMeetingsSectionProps {
-  onMeetingScheduled?: (meeting: Meeting) => void
-  scheduledMeetings?: Meeting[]
+  onMeetingScheduled?: (meeting: Meeting) => void;
+  scheduledMeetings?: Meeting[];
 }
 
 const instructors = [
@@ -29,26 +40,37 @@ const instructors = [
   { id: "3", name: "Prof. Maria García", department: "Digital Arts" },
   { id: "4", name: "Dr. James Chen", department: "Biology" },
   { id: "5", name: "Sarah Mitchell", department: "Engineering" },
-]
+];
 
-const audiences = ["Students", "Instructors", "Families"] as const
+const audiences = ["Students", "Instructors", "Families"] as const;
 
-export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = [] }: AdminMeetingsSectionProps) {
-  const [title, setTitle] = useState("AI Coding Lab - Live Session")
-  const [instructor, setInstructor] = useState("Instructor Amina Yusuf")
-  const [datetime, setDatetime] = useState("2024-03-25T15:00")
-  const [audience, setAudience] = useState<"Students" | "Instructors" | "Families">("Students")
-  const [meetings, setMeetings] = useState<Meeting[]>(scheduledMeetings)
-  const [scheduled, setScheduled] = useState(false)
+export function AdminMeetingSection({
+  onMeetingScheduled,
+  scheduledMeetings = [],
+}: AdminMeetingsSectionProps) {
+  const [title, setTitle] = useState("AI Coding Lab - Live Session");
+  const [instructor, setInstructor] = useState("Instructor Amina Yusuf");
+  const [datetime, setDatetime] = useState("2024-03-25T15:00");
+  const [audience, setAudience] = useState<
+    "Students" | "Instructors" | "Families"
+  >("Students");
+  const [meetings, setMeetings] = useState<Meeting[]>(scheduledMeetings);
+  const [scheduled, setScheduled] = useState(false);
 
   const generateMeetLink = () => {
-    const chars = "abcdefghijklmnopqrstuvwxyz"
-    return "meet.google.com/" + Array.from({ length: 10 }, () => chars[Math.floor(Math.random() * chars.length)]).join("")
-  }
+    const chars = "abcdefghijklmnopqrstuvwxyz";
+    return (
+      "meet.google.com/" +
+      Array.from(
+        { length: 10 },
+        () => chars[Math.floor(Math.random() * chars.length)],
+      ).join("")
+    );
+  };
 
   const handleSchedule = () => {
     if (!title.trim() || !instructor) {
-      return
+      return;
     }
 
     const newMeeting: Meeting = {
@@ -59,48 +81,54 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
       audience,
       meetLink: generateMeetLink(),
       status: "scheduled",
-    }
+    };
 
-    setMeetings([newMeeting, ...meetings])
-    setScheduled(true)
-    onMeetingScheduled?.(newMeeting)
+    setMeetings([newMeeting, ...meetings]);
+    setScheduled(true);
+    onMeetingScheduled?.(newMeeting);
 
-    setTimeout(() => setScheduled(false), 2000)
-  }
+    setTimeout(() => setScheduled(false), 2000);
+  };
 
   const removeMeeting = (id: string) => {
-    setMeetings(meetings.filter((m) => m.id !== id))
-  }
+    setMeetings(meetings.filter((m) => m.id !== id));
+  };
 
   const resetForm = () => {
-    setTitle("AI Coding Lab - Live Session")
-    setInstructor("Instructor Amina Yusuf")
-    setDatetime("2024-03-25T15:00")
-    setAudience("Students")
-  }
+    setTitle("AI Coding Lab - Live Session");
+    setInstructor("Instructor Amina Yusuf");
+    setDatetime("2024-03-25T15:00");
+    setAudience("Students");
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "live":
-        return "bg-red-500/20 border-red-500/30 text-red-300"
+        return "bg-red-500/20 border-red-500/30 text-red-300";
       case "scheduled":
-        return "bg-blue-500/20 border-blue-500/30 text-blue-300"
+        return "bg-blue-500/20 border-blue-500/30 text-blue-300";
       case "completed":
-        return "bg-gray-500/20 border-gray-500/30 text-gray-300"
+        return "bg-gray-500/20 border-gray-500/30 text-gray-300";
       default:
-        return "bg-gray-500/20 border-gray-500/30 text-gray-300"
+        return "bg-gray-500/20 border-gray-500/30 text-gray-300";
     }
-  }
+  };
 
   return (
     <section className="container px-4 pb-12 md:px-6">
       <div className="mb-12">
-        <Badge variant="outline" className="border-emerald-500/30 bg-emerald-500/10 text-emerald-300 mb-4">
+        <Badge
+          variant="outline"
+          className="border-emerald-500/30 bg-emerald-500/10 text-emerald-300 mb-4"
+        >
           Demo Feature: Meeting Scheduler
         </Badge>
-        <h3 className="text-3xl font-bold text-foreground mb-3">Schedule Instructor Sessions</h3>
+        <h3 className="text-3xl font-bold text-foreground mb-3">
+          Schedule Instructor Sessions
+        </h3>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          Create Google Meet sessions and schedule classes for students, instructors, or families. Meeting links are generated automatically.
+          Create Google Meet sessions and schedule classes for students,
+          instructors, or families. Meeting links are generated automatically.
         </p>
       </div>
 
@@ -114,7 +142,9 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
         >
           <Card className="p-6 border-border/40 bg-card/65 backdrop-blur-xl rounded-2xl space-y-5">
             <div>
-              <label className="text-sm font-semibold text-foreground mb-2 block">Session Title</label>
+              <label className="text-sm font-semibold text-foreground mb-2 block">
+                Session Title
+              </label>
               <Input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -124,7 +154,9 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
             </div>
 
             <div>
-              <label className="text-sm font-semibold text-foreground mb-2 block">Instructor</label>
+              <label className="text-sm font-semibold text-foreground mb-2 block">
+                Instructor
+              </label>
               <select
                 value={instructor}
                 onChange={(e) => setInstructor(e.target.value)}
@@ -139,7 +171,9 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
             </div>
 
             <div>
-              <label className="text-sm font-semibold text-foreground mb-2 block">Date & Time</label>
+              <label className="text-sm font-semibold text-foreground mb-2 block">
+                Date & Time
+              </label>
               <input
                 type="datetime-local"
                 value={datetime}
@@ -149,7 +183,9 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
             </div>
 
             <div>
-              <label className="text-sm font-semibold text-foreground mb-3 block">Audience</label>
+              <label className="text-sm font-semibold text-foreground mb-3 block">
+                Audience
+              </label>
               <div className="grid grid-cols-3 gap-2">
                 {audiences.map((aud) => (
                   <button
@@ -168,14 +204,22 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
             </div>
 
             <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
-              <p className="text-xs font-semibold text-emerald-300 mb-2">🔗 Google Meet Link</p>
+              <p className="text-xs font-semibold text-emerald-300 mb-2">
+                🔗 Google Meet Link
+              </p>
               <p className="text-xs text-muted-foreground">
-                A unique Google Meet link is automatically generated when you schedule. Students and instructors see this link in their respective dashboard views.
+                A unique Google Meet link is automatically generated when you
+                schedule. Students and instructors see this link in their
+                respective dashboard views.
               </p>
             </div>
 
             <div className="flex gap-3 pt-4">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex-1"
+              >
                 <Button
                   onClick={handleSchedule}
                   className="w-full rounded-xl bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600"
@@ -201,7 +245,9 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
                 className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 flex items-center gap-2"
               >
                 <Check className="h-4 w-4 text-emerald-400" />
-                <span className="text-sm font-medium text-emerald-300">Session scheduled!</span>
+                <span className="text-sm font-medium text-emerald-300">
+                  Session scheduled!
+                </span>
               </motion.div>
             )}
           </Card>
@@ -215,14 +261,18 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
           className="space-y-6"
         >
           <div className="rounded-2xl border border-border/40 bg-secondary/30 p-6 backdrop-blur-sm">
-            <p className="text-sm font-semibold text-muted-foreground mb-4">Live Preview - Student Dashboard</p>
+            <p className="text-sm font-semibold text-muted-foreground mb-4">
+              Live Preview - Student Dashboard
+            </p>
 
             <div className="space-y-3 max-h-150 overflow-y-auto">
               <AnimatePresence>
                 {meetings.length === 0 ? (
                   <div className="rounded-xl border border-dashed border-border/50 p-8 text-center">
                     <Presentation className="h-8 w-8 text-muted-foreground/40 mx-auto mb-3" />
-                    <p className="text-sm text-muted-foreground">Schedule a session to see it appear here</p>
+                    <p className="text-sm text-muted-foreground">
+                      Schedule a session to see it appear here
+                    </p>
                   </div>
                 ) : (
                   meetings.map((meeting) => (
@@ -235,8 +285,12 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
                     >
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div>
-                          <h4 className="text-sm font-semibold text-foreground mb-1">{meeting.title}</h4>
-                          <p className="text-xs text-muted-foreground">{meeting.instructor}</p>
+                          <h4 className="text-sm font-semibold text-foreground mb-1">
+                            {meeting.title}
+                          </h4>
+                          <p className="text-xs text-muted-foreground">
+                            {meeting.instructor}
+                          </p>
                         </div>
                         <button
                           onClick={() => removeMeeting(meeting.id)}
@@ -260,9 +314,13 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
                       <div className="rounded-lg bg-secondary/50 border border-border/40 p-3 mb-3">
                         <div className="flex items-center gap-2 mb-2">
                           <Lock className="h-3 w-3 text-muted-foreground" />
-                          <span className="text-xs font-medium text-muted-foreground">Google Meet Link</span>
+                          <span className="text-xs font-medium text-muted-foreground">
+                            Google Meet Link
+                          </span>
                         </div>
-                        <p className="text-xs font-mono text-cyan-400 truncate">{meeting.meetLink}</p>
+                        <p className="text-xs font-mono text-cyan-400 truncate">
+                          {meeting.meetLink}
+                        </p>
                       </div>
 
                       <Button
@@ -275,8 +333,12 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
                         <ExternalLink className="ml-2 h-3 w-3" />
                       </Button>
 
-                      <Badge variant="outline" className={`mt-3 text-xs ${getStatusColor(meeting.status)}`}>
-                        {meeting.status.charAt(0).toUpperCase() + meeting.status.slice(1)}
+                      <Badge
+                        variant="outline"
+                        className={`mt-3 text-xs ${getStatusColor(meeting.status)}`}
+                      >
+                        {meeting.status.charAt(0).toUpperCase() +
+                          meeting.status.slice(1)}
                       </Badge>
                     </motion.div>
                   ))
@@ -286,13 +348,18 @@ export function AdminMeetingSection({ onMeetingScheduled, scheduledMeetings = []
           </div>
 
           <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4">
-            <p className="text-xs font-semibold text-emerald-300 mb-2">💡 Demo Insight</p>
+            <p className="text-xs font-semibold text-emerald-300 mb-2">
+              💡 Demo Insight
+            </p>
             <p className="text-xs text-muted-foreground">
-              Each scheduled session appears on the landing page and in student/instructor dashboards. The "Open Google Meet" button takes them to the actual video conference. Perfect for organizing classes, office hours, and special events.
+              Each scheduled session appears on the landing page and in
+              student/instructor dashboards. The "Open Google Meet" button takes
+              them to the actual video conference. Perfect for organizing
+              classes, office hours, and special events.
             </p>
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
