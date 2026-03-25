@@ -120,23 +120,6 @@ export function VideoFeedSection() {
 
   return (
     <section ref={sectionRef} className="relative py-32 overflow-hidden">
-      {/* Enhanced background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
-      
-      {/* Floating elements */}
-      <motion.div
-        className="absolute top-20 left-10 w-32 h-32 rounded-full blur-[80px] opacity-30"
-        style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.4), transparent)' }}
-        animate={{ y: [0, 30, 0], x: [0, 20, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-10 w-40 h-40 rounded-full blur-[100px] opacity-25"
-        style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.4), transparent)' }}
-        animate={{ y: [0, -30, 0], x: [0, -20, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -154,7 +137,7 @@ export function VideoFeedSection() {
             >
               <Play className="w-4 h-4 text-primary" />
             </motion.div>
-            <span className="text-sm text-primary font-medium">Student Stories</span>
+            <span className="text-sm text-primary font-medium">Student Achievements</span>
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
             <span className="text-foreground">See What Students </span>
@@ -170,7 +153,7 @@ export function VideoFeedSection() {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Real projects, real stories, real impact
+            Admin-curated wins, showcases, and project highlights.
           </p>
         </motion.div>
 

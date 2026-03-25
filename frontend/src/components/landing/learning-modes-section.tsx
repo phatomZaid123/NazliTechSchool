@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 export function LearningModesSection() {
   return (
     <section className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/5 to-background" />
 
       <div className="container relative z-10 px-4 md:px-6">
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-8 max-w-6xl mx-auto">

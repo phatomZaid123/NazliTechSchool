@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea"
 export function QuestionsSection() {
   return (
     <section className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
 
       <div className="container relative z-10 px-4 md:px-6">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 max-w-6xl mx-auto">

@@ -192,12 +192,6 @@ export function SocialMediaSection() {
 
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div
@@ -225,7 +219,7 @@ export function SocialMediaSection() {
           </h2>
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Follow us across platforms for updates, tips, and inspiring student success stories
+            Posts approved by the admin team appear here as the public social wall.
           </p>
         </motion.div>
 

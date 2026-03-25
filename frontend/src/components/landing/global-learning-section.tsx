@@ -70,46 +70,6 @@ export function GlobalLearningSection() {
 
   return (
     <section ref={sectionRef} className="relative py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
-      
-      {/* Animated globe effect */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-10">
-        <motion.div
-          className="absolute inset-0 rounded-full border border-primary/30"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute inset-[50px] rounded-full border border-accent/20"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute inset-[100px] rounded-full border border-glow-cyan/20"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        />
-        {/* Orbiting dots */}
-        <motion.div
-          className="absolute w-3 h-3 rounded-full bg-primary"
-          style={{ top: "50%", left: "0%" }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-
-      {/* Floating glow */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full blur-[150px]"
-        style={{ background: activeRegion.glowColor }}
-        animate={{
-          opacity: [0.2, 0.4, 0.2],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      />
-
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

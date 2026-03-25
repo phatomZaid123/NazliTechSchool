@@ -1,10 +1,22 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion"
+import { useRef, useState } from "react"
+import { motion, useInView, useReducedMotion } from "framer-motion"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
-import { Play, Pause, RotateCcw, Zap, Atom, Code2, Sparkles, Bot, FlaskConical, ChevronLeft, ChevronRight } from "lucide-react"
+import {
+  Atom,
+  Bot,
+  ChevronLeft,
+  ChevronRight,
+  Code2,
+  FlaskConical,
+  Pause,
+  Play,
+  RotateCcw,
+  Sparkles,
+  Zap,
+} from "lucide-react"
 import { useTypewriterOnce } from "@/hooks/use-typewriter"
 
 const simulations = [
@@ -14,41 +26,44 @@ const simulations = [
     description: "Manipulate gravity, mass, and velocity in real time.",
     icon: Atom,
     tag: "Mechanics",
+    highlights: ["Force and energy update instantly", "Perfect for class walkthroughs", "Great for landing-page demos"],
   },
   {
     id: "coding",
     label: "Coding Studio",
-    description: "Build algorithms and see results instantly with live feedback.",
+    description: "Build logic paths and preview algorithm outcomes without leaving the browser.",
     icon: Code2,
     tag: "Programming",
+    highlights: ["Step-by-step problem solving", "Instant AI feedback prompts", "Project checkpoints for students"],
   },
   {
     id: "chemistry",
     label: "Chemistry Lab",
-    description: "Explore reactions and molecular behavior through safe simulations.",
+    description: "Explore reactions safely with visual experiment guides and result summaries.",
     icon: FlaskConical,
     tag: "Science",
+    highlights: ["Reaction setup previews", "Lab safety callouts", "Results ready for instructor review"],
   },
   {
     id: "robotics",
     label: "Robotics Studio",
-    description: "Design motion systems and test robotic workflows virtually.",
+    description: "Test motion logic and workflow planning before students build the physical prototype.",
     icon: Bot,
     tag: "Engineering",
+    highlights: ["Motion checkpoints", "Sensor workflow planning", "Mentor review snapshots"],
   },
 ]
 
 export function SimulationSection() {
-  const [isPlaying, setIsPlaying] = useState(true)
-  const prefersReducedMotion = useReducedMotion()
+  const [isPlaying, setIsPlaying] = useState(false)
   const [activeSimulation, setActiveSimulation] = useState(0)
   const [gravity, setGravity] = useState([9.8])
   const [mass, setMass] = useState([1])
   const [velocity, setVelocity] = useState([5])
-  const [hoveredSlider, setHoveredSlider] = useState<string | null>(null)
-  
+
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const prefersReducedMotion = useReducedMotion()
 
   const { displayText: headingText } = useTypewriterOnce(
     "Real Physics",
@@ -58,441 +73,266 @@ export function SimulationSection() {
 
   const calculatedForce = (mass[0] * gravity[0]).toFixed(2)
   const calculatedEnergy = (0.5 * mass[0] * velocity[0] * velocity[0]).toFixed(2)
-
-  useEffect(() => {
-    if (!isPlaying || prefersReducedMotion) return
-
-    const interval = setInterval(() => {
-      setActiveSimulation((prev) => (prev + 1) % simulations.length)
-    }, 6000)
-
-    return () => clearInterval(interval)
-  }, [isPlaying, prefersReducedMotion])
-
   const activeSimulationData = simulations[activeSimulation]
+
+  const markerSize = 30 + mass[0] * 6
+  const markerX = Math.min(80, 18 + velocity[0] * 2.8)
+  const markerY = Math.max(16, 72 - gravity[0] * 1.7 - velocity[0] * 0.7)
 
   return (
     <section id="simulation" ref={sectionRef} className="relative py-32 overflow-hidden">
-      {/* Enhanced background effects */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
-      
-      {/* Animated orbital rings */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px]">
-        <motion.div
-          className="absolute inset-0 rounded-full border border-primary/10"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute inset-[100px] rounded-full border border-accent/10"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.div
-          className="absolute inset-[200px] rounded-full border border-glow-cyan/10"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
-
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] opacity-25"
-        style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.2))' }}
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 90, 0],
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      />
-
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16 text-center"
         >
-          <motion.div 
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-accent/30 bg-accent/5 mb-6"
-            whileHover={{ scale: 1.05, borderColor: "rgba(6, 182, 212, 0.5)" }}
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Zap className="w-4 h-4 text-accent" />
-            </motion.div>
-            <span className="text-sm text-accent font-medium">Interactive Learning</span>
-          </motion.div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-card/60 px-4 py-2">
+            <Zap className="h-4 w-4 text-accent" />
+            <span className="text-sm font-medium text-accent">Interactive Learning</span>
+          </div>
+          <h2 className="mb-6 text-4xl font-bold text-balance md:text-5xl">
             <span className="text-foreground">Experience </span>
             <span className="bg-gradient-to-r from-accent to-glow-cyan bg-clip-text text-transparent">
               {headingText}
               {headingText !== "Real Physics" && (
-                <motion.span
-                  className="inline-block w-[3px] h-[0.8em] bg-accent ml-1 align-middle"
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                />
+                <span className="ml-1 inline-block h-[0.8em] w-[3px] animate-pulse bg-accent align-middle" />
               )}
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Our interactive simulations let you manipulate real-world physics parameters in real-time
+          <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
+            A lighter simulation demo that still shows live controls, clear outcomes, and how the product could be
+            presented in class or on the landing page.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
-          {/* Controls Panel */}
+        <div className="mx-auto grid max-w-6xl items-start gap-8 lg:grid-cols-2">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 space-y-8"
-            whileHover={{ borderColor: "rgba(139, 92, 246, 0.3)" }}
-            transition={{ duration: 0.3 }}
+            className="space-y-8 rounded-3xl border border-border/50 bg-card/70 p-8 backdrop-blur-md"
           >
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-foreground flex items-center gap-2">
-                <motion.div
-                  animate={{ rotate: isPlaying ? 360 : 0 }}
-                  transition={{ duration: 3, repeat: isPlaying ? Infinity : 0, ease: "linear" }}
-                >
-                  <Atom className="w-5 h-5 text-primary" />
-                </motion.div>
-                Physics Simulation
-              </h3>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/50 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                  <Sparkles className="h-3.5 w-3.5 text-accent" />
+                  Simulation Controls
+                </div>
+                <h3 className="mt-4 text-2xl font-semibold text-foreground">Live parameter preview</h3>
+              </div>
+
               <div className="flex gap-2">
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="rounded-xl hover:border-primary/50 hover:bg-primary/10"
-                    onClick={() => setIsPlaying(!isPlaying)}
-                  >
-                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="rounded-xl hover:border-accent/50 hover:bg-accent/10"
-                    onClick={() => {
-                      setGravity([9.8])
-                      setMass([1])
-                      setVelocity([5])
-                    }}
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                  </Button>
-                </motion.div>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="rounded-xl border-border/40"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                >
+                  {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                </Button>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="rounded-xl border-border/40"
+                  onClick={() => {
+                    setGravity([9.8])
+                    setMass([1])
+                    setVelocity([5])
+                    setIsPlaying(false)
+                  }}
+                >
+                  <RotateCcw className="h-4 w-4" />
+                </Button>
               </div>
             </div>
 
-            {/* Gravity Slider */}
-            <motion.div 
-              className="space-y-4 p-4 rounded-2xl transition-colors"
-              style={{ 
-                backgroundColor: hoveredSlider === 'gravity' ? 'rgba(139, 92, 246, 0.05)' : 'transparent',
-              }}
-              onMouseEnter={() => setHoveredSlider('gravity')}
-              onMouseLeave={() => setHoveredSlider(null)}
-            >
-              <div className="flex justify-between">
-                <label className="text-sm font-medium text-foreground">Gravity (m/s²)</label>
-                <motion.span 
-                  className="text-sm text-primary font-mono"
-                  animate={hoveredSlider === 'gravity' ? { scale: 1.1 } : { scale: 1 }}
+            <div className="grid gap-3 sm:grid-cols-2">
+              {simulations.map((simulation, index) => (
+                <button
+                  key={simulation.id}
+                  onClick={() => setActiveSimulation(index)}
+                  className={`rounded-2xl border px-4 py-4 text-left transition-colors ${
+                    activeSimulation === index
+                      ? "border-accent/40 bg-accent/10"
+                      : "border-border/40 bg-background/45 hover:border-border/70 hover:bg-background/70"
+                  }`}
                 >
-                  {gravity[0].toFixed(1)}
-                </motion.span>
-              </div>
-              <Slider
-                value={gravity}
-                onValueChange={setGravity}
-                min={0}
-                max={25}
-                step={0.1}
-                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_.relative]:bg-secondary [&_[data-disabled]]:bg-muted"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Moon (1.6)</span>
-                <span>Earth (9.8)</span>
-                <span>Jupiter (24.8)</span>
-              </div>
-            </motion.div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary/70 text-foreground">
+                      <simulation.icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{simulation.label}</p>
+                      <p className="text-xs text-muted-foreground">{simulation.tag}</p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
 
-            {/* Mass Slider */}
-            <motion.div 
-              className="space-y-4 p-4 rounded-2xl transition-colors"
-              style={{ 
-                backgroundColor: hoveredSlider === 'mass' ? 'rgba(6, 182, 212, 0.05)' : 'transparent',
-              }}
-              onMouseEnter={() => setHoveredSlider('mass')}
-              onMouseLeave={() => setHoveredSlider(null)}
-            >
-              <div className="flex justify-between">
-                <label className="text-sm font-medium text-foreground">Mass (kg)</label>
-                <motion.span 
-                  className="text-sm text-accent font-mono"
-                  animate={hoveredSlider === 'mass' ? { scale: 1.1 } : { scale: 1 }}
-                >
-                  {mass[0].toFixed(1)}
-                </motion.span>
-              </div>
-              <Slider
-                value={mass}
-                onValueChange={setMass}
-                min={0.1}
-                max={10}
-                step={0.1}
-                className="[&_[role=slider]]:bg-accent [&_[role=slider]]:border-accent"
-              />
-            </motion.div>
+            <p className="text-sm leading-6 text-muted-foreground">{activeSimulationData.description}</p>
 
-            {/* Velocity Slider */}
-            <motion.div 
-              className="space-y-4 p-4 rounded-2xl transition-colors"
-              style={{ 
-                backgroundColor: hoveredSlider === 'velocity' ? 'rgba(59, 130, 246, 0.05)' : 'transparent',
-              }}
-              onMouseEnter={() => setHoveredSlider('velocity')}
-              onMouseLeave={() => setHoveredSlider(null)}
-            >
-              <div className="flex justify-between">
-                <label className="text-sm font-medium text-foreground">Initial Velocity (m/s)</label>
-                <motion.span 
-                  className="text-sm text-glow-cyan font-mono"
-                  animate={hoveredSlider === 'velocity' ? { scale: 1.1 } : { scale: 1 }}
-                >
-                  {velocity[0].toFixed(1)}
-                </motion.span>
-              </div>
-              <Slider
-                value={velocity}
-                onValueChange={setVelocity}
-                min={0}
-                max={20}
-                step={0.5}
-                className="[&_[role=slider]]:bg-glow-cyan [&_[role=slider]]:border-glow-cyan"
-              />
-            </motion.div>
-
-            {/* Calculated Values */}
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/30">
-              <motion.div 
-                className="bg-secondary/50 rounded-2xl p-4 border border-transparent hover:border-primary/30 transition-colors"
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  Gravitational Force
+            <div className="space-y-6">
+              <div className="space-y-3 rounded-2xl border border-border/40 bg-background/45 p-4">
+                <div className="flex items-center justify-between text-sm">
+                  <label className="font-medium text-foreground">Gravity</label>
+                  <span className="font-mono text-primary">{gravity[0].toFixed(1)} m/s2</span>
                 </div>
-                <motion.div 
-                  className="text-2xl font-bold text-primary font-mono"
-                  key={calculatedForce}
-                  initial={{ scale: 1.2, opacity: 0.5 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {calculatedForce} N
-                </motion.div>
-              </motion.div>
-              <motion.div 
-                className="bg-secondary/50 rounded-2xl p-4 border border-transparent hover:border-accent/30 transition-colors"
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
-                  <Zap className="w-3 h-3" />
-                  Kinetic Energy
+                <Slider value={gravity} onValueChange={setGravity} min={0} max={25} step={0.1} />
+              </div>
+
+              <div className="space-y-3 rounded-2xl border border-border/40 bg-background/45 p-4">
+                <div className="flex items-center justify-between text-sm">
+                  <label className="font-medium text-foreground">Mass</label>
+                  <span className="font-mono text-accent">{mass[0].toFixed(1)} kg</span>
                 </div>
-                <motion.div 
-                  className="text-2xl font-bold text-accent font-mono"
-                  key={calculatedEnergy}
-                  initial={{ scale: 1.2, opacity: 0.5 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {calculatedEnergy} J
-                </motion.div>
-              </motion.div>
+                <Slider value={mass} onValueChange={setMass} min={0.1} max={10} step={0.1} />
+              </div>
+
+              <div className="space-y-3 rounded-2xl border border-border/40 bg-background/45 p-4">
+                <div className="flex items-center justify-between text-sm">
+                  <label className="font-medium text-foreground">Velocity</label>
+                  <span className="font-mono text-glow-cyan">{velocity[0].toFixed(1)} m/s</span>
+                </div>
+                <Slider value={velocity} onValueChange={setVelocity} min={0} max={20} step={0.5} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 border-t border-border/30 pt-4">
+              <div className="rounded-2xl border border-border/40 bg-background/45 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Force</p>
+                <p className="mt-2 text-2xl font-bold text-primary">{calculatedForce} N</p>
+              </div>
+              <div className="rounded-2xl border border-border/40 bg-background/45 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Kinetic Energy</p>
+                <p className="mt-2 text-2xl font-bold text-accent">{calculatedEnergy} J</p>
+              </div>
             </div>
           </motion.div>
 
-          {/* Simulation Visualization */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-8 h-[500px] relative overflow-hidden"
+            className="rounded-3xl border border-border/50 bg-card/70 p-8 backdrop-blur-md"
           >
-            <div className="absolute inset-0">
-              <div
-                className="absolute inset-0 opacity-10"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)",
-                  backgroundSize: "40px 40px",
-                }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: "radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 55%)",
-                }}
-              />
-            </div>
-
-            <div className="relative z-10 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center">
-                    <activeSimulationData.icon className="w-5 h-5 text-foreground" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide">{activeSimulationData.tag}</p>
-                    <h3 className="text-lg font-semibold text-foreground">{activeSimulationData.label}</h3>
-                  </div>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/40 bg-background/50">
+                  <activeSimulationData.icon className="h-5 w-5 text-foreground" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="rounded-lg"
-                    onClick={() =>
-                      setActiveSimulation((prev) => (prev - 1 + simulations.length) % simulations.length)
-                    }
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="rounded-lg"
-                    onClick={() => setActiveSimulation((prev) => (prev + 1) % simulations.length)}
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{activeSimulationData.tag}</p>
+                  <h3 className="text-xl font-semibold text-foreground">{activeSimulationData.label}</h3>
                 </div>
               </div>
 
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeSimulationData.id}
-                  initial={{ opacity: 0, x: 40 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -40 }}
-                  transition={{ duration: 0.4 }}
-                  className="mt-6 flex-1 rounded-2xl border border-border/40 bg-background/60 p-6 relative overflow-hidden"
+              <div className="flex gap-2">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="rounded-xl border-border/40"
+                  onClick={() => setActiveSimulation((prev) => (prev - 1 + simulations.length) % simulations.length)}
                 >
-                  {activeSimulationData.id === "physics" ? (
-                    <div className="relative h-full">
-                      {isPlaying && !prefersReducedMotion && (
-                        <>
-                          <motion.div
-                            className="absolute"
-                            style={{
-                              width: (20 + mass[0] * 8) + "px",
-                              height: (20 + mass[0] * 8) + "px",
-                            }}
-                            animate={{
-                              y: [40, 320 - velocity[0] * 10, 40],
-                              x: [80, 180, 80],
-                            }}
-                            transition={{
-                              duration: 3 - gravity[0] / 15,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            }}
-                          >
-                            <motion.div
-                              className="w-full h-full rounded-full"
-                              style={{
-                                background: "linear-gradient(135deg, oklch(0.65 0.25 280), oklch(0.75 0.15 200))",
-                                boxShadow:
-                                  "0 0 " + (18 + velocity[0] * 2) + "px oklch(0.65 0.25 280 / 0.6)",
-                              }}
-                              animate={{
-                                boxShadow: [
-                                  "0 0 " + (18 + velocity[0] * 2) + "px oklch(0.65 0.25 280 / 0.6)",
-                                  "0 0 " + (28 + velocity[0] * 2) + "px oklch(0.65 0.25 280 / 0.7)",
-                                  "0 0 " + (18 + velocity[0] * 2) + "px oklch(0.65 0.25 280 / 0.6)",
-                                ],
-                              }}
-                              transition={{ duration: 1, repeat: Infinity }}
-                            />
-                          </motion.div>
-                        </>
-                      )}
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="rounded-xl border-border/40"
+                  onClick={() => setActiveSimulation((prev) => (prev + 1) % simulations.length)}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
 
-                      {!isPlaying && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-card/90 backdrop-blur-sm border border-border/50 rounded-2xl p-6 text-center">
-                            <Pause className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                            <p className="text-sm text-muted-foreground">Simulation Paused</p>
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="absolute bottom-6 left-6 right-6 bg-background/80 backdrop-blur-sm rounded-xl p-4 border border-border/30">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Code2 className="w-4 h-4 text-foreground" />
-                          <span className="text-sm font-medium text-foreground">Live Equations</span>
-                        </div>
-                        <div className="font-mono text-sm text-muted-foreground space-y-1">
-                          <div>
-                            F = m x g = {mass[0].toFixed(1)} x {gravity[0].toFixed(1)} =
-                            <span className="text-foreground ml-1">{calculatedForce} N</span>
-                          </div>
-                          <div>
-                            KE = 0.5mv² = 0.5 x {mass[0].toFixed(1)} x {velocity[0].toFixed(1)}² =
-                            <span className="text-foreground ml-1">{calculatedEnergy} J</span>
-                          </div>
-                        </div>
-                      </div>
+            <div className="mt-6 rounded-3xl border border-border/40 bg-background/60 p-6">
+              {activeSimulationData.id === "physics" ? (
+                <div className="space-y-6">
+                  <div className="relative min-h-[320px] overflow-hidden rounded-2xl border border-dashed border-border/40 bg-secondary/10">
+                    <div className="absolute left-6 right-6 top-8 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                      <span>Launch Preview</span>
+                      <span>{isPlaying ? "Animating" : "Static Preview"}</span>
                     </div>
-                  ) : (
-                    <div className="h-full flex flex-col justify-between">
-                      <p className="text-sm text-muted-foreground">{activeSimulationData.description}</p>
-                      <div className="mt-6 grid gap-4">
-                        {[
-                          "Interactive checkpoints",
-                          "Guided by the Nazli AI mascot",
-                          "Projects across multiple topics",
-                        ].map((item) => (
-                          <div
-                            key={item}
-                            className="rounded-xl border border-border/40 bg-card/60 p-4 text-sm text-foreground"
-                          >
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+                    <div className="absolute bottom-14 left-6 right-6 h-px bg-border/50" />
+                    <div className="absolute bottom-14 left-6 text-xs text-muted-foreground">Start</div>
+                    <div className="absolute bottom-14 right-6 text-xs text-muted-foreground">Outcome</div>
 
-              <div className="mt-6 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {simulations.map((sim, index) => (
-                    <button
-                      key={sim.id}
-                      onClick={() => setActiveSimulation(index)}
-                      className={
-                        "h-2.5 w-2.5 rounded-full transition-colors " +
-                        (activeSimulation === index ? "bg-foreground" : "bg-muted")
-                      }
-                      aria-label={"View " + sim.label}
+                    <motion.div
+                      className="absolute rounded-full bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/35"
+                      style={{
+                        width: markerSize,
+                        height: markerSize,
+                        left: `calc(${markerX}% - ${markerSize / 2}px)`,
+                        top: `calc(${markerY}% - ${markerSize / 2}px)`,
+                      }}
+                      animate={isPlaying && !prefersReducedMotion ? { scale: [1, 1.08, 1], y: [0, 6, 0] } : undefined}
+                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                     />
+
+                    <div className="absolute inset-x-6 bottom-6 grid gap-3 md:grid-cols-3">
+                      <div className="rounded-2xl border border-border/40 bg-background/80 p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Mass</p>
+                        <p className="mt-2 text-lg font-semibold text-foreground">{mass[0].toFixed(1)} kg</p>
+                      </div>
+                      <div className="rounded-2xl border border-border/40 bg-background/80 p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Gravity</p>
+                        <p className="mt-2 text-lg font-semibold text-foreground">{gravity[0].toFixed(1)} m/s2</p>
+                      </div>
+                      <div className="rounded-2xl border border-border/40 bg-background/80 p-4">
+                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Velocity</p>
+                        <p className="mt-2 text-lg font-semibold text-foreground">{velocity[0].toFixed(1)} m/s</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-border/40 bg-background/45 p-4 font-mono text-sm text-muted-foreground">
+                    <div>
+                      F = m x g = {mass[0].toFixed(1)} x {gravity[0].toFixed(1)} =
+                      <span className="ml-1 text-foreground">{calculatedForce} N</span>
+                    </div>
+                    <div className="mt-2">
+                      KE = 0.5mv2 = 0.5 x {mass[0].toFixed(1)} x {velocity[0].toFixed(1)}2 =
+                      <span className="ml-1 text-foreground">{calculatedEnergy} J</span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <p className="text-sm leading-6 text-muted-foreground">{activeSimulationData.description}</p>
+                  {activeSimulationData.highlights.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-2xl border border-border/40 bg-background/45 p-4 text-sm text-foreground"
+                    >
+                      {item}
+                    </div>
                   ))}
                 </div>
-                <span className="text-xs text-muted-foreground">Auto-swaps every 6s</span>
+              )}
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                {simulations.map((simulation, index) => (
+                  <button
+                    key={simulation.id}
+                    onClick={() => setActiveSimulation(index)}
+                    className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                      activeSimulation === index ? "bg-foreground" : "bg-muted"
+                    }`}
+                    aria-label={`View ${simulation.label}`}
+                  />
+                ))}
               </div>
+              <p className="text-sm text-muted-foreground">
+                Use this block as the lightweight class demo before a live session or Google Meet handoff.
+              </p>
             </div>
           </motion.div>
-
         </div>
       </div>
     </section>

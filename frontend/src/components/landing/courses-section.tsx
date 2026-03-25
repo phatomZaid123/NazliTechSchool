@@ -101,19 +101,6 @@ export function CoursesSection() {
 
   return (
     <section ref={sectionRef} className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-accent/5 to-background" />
-      
-      {/* Animated background elements */}
-      <motion.div
-        className="absolute top-1/4 right-0 w-125 h-125 rounded-full blur-[150px] opacity-20"
-        style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.2))' }}
-        animate={{
-          x: [0, 50, 0],
-          opacity: [0.2, 0.3, 0.2],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

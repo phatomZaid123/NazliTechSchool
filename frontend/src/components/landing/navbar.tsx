@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Menu, X, ChevronDown, Sparkles } from "lucide-react"
+import { Menu, X, Sparkles } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const navItems = [
   { label: "Courses", href: "#courses" },
@@ -38,40 +39,36 @@ export function Navbar() {
       >
         <div className="container px-4 md:px-6">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
+            <Link to="/" className="group flex items-center gap-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+                <Sparkles className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
                 Nazli<span className="text-primary">Tech</span>
               </span>
-            </a>
+            </Link>
 
-            {/* Desktop navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {item.label}
                 </a>
               ))}
             </div>
 
-            {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-                Sign In
+              <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
+                <Link to="/admin">Admin Portal</Link>
               </Button>
-              <Button className="rounded-lg">
-                Get Started
+              <Button asChild className="rounded-lg">
+                <a href="#pricing">Get Started</a>
               </Button>
             </div>
 
-            {/* Mobile menu button */}
             <Button
               variant="ghost"
               size="icon"
@@ -88,7 +85,6 @@ export function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -104,18 +100,22 @@ export function Navbar() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-lg font-medium text-foreground py-3 border-b border-border/30"
+                    className="border-b border-border/30 py-3 text-lg font-medium text-foreground"
                   >
                     {item.label}
                   </a>
                 ))}
               </div>
-              <div className="flex flex-col gap-4 mt-8">
-                <Button variant="outline" className="w-full rounded-xl py-6">
-                  Sign In
+              <div className="mt-8 flex flex-col gap-4">
+                <Button asChild variant="outline" className="w-full rounded-xl py-6">
+                  <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                    Admin Portal
+                  </Link>
                 </Button>
-                <Button className="w-full rounded-lg py-6">
-                  Get Started
+                <Button asChild className="w-full rounded-lg py-6">
+                  <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>
+                    Get Started
+                  </a>
                 </Button>
               </div>
             </div>

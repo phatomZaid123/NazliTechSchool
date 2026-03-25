@@ -29,7 +29,6 @@ export function CurriculumSection() {
 
   return (
     <section ref={sectionRef} className="relative py-28 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
 
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
