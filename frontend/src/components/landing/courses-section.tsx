@@ -1,16 +1,29 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react"
-import { motion, useInView } from "framer-motion"
-import { Brain, Atom, Code2, Rocket, Database, Palette, ChevronRight, Clock, Users, Star, Play } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useTypewriterOnce } from "@/hooks/use-typewriter"
+import { useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import {
+  Brain,
+  Atom,
+  Code2,
+  Rocket,
+  Database,
+  Palette,
+  ChevronRight,
+  Clock,
+  Users,
+  Star,
+  Play,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTypewriterOnce } from "@/hooks/use-typewriter";
 
 const courses = [
   {
     id: 1,
     title: "AI Coding Lab",
-    description: "Build intelligent applications with machine learning, neural networks, and cutting-edge AI tools.",
+    description:
+      "Build intelligent applications with machine learning, neural networks, and cutting-edge AI tools.",
     icon: Brain,
     color: "from-primary to-accent",
     glowColor: "rgba(139, 92, 246, 0.3)",
@@ -23,7 +36,8 @@ const courses = [
   {
     id: 2,
     title: "Physics Simulation",
-    description: "Master physics through interactive simulations covering mechanics, thermodynamics, and quantum physics.",
+    description:
+      "Master physics through interactive simulations covering mechanics, thermodynamics, and quantum physics.",
     icon: Atom,
     color: "from-accent to-glow-cyan",
     glowColor: "rgba(6, 182, 212, 0.3)",
@@ -36,7 +50,8 @@ const courses = [
   {
     id: 3,
     title: "Full-Stack Development",
-    description: "End-to-end web development with React, Node.js, databases, and cloud deployment.",
+    description:
+      "End-to-end web development with React, Node.js, databases, and cloud deployment.",
     icon: Code2,
     color: "from-glow-cyan to-glow-blue",
     glowColor: "rgba(59, 130, 246, 0.3)",
@@ -49,7 +64,8 @@ const courses = [
   {
     id: 4,
     title: "Project-Based Learning",
-    description: "Build real-world projects from scratch with mentorship from industry professionals.",
+    description:
+      "Build real-world projects from scratch with mentorship from industry professionals.",
     icon: Rocket,
     color: "from-glow-blue to-primary",
     glowColor: "rgba(139, 92, 246, 0.25)",
@@ -62,7 +78,8 @@ const courses = [
   {
     id: 5,
     title: "Data Engineering",
-    description: "Learn to build scalable data pipelines, warehouses, and analytics platforms.",
+    description:
+      "Learn to build scalable data pipelines, warehouses, and analytics platforms.",
     icon: Database,
     color: "from-primary to-glow-blue",
     glowColor: "rgba(59, 130, 246, 0.25)",
@@ -75,7 +92,8 @@ const courses = [
   {
     id: 6,
     title: "UI/UX Design Lab",
-    description: "Create stunning user interfaces with modern design principles and prototyping tools.",
+    description:
+      "Create stunning user interfaces with modern design principles and prototyping tools.",
     icon: Palette,
     color: "from-accent to-primary",
     glowColor: "rgba(6, 182, 212, 0.25)",
@@ -85,22 +103,26 @@ const courses = [
     modules: ["Design Systems", "Prototyping", "User Research", "Motion"],
     featured: true,
   },
-]
+];
 
 export function CoursesSection() {
-  const [expandedId, setExpandedId] = useState<number | null>(null)
-  const [hoveredId, setHoveredId] = useState<number | null>(null)
-  const sectionRef = useRef(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   const { displayText: headingText } = useTypewriterOnce(
     "Experience",
     60,
-    isInView ? 300 : 99999
-  )
+    isInView ? 300 : 99999,
+  );
 
   return (
-    <section ref={sectionRef} className="relative py-32 overflow-hidden">
+    <section
+      id="courses"
+      ref={sectionRef}
+      className="relative py-32 overflow-hidden"
+    >
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -108,7 +130,7 @@ export function CoursesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6"
             whileHover={{ scale: 1.05 }}
           >
@@ -118,7 +140,9 @@ export function CoursesSection() {
             >
               <Rocket className="w-4 h-4 text-primary" />
             </motion.div>
-            <span className="text-sm text-primary font-medium">Interactive Courses</span>
+            <span className="text-sm text-primary font-medium">
+              Interactive Courses
+            </span>
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
             <span className="text-foreground">Learn Through </span>
@@ -134,7 +158,8 @@ export function CoursesSection() {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Hands-on courses designed to transform you into a skilled professional
+            Hands-on courses designed to transform you into a skilled
+            professional
           </p>
         </motion.div>
 
@@ -146,7 +171,9 @@ export function CoursesSection() {
               index={index}
               isExpanded={expandedId === course.id}
               isHovered={hoveredId === course.id}
-              onToggle={() => setExpandedId(expandedId === course.id ? null : course.id)}
+              onToggle={() =>
+                setExpandedId(expandedId === course.id ? null : course.id)
+              }
               onHover={(hovered) => setHoveredId(hovered ? course.id : null)}
             />
           ))}
@@ -159,11 +186,7 @@ export function CoursesSection() {
           className="text-center mt-12"
         >
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-lg px-8"
-            >
+            <Button size="lg" variant="outline" className="rounded-lg px-8">
               View All Courses
               <ChevronRight className="w-5 h-5 ml-2" />
             </Button>
@@ -171,20 +194,27 @@ export function CoursesSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
 interface CourseCardProps {
-  course: typeof courses[0]
-  index: number
-  isExpanded: boolean
-  isHovered: boolean
-  onToggle: () => void
-  onHover: (hovered: boolean) => void
+  course: (typeof courses)[0];
+  index: number;
+  isExpanded: boolean;
+  isHovered: boolean;
+  onToggle: () => void;
+  onHover: (hovered: boolean) => void;
 }
 
-function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }: CourseCardProps) {
-  const Icon = course.icon
+function CourseCard({
+  course,
+  index,
+  isExpanded,
+  isHovered,
+  onToggle,
+  onHover,
+}: CourseCardProps) {
+  const Icon = course.icon;
 
   return (
     <motion.div
@@ -197,10 +227,10 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
       className={`relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-6 cursor-pointer transition-all duration-500 ${
-        isExpanded ? 'md:col-span-2 lg:col-span-2' : ''
+        isExpanded ? "md:col-span-2 lg:col-span-2" : ""
       }`}
       style={{
-        boxShadow: isHovered ? `0 0 40px ${course.glowColor}` : 'none',
+        boxShadow: isHovered ? `0 0 40px ${course.glowColor}` : "none",
       }}
       whileHover={{ y: -5 }}
     >
@@ -215,7 +245,7 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
 
       {/* Featured badge */}
       {course.featured && (
-        <motion.div 
+        <motion.div
           className="absolute -top-2 -right-2 px-3 py-1 rounded-full bg-gradient-to-r from-primary to-accent text-xs font-medium text-primary-foreground"
           animate={isHovered ? { scale: [1, 1.1, 1] } : {}}
           transition={{ duration: 0.5 }}
@@ -224,11 +254,13 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
         </motion.div>
       )}
 
-      <div className={`relative z-10 flex ${isExpanded ? 'flex-row gap-8' : 'flex-col'}`}>
+      <div
+        className={`relative z-10 flex ${isExpanded ? "flex-row gap-8" : "flex-col"}`}
+      >
         {/* Main content */}
-        <div className={isExpanded ? 'flex-1' : ''}>
+        <div className={isExpanded ? "flex-1" : ""}>
           {/* Icon with animation */}
-          <motion.div 
+          <motion.div
             className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${course.color} flex items-center justify-center mb-4`}
             animate={isHovered ? { rotate: [0, -5, 5, 0] } : {}}
             transition={{ duration: 0.5 }}
@@ -237,28 +269,30 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
           </motion.div>
 
           {/* Title and description */}
-          <h3 className="text-xl font-bold text-foreground mb-2">{course.title}</h3>
+          <h3 className="text-xl font-bold text-foreground mb-2">
+            {course.title}
+          </h3>
           <p className="text-muted-foreground text-sm leading-relaxed mb-4">
             {course.description}
           </p>
 
           {/* Stats with hover effects */}
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <motion.span 
+            <motion.span
               className="flex items-center gap-1"
               whileHover={{ scale: 1.1, color: "oklch(0.65 0.25 280)" }}
             >
               <Clock className="w-4 h-4" />
               {course.duration}
             </motion.span>
-            <motion.span 
+            <motion.span
               className="flex items-center gap-1"
               whileHover={{ scale: 1.1, color: "oklch(0.7 0.18 200)" }}
             >
               <Users className="w-4 h-4" />
               {course.students}
             </motion.span>
-            <motion.span 
+            <motion.span
               className="flex items-center gap-1"
               whileHover={{ scale: 1.1 }}
             >
@@ -275,7 +309,9 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
             animate={{ opacity: 1, x: 0 }}
             className="flex-1"
           >
-            <h4 className="text-sm font-semibold text-foreground mb-4">Course Modules</h4>
+            <h4 className="text-sm font-semibold text-foreground mb-4">
+              Course Modules
+            </h4>
             <div className="space-y-3">
               {course.modules.map((module, i) => (
                 <motion.div
@@ -286,7 +322,9 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
                   className="flex items-center gap-3 p-3 rounded-xl bg-secondary/30 hover:bg-secondary/50 transition-colors"
                   whileHover={{ x: 5 }}
                 >
-                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-xs font-bold text-primary-foreground`}>
+                  <div
+                    className={`w-8 h-8 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-xs font-bold text-primary-foreground`}
+                  >
                     {i + 1}
                   </div>
                   <span className="text-sm text-foreground">{module}</span>
@@ -308,7 +346,9 @@ function CourseCard({ course, index, isExpanded, isHovered, onToggle, onHover }:
       </div>
 
       {/* Subtle corner accents */}
-      <div className={`absolute top-0 right-0 w-20 h-20 rounded-tr-3xl opacity-20 bg-gradient-to-bl ${course.color}`} />
+      <div
+        className={`absolute top-0 right-0 w-20 h-20 rounded-tr-3xl opacity-20 bg-gradient-to-bl ${course.color}`}
+      />
     </motion.div>
-  )
+  );
 }

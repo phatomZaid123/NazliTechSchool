@@ -1,10 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Check, Sparkles, Zap, Crown, Users, BookOpen, Video, Code, FlaskConical, ChefHat } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useTypewriterOnce } from "@/hooks/use-typewriter"
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Check,
+  Sparkles,
+  Zap,
+  Crown,
+  Users,
+  BookOpen,
+  Video,
+  Code,
+  FlaskConical,
+  ChefHat,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useTypewriterOnce } from "@/hooks/use-typewriter";
 
 const pricingPlans = [
   {
@@ -21,9 +32,9 @@ const pricingPlans = [
       "Community forum access",
       "Weekly live Q&A sessions",
       "Progress tracking dashboard",
-      "Mobile app access"
+      "Mobile app access",
     ],
-    highlighted: false
+    highlighted: false,
   },
   {
     id: "pro",
@@ -41,10 +52,10 @@ const pricingPlans = [
       "1-on-1 mentor sessions (2/month)",
       "Project-based certifications",
       "Priority support",
-      "Offline downloads"
+      "Offline downloads",
     ],
     highlighted: true,
-    badge: "Most Popular"
+    badge: "Most Popular",
   },
   {
     id: "enterprise",
@@ -62,11 +73,11 @@ const pricingPlans = [
       "Analytics & reporting dashboard",
       "Dedicated success manager",
       "API access",
-      "SLA guarantee"
+      "SLA guarantee",
     ],
-    highlighted: false
-  }
-]
+    highlighted: false,
+  },
+];
 
 const courseCategories = [
   {
@@ -76,7 +87,7 @@ const courseCategories = [
     color: "from-emerald-500 to-teal-600",
     courses: 25,
     students: "12K+",
-    description: "Python, JavaScript, AI/ML, Web Dev"
+    description: "Python, JavaScript, AI/ML, Web Dev",
   },
   {
     id: "sciences",
@@ -85,7 +96,7 @@ const courseCategories = [
     color: "from-blue-500 to-indigo-600",
     courses: 18,
     students: "8K+",
-    description: "Physics, Chemistry, Biology Labs"
+    description: "Physics, Chemistry, Biology Labs",
   },
   {
     id: "video",
@@ -94,7 +105,7 @@ const courseCategories = [
     color: "from-pink-500 to-rose-600",
     courses: 12,
     students: "5K+",
-    description: "Editing, Animation, VFX"
+    description: "Editing, Animation, VFX",
   },
   {
     id: "culinary",
@@ -103,19 +114,20 @@ const courseCategories = [
     color: "from-amber-500 to-orange-600",
     courses: 8,
     students: "3K+",
-    description: "Cooking, Baking, Nutrition"
-  }
-]
+    description: "Cooking, Baking, Nutrition",
+  },
+];
 
 export function PricingSection() {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly")
-  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null)
-  const [selectedCategory, setSelectedCategory] = useState("programming")
-  
-  const { displayText: titleText, ref: titleRef, hasStarted: titleStarted } = useTypewriterOnce(
-    "Invest in Your Future",
-    50
-  )
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
+    "monthly",
+  );
+  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("programming");
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  const { displayText: titleText, hasStarted: titleStarted } =
+    useTypewriterOnce("Invest in Your Future", 50);
 
   return (
     <section id="pricing" className="relative py-32 overflow-hidden">
@@ -134,19 +146,24 @@ export function PricingSection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-500/30 mb-6"
           >
             <Sparkles className="w-4 h-4 text-purple-400" />
-            <span className="text-sm font-medium text-purple-300">Flexible Plans for Everyone</span>
+            <span className="text-sm font-medium text-purple-300">
+              Flexible Plans for Everyone
+            </span>
           </motion.div>
 
-          <h2 
+          <h2
             ref={titleRef}
             className="text-4xl md:text-6xl font-bold text-foreground mb-6"
           >
             {titleStarted ? titleText : "Invest in Your Future"}
-            {titleStarted && <span className="animate-pulse text-purple-400">|</span>}
+            {titleStarted && (
+              <span className="animate-pulse text-purple-400">|</span>
+            )}
           </h2>
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose the perfect plan to unlock your potential. All plans include access to our global learning community.
+            Choose the perfect plan to unlock your potential. All plans include
+            access to our global learning community.
           </p>
         </motion.div>
 
@@ -201,7 +218,10 @@ export function PricingSection() {
                   : "bg-secondary/30 border border-border hover:border-purple-500/30"
               }`}
               style={{
-                boxShadow: hoveredPlan === plan.id ? `0 0 60px ${plan.glowColor}` : "none"
+                boxShadow:
+                  hoveredPlan === plan.id
+                    ? `0 0 60px ${plan.glowColor}`
+                    : "none",
               }}
             >
               {plan.badge && (
@@ -213,12 +233,16 @@ export function PricingSection() {
               )}
 
               {/* Plan Icon */}
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${plan.color} flex items-center justify-center mb-6`}>
+              <div
+                className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${plan.color} flex items-center justify-center mb-6`}
+              >
                 <plan.icon className="w-8 h-8 text-white" />
               </div>
 
               {/* Plan Name */}
-              <h3 className="text-2xl font-bold text-foreground mb-2">{plan.name}</h3>
+              <h3 className="text-2xl font-bold text-foreground mb-2">
+                {plan.name}
+              </h3>
               <p className="text-muted-foreground mb-6">{plan.description}</p>
 
               {/* Price */}
@@ -232,7 +256,10 @@ export function PricingSection() {
                     className="flex items-baseline gap-2"
                   >
                     <span className="text-5xl font-bold text-foreground">
-                      ${billingCycle === "monthly" ? plan.price.monthly : Math.round(plan.price.yearly / 12)}
+                      $
+                      {billingCycle === "monthly"
+                        ? plan.price.monthly
+                        : Math.round(plan.price.yearly / 12)}
                     </span>
                     <span className="text-muted-foreground">/month</span>
                   </motion.div>
@@ -255,7 +282,9 @@ export function PricingSection() {
                     transition={{ delay: 0.3 + i * 0.05 }}
                     className="flex items-start gap-3"
                   >
-                    <div className={`w-5 h-5 rounded-full bg-gradient-to-r ${plan.color} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                    <div
+                      className={`w-5 h-5 rounded-full bg-gradient-to-r ${plan.color} flex items-center justify-center flex-shrink-0 mt-0.5`}
+                    >
                       <Check className="w-3 h-3 text-white" />
                     </div>
                     <span className="text-muted-foreground">{feature}</span>
@@ -289,7 +318,8 @@ export function PricingSection() {
               Explore Our Course Portals
             </h3>
             <p className="text-muted-foreground max-w-xl mx-auto">
-              Themed learning experiences designed for different passions and career paths
+              Themed learning experiences designed for different passions and
+              career paths
             </p>
           </div>
 
@@ -333,16 +363,24 @@ export function PricingSection() {
                       <div>
                         <div className="flex items-center gap-3 mb-4">
                           <category.icon className="w-10 h-10 text-white" />
-                          <h4 className="text-3xl font-bold text-white">{category.name}</h4>
+                          <h4 className="text-3xl font-bold text-white">
+                            {category.name}
+                          </h4>
                         </div>
-                        <p className="text-white/80 text-lg mb-6">{category.description}</p>
+                        <p className="text-white/80 text-lg mb-6">
+                          {category.description}
+                        </p>
                         <div className="flex gap-6 mb-8">
                           <div>
-                            <p className="text-3xl font-bold text-white">{category.courses}</p>
+                            <p className="text-3xl font-bold text-white">
+                              {category.courses}
+                            </p>
                             <p className="text-white/70">Courses</p>
                           </div>
                           <div>
-                            <p className="text-3xl font-bold text-white">{category.students}</p>
+                            <p className="text-3xl font-bold text-white">
+                              {category.students}
+                            </p>
                             <p className="text-white/70">Students</p>
                           </div>
                         </div>
@@ -369,7 +407,7 @@ export function PricingSection() {
                       </div>
                     </div>
                   </motion.div>
-                )
+                ),
             )}
           </AnimatePresence>
         </motion.div>
@@ -385,7 +423,7 @@ export function PricingSection() {
             { value: "2,800+", label: "Active Students" },
             { value: "60+", label: "Expert Courses" },
             { value: "4.9/5", label: "Average Rating" },
-            { value: "15+", label: "Countries" }
+            { value: "15+", label: "Countries" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -404,5 +442,5 @@ export function PricingSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

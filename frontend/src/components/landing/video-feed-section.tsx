@@ -141,11 +141,11 @@ export function VideoFeedSection() {
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
             <span className="text-foreground">See What Students </span>
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">
               {headingText}
               {headingText !== "Are Building" && (
                 <motion.span
-                  className="inline-block w-[3px] h-[0.8em] bg-primary ml-1 align-middle"
+                  className="inline-block w-0.75 h-[0.8em] bg-primary ml-1 align-middle"
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 0.8, repeat: Infinity }}
                 />
@@ -194,7 +194,7 @@ export function VideoFeedSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex-shrink-0 snap-center"
+                className="shrink-0 snap-center"
                 onMouseEnter={() => setHoveredVideo(video.id)}
                 onMouseLeave={() => setHoveredVideo(null)}
               >
@@ -273,12 +273,12 @@ function VideoCard({ video, isActive, isHovered, isMuted, onToggleMute, onClick 
       transition={{ type: "spring", stiffness: 300 }}
     >
       {/* Background gradient */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${video.thumbnail}`} />
+      <div className={`absolute inset-0 bg-linear-to-br ${video.thumbnail}`} />
       
       {/* Shimmer effect on hover */}
       {isHovered && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+          className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent"
           initial={{ x: "-100%" }}
           animate={{ x: "100%" }}
           transition={{ duration: 1, repeat: Infinity, repeatDelay: 0.5 }}

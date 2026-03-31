@@ -554,43 +554,44 @@ export function AdminPage() {
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-20 border-b border-border/50 bg-background/95 backdrop-blur">
-            <div className="flex flex-col gap-4 px-4 py-4 md:px-6 lg:px-8 xl:flex-row xl:items-center xl:justify-between">
+          <header className="sticky top-0 z-20 border-b border-border/50 bg-background/88 backdrop-blur-xl">
+            <div className="grid gap-3 px-4 py-4 md:px-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-8">
               <div className="min-w-0">
-                <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                <p className="text-[11px] uppercase tracking-[0.22em] text-amber-100/80">
                   Nazli Tech admin
                 </p>
-                <h2 className="mt-1 truncate text-2xl font-semibold text-foreground">
+                <h2 className="mt-2 truncate bg-linear-to-r from-white via-slate-100 to-amber-100 bg-clip-text text-2xl font-semibold tracking-tight text-transparent">
                   {currentView.title}
                 </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="mt-1 hidden max-w-xl text-sm text-muted-foreground md:block">
                   {currentView.subtitle}
                 </p>
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                <div className="relative min-w-0 sm:w-64">
+              <div className="flex flex-wrap items-center gap-2 sm:justify-end">
+                <div className="relative hidden min-w-0 xl:block xl:w-60">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     placeholder="Search"
-                    className="h-10 rounded-xl border-border/50 bg-card/60 pl-9"
+                    className="h-10 rounded-full border-border/50 bg-card/60 pl-9"
                   />
                 </div>
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-10 w-10 rounded-xl border-border/50 bg-card/60"
+                  className="hidden h-10 w-10 rounded-full border-border/50 bg-card/60 sm:inline-flex"
                 >
                   <Bell className="h-4 w-4" />
                 </Button>
                 <Button
                   asChild
                   variant="outline"
-                  className="h-10 rounded-xl border-border/50 bg-card/60"
+                  size="sm"
+                  className="h-10 rounded-full border-border/50 bg-card/60"
                 >
                   <Link to="/">
                     <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to site
+                  Log out
                   </Link>
                 </Button>
               </div>
@@ -605,14 +606,14 @@ export function AdminPage() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="rounded-2xl border border-border/50 bg-card/55 p-5"
+                  className="rounded-2xl border border-border/50 bg-card/65 p-5 shadow-[0_18px_50px_-38px_rgba(245,158,11,0.22)]"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm text-muted-foreground">
                         {stat.label}
                       </p>
-                      <p className="mt-3 text-3xl font-semibold text-foreground">
+                      <p className="mt-3 bg-linear-to-r from-white to-slate-200 bg-clip-text text-3xl font-semibold text-transparent">
                         {stat.value}
                       </p>
                     </div>
@@ -1411,7 +1412,7 @@ function MeetingsPanel({
           <div className="mt-5 flex flex-wrap gap-3">
             <Button onClick={onCreateMeeting} className="rounded-xl">
               <Calendar className="mr-2 h-4 w-4" />
-              Create event + Meet link
+              Create Meeting link
             </Button>
             <Button
               variant="outline"

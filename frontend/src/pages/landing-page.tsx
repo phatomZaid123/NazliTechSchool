@@ -1,10 +1,11 @@
 import { Navbar } from "@/components/landing/navbar";
 import { HeroSection } from "@/components/landing/hero-section";
-import { SimulationSection } from "@/components/landing/simulation-section";
+// import { SimulationSection } from "@/components/landing/simulation-section";
 import { VideoFeedSection } from "@/components/landing/video-feed-section";
 import { CurriculumSection } from "@/components/landing/curriculum-section";
 import { LearningModesSection } from "@/components/landing/learning-modes-section";
 import { CoursesSection } from "@/components/landing/courses-section";
+import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { GlobalLearningSection } from "@/components/landing/global-learning-section";
 import { PricingSection } from "@/components/landing/pricing-section";
 import { SocialMediaSection } from "@/components/landing/social-media-section";
@@ -23,11 +24,12 @@ export function LandingPage() {
       <div className="relative z-10">
         <Navbar />
         <HeroSection />
-        <SimulationSection />
-        <VideoFeedSection />
+        {/* <SimulationSection /> */}
         <CurriculumSection />
         <LearningModesSection />
         <CoursesSection />
+        <VideoFeedSection />
+        <TestimonialsSection />
         <GlobalLearningSection />
         <PricingSection />
         <SocialMediaSection />

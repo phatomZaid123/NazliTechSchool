@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Send, X, Minimize2, Sparkles, MessageSquare, BookOpen, Code, FlaskConical, Lightbulb } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "@/lib/utils"
 
 const sampleResponses = [
   "I can help you understand complex concepts through interactive simulations!",
@@ -81,7 +82,7 @@ export function AIAssistant() {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6"
           >
             {/* Welcome bubble */}
             <AnimatePresence>
@@ -90,7 +91,7 @@ export function AIAssistant() {
                   initial={{ opacity: 0, x: 20, scale: 0.8 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   exit={{ opacity: 0, x: 20, scale: 0.8 }}
-                  className="absolute bottom-full right-0 mb-4 w-64 p-4 rounded-2xl rounded-br-md bg-card/95 backdrop-blur-xl border border-border/50 shadow-xl"
+                  className="absolute bottom-full right-0 mb-4 w-[calc(100vw-2rem)] max-w-64 rounded-2xl rounded-br-md border border-border/50 bg-card/95 p-4 shadow-xl backdrop-blur-xl"
                 >
                   <p className="text-sm text-foreground">
                     <span className="font-semibold text-primary">Hi there!</span> Need help exploring our courses?
@@ -108,26 +109,26 @@ export function AIAssistant() {
               }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="relative w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 via-primary to-cyan-500 p-1 shadow-lg shadow-primary/40 group"
+              className="group relative h-16 w-16 rounded-full bg-gradient-to-br from-purple-500 via-primary to-cyan-500 p-1 shadow-lg shadow-primary/40 sm:h-20 sm:w-20"
             >
               <div className="w-full h-full rounded-full bg-card flex items-center justify-center overflow-hidden">
                 {/* Nova Mascot Face */}
                 <div className={`relative ${mascotExpressions[mascotMood]}`}>
                   {/* Face background */}
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-cyan-400 flex items-center justify-center">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-purple-400 to-cyan-400 sm:h-14 sm:w-14">
                     {/* Eyes */}
-                    <div className="flex gap-2.5 mb-1">
+                    <div className="mb-1 flex gap-2 sm:gap-2.5">
                       <motion.div 
-                        className="w-3 h-3 rounded-full bg-card"
+                        className="h-2.5 w-2.5 rounded-full bg-card sm:h-3 sm:w-3"
                         animate={{ scaleY: mascotMood === "happy" ? 0.3 : 1 }}
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-foreground ml-0.5 mt-0.5" />
+                        <div className="ml-0.5 mt-0.5 h-1.5 w-1.5 rounded-full bg-foreground" />
                       </motion.div>
                       <motion.div 
-                        className="w-3 h-3 rounded-full bg-card"
+                        className="h-2.5 w-2.5 rounded-full bg-card sm:h-3 sm:w-3"
                         animate={{ scaleY: mascotMood === "happy" ? 0.3 : 1 }}
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-foreground ml-0.5 mt-0.5" />
+                        <div className="ml-0.5 mt-0.5 h-1.5 w-1.5 rounded-full bg-foreground" />
                       </motion.div>
                     </div>
                   </div>
@@ -139,8 +140,8 @@ export function AIAssistant() {
               </div>
               
               {/* Notification ping */}
-              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
-                <MessageSquare className="w-3 h-3 text-accent-foreground" />
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent sm:h-5 sm:w-5">
+                <MessageSquare className="h-2.5 w-2.5 text-accent-foreground sm:h-3 sm:w-3" />
               </span>
               
               {/* Glow effect */}
@@ -155,17 +156,15 @@ export function AIAssistant() {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0, 
-              scale: 1,
-              height: isMinimized ? 'auto' : '520px'
-            }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 w-[400px] bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl shadow-black/30 overflow-hidden flex flex-col"
+            className={cn(
+              "fixed inset-x-4 bottom-4 z-50 flex max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-3xl border border-border/50 bg-card/95 shadow-2xl shadow-black/30 backdrop-blur-xl sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[400px]",
+              isMinimized ? "h-auto" : "h-[min(520px,calc(100vh-2rem))] sm:h-[520px]",
+            )}
           >
             {/* Header with mascot */}
-            <div className="relative bg-gradient-to-r from-purple-500/20 via-primary/20 to-cyan-500/20 p-4 border-b border-border/30">
+            <div className="relative border-b border-border/30 bg-gradient-to-r from-purple-500/20 via-primary/20 to-cyan-500/20 p-3 sm:p-4">
               {/* Animated background particles */}
               <div className="absolute inset-0 overflow-hidden">
                 {[...Array(5)].map((_, i) => (
@@ -187,10 +186,10 @@ export function AIAssistant() {
               </div>
 
               <div className="relative flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3">
                   {/* Mini mascot in header */}
                   <motion.div 
-                    className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-500 p-0.5"
+                    className="h-11 w-11 rounded-xl bg-gradient-to-br from-purple-500 to-cyan-500 p-0.5 sm:h-12 sm:w-12"
                     animate={{ rotate: mascotMood === "thinking" ? [0, -5, 5, 0] : 0 }}
                     transition={{ duration: 0.5, repeat: mascotMood === "thinking" ? Infinity : 0 }}
                   >
@@ -258,7 +257,7 @@ export function AIAssistant() {
             {!isMinimized && (
               <>
                 {/* Messages */}
-                <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+                <div className="flex-1 space-y-4 overflow-y-auto p-3 sm:p-4">
                   {messages.map((msg, i) => (
                     <motion.div
                       key={i}
@@ -310,7 +309,7 @@ export function AIAssistant() {
                 </div>
 
                 {/* Quick suggestions with icons */}
-                <div className="px-4 pb-3">
+                <div className="px-3 pb-3 sm:px-4">
                   <p className="text-xs text-muted-foreground mb-2">Quick topics:</p>
                   <div className="flex gap-2 overflow-x-auto pb-1">
                     {sampleQuestions.map((q, i) => (
@@ -329,7 +328,7 @@ export function AIAssistant() {
                 </div>
 
                 {/* Input */}
-                <div className="p-4 pt-0">
+                <div className="p-3 pt-0 sm:p-4 sm:pt-0">
                   <div className="flex gap-2">
                     <Input
                       value={inputValue}

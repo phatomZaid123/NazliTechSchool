@@ -1,30 +1,45 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Menu, X, Sparkles } from "lucide-react"
-import { Link } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Menu, X, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const navItems = [
-  { label: "Courses", href: "#courses" },
-  { label: "Simulations", href: "#simulation" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Global", href: "#global" },
-  { label: "Community", href: "#community" },
-]
+type NavItemType = "anchor" | "route" | "external";
+
+interface NavItem {
+  label: string;
+  href: string;
+  type: NavItemType;
+}
+
+const navItems: NavItem[] = [
+  { label: "Courses", href: "#courses", type: "anchor" },
+  // { label: "Simulations", href: "#simulation", type: "anchor" },
+  { label: "Pricing", href: "#pricing", type: "anchor" },
+  { label: "Global", href: "#global", type: "anchor" },
+  { label: "Community", href: "/community", type: "route" },
+];
+
+const renderNavLink = (item: NavItem) => {
+  if (item.type === "route") {
+    return { isRoute: true };
+  }
+  return { isRoute: false };
+};
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -40,7 +55,7 @@ export function Navbar() {
         <div className="container px-4 md:px-6">
           <div className="flex items-center justify-between h-20">
             <Link to="/" className="group flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-primary to-accent">
                 <Sparkles className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
@@ -49,22 +64,36 @@ export function Navbar() {
             </Link>
 
             <div className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.label}
-                </a>
-              ))}
+              {navItems.map((item) => {
+                const { isRoute } = renderNavLink(item);
+                return isRoute ? (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </div>
 
             <div className="hidden md:flex items-center gap-4">
-              <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
+              {/* <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
                 <Link to="/admin">Admin Portal</Link>
-              </Button>
-              <Button asChild className="rounded-lg">
+              </Button> */}
+              <Button
+                asChild
+                className="rounded-xl bg-linear-to-r from-white to-sky-100 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]"
+              >
                 <a href="#pricing">Get Started</a>
               </Button>
             </div>
@@ -95,24 +124,43 @@ export function Navbar() {
           >
             <div className="container px-4 py-8">
               <div className="flex flex-col gap-4">
-                {navItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="border-b border-border/30 py-3 text-lg font-medium text-foreground"
-                  >
-                    {item.label}
-                  </a>
-                ))}
+                {navItems.map((item) => {
+                  const { isRoute } = renderNavLink(item);
+                  return isRoute ? (
+                    <Link
+                      key={item.label}
+                      to={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="border-b border-border/30 py-3 text-lg font-medium text-foreground"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="border-b border-border/30 py-3 text-lg font-medium text-foreground"
+                    >
+                      {item.label}
+                    </a>
+                  );
+                })}
               </div>
               <div className="mt-8 flex flex-col gap-4">
-                <Button asChild variant="outline" className="w-full rounded-xl py-6">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="w-full rounded-xl py-6"
+                >
                   <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
                     Admin Portal
                   </Link>
                 </Button>
-                <Button asChild className="w-full rounded-lg py-6">
+                <Button
+                  asChild
+                  className="w-full rounded-xl bg-linear-to-r from-white to-sky-100 py-6 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]"
+                >
                   <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>
                     Get Started
                   </a>
@@ -123,5 +171,5 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Bot, Globe, Cpu, Sparkles } from "lucide-react"
-import { useTypewriter } from "@/hooks/use-typewriter"
+import { motion, useMotionValue } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Bot, Globe, Cpu, Sparkles } from "lucide-react";
+import { useTypewriter } from "@/hooks/use-typewriter";
 
 export function HeroSection() {
   const { text: typedWord, isTyping } = useTypewriter({
@@ -11,37 +11,46 @@ export function HeroSection() {
     typeSpeed: 120,
     deleteSpeed: 80,
     delayBetweenWords: 2500,
-  })
+  });
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="container relative z-10 px-4 md:px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
           {/* Left content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
-            <motion.div 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm"
-              whileHover={{ scale: 1.05, borderColor: "rgba(139, 92, 246, 0.5)" }}
+            <motion.div
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 shadow-[0_18px_44px_-30px_rgba(56,189,248,0.55)] backdrop-blur-sm"
+              whileHover={{
+                scale: 1.05,
+                borderColor: "rgba(139, 92, 246, 0.5)",
+              }}
               transition={{ type: "spring", stiffness: 400 }}
             >
               <motion.div
                 animate={{ rotate: [0, 15, -15, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               >
                 <Sparkles className="w-4 h-4 text-primary" />
               </motion.div>
-              <span className="text-sm text-primary font-medium">The Future of Learning</span>
+              <span className="bg-linear-to-r from-sky-100 via-white to-cyan-100 bg-clip-text text-sm font-medium text-transparent">
+                The Future of Learning
+              </span>
             </motion.div>
-            
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+
+            <h1 className="text-4xl font-bold leading-[0.95] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               <span className="text-foreground">Learn by </span>
               <br />
-              <span className="relative bg-linear-to-r from-primary via-accent to-glow-cyan bg-clip-text text-transparent">
+              <span className="relative bg-linear-to-r from-sky-100 via-white to-cyan-200 bg-clip-text text-transparent [text-shadow:0_0_32px_rgba(125,211,252,0.22)]">
                 {typedWord}
                 <motion.span
                   className="inline-block w-0.75 h-[1em] bg-primary ml-1 align-middle"
@@ -50,7 +59,7 @@ export function HeroSection() {
                 />
               </span>
               <br />
-              <motion.span 
+              <motion.span
                 className="text-foreground"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -59,35 +68,33 @@ export function HeroSection() {
                 Not Watching.
               </motion.span>
             </h1>
-            
-            <motion.p 
-              className="text-xl text-muted-foreground max-w-lg leading-relaxed"
+
+            <motion.p
+              className="max-w-lg text-lg leading-relaxed text-muted-foreground md:text-xl"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Interactive simulations, AI-powered guidance, and hands-on projects. 
-              Experience education that prepares you for the real world.
+              Interactive simulations, AI-powered guidance, and hands-on
+              projects. Experience education that prepares you for the real
+              world.
             </motion.p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button size="lg" className="group rounded-lg px-8 py-6 text-lg shadow-sm hover:shadow-md">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  size="lg"
+                  className="group rounded-xl bg-linear-to-r from-white to-sky-100 px-8 py-6 text-lg text-slate-950 shadow-[0_22px_55px_-24px_rgba(56,189,248,0.8)] hover:shadow-[0_28px_65px_-24px_rgba(96,165,250,0.88)]"
+                >
                   Explore the Experience
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  className="rounded-lg px-8 py-6 text-lg"
-                >
-                  Watch Demo
-                </Button>
-              </motion.div>
             </div>
-            
+
             {/* Stats with hover effects */}
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border/30">
               {[
@@ -103,13 +110,15 @@ export function HeroSection() {
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
                   className="cursor-default"
                 >
-                  <motion.div 
+                  <motion.div
                     className="text-2xl md:text-3xl font-bold text-foreground"
                     whileHover={{ scale: 1.1, color: "oklch(0.65 0.25 280)" }}
                   >
                     {stat.value}
                   </motion.div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.label}
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -125,30 +134,34 @@ export function HeroSection() {
               className="absolute top-0 right-0 w-72"
             >
               <FloatingCard delay={0} glowColor="primary">
-                <div className="flex items-center gap-3 mb-3">
-                  <motion.div 
-                    className="w-10 h-10 rounded-xl bg-linear-to-br from-primary to-accent flex items-center justify-center"
+                <div className="flex items-center gap-3 mb-4">
+                  <motion.div
+                    className="w-10 h-10 rounded-xl bg-linear-to-br from-primary to-accent flex items-center justify-center flex-shrink-0"
                     whileHover={{ rotate: [0, -10, 10, 0] }}
                     transition={{ duration: 0.5 }}
                   >
                     <Bot className="w-5 h-5 text-primary-foreground" />
                   </motion.div>
                   <div>
-                    <div className="font-semibold text-foreground">AI Assistant</div>
-                    <div className="text-xs text-muted-foreground">Always here to help</div>
+                    <div className="font-semibold text-foreground text-base">
+                      AI Assistant
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Always here to help
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <motion.div 
-                    className="bg-secondary/50 rounded-lg p-3 text-sm text-foreground"
+                <div className="space-y-2.5">
+                  <motion.div
+                    className="bg-secondary/50 rounded-lg p-3.5 text-sm text-foreground border border-border/20"
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1 }}
                   >
                     {"How can I solve this physics equation?"}
                   </motion.div>
-                  <motion.div 
-                    className="bg-primary/10 rounded-lg p-3 text-sm text-foreground border border-primary/20"
+                  <motion.div
+                    className="bg-primary/10 rounded-lg p-3.5 text-sm text-foreground border border-primary/20"
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1.5 }}
@@ -168,48 +181,84 @@ export function HeroSection() {
             >
               <FloatingCard delay={1} glowColor="accent">
                 <div className="flex items-center gap-3 mb-4">
-                  <motion.div 
-                    className="w-10 h-10 rounded-xl bg-linear-to-br from-accent to-glow-cyan flex items-center justify-center"
+                  <motion.div
+                    className="w-10 h-10 rounded-xl bg-linear-to-br from-accent to-glow-cyan flex items-center justify-center flex-shrink-0"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   >
                     <Cpu className="w-5 h-5 text-accent-foreground" />
                   </motion.div>
                   <div>
-                    <div className="font-semibold text-foreground">Live Simulation</div>
-                    <div className="text-xs text-muted-foreground">Physics Engine</div>
+                    <div className="font-semibold text-foreground text-base">
+                      Live Simulation
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Physics Engine
+                    </div>
                   </div>
                 </div>
-                <div className="h-24 rounded-lg bg-linear-to-br from-secondary to-muted flex items-center justify-center relative overflow-hidden">
-                  {/* Multiple orbiting particles */}
+                <div className="h-28 rounded-lg bg-linear-to-br from-secondary to-muted flex items-center justify-center relative overflow-hidden border border-border/20">
+                  {/* Orbit circles */}
                   <motion.div
-                    className="absolute w-3 h-3 rounded-full bg-accent shadow-lg shadow-accent/50"
-                    animate={{
-                      x: [0, 30, 0, -30, 0],
-                      y: [-25, 0, 25, 0, -25],
+                    className="absolute inset-0 rounded-lg"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1), transparent)",
                     }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                   />
+
+                  {/* Particle 1 - Accent color */}
                   <motion.div
-                    className="absolute w-2 h-2 rounded-full bg-primary shadow-lg shadow-primary/50"
+                    className="absolute w-3 h-3 rounded-full bg-accent shadow-lg shadow-accent/60"
                     animate={{
-                      x: [20, -20, 20],
-                      y: [0, 20, 0],
+                      x: [0, 35, 0, -35, 0],
+                      y: [-28, 0, 28, 0, -28],
                     }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
+
+                  {/* Particle 2 - Primary color */}
                   <motion.div
-                    className="absolute w-1.5 h-1.5 rounded-full bg-glow-cyan shadow-lg shadow-glow-cyan/50"
+                    className="absolute w-2.5 h-2.5 rounded-full bg-primary shadow-lg shadow-primary/60"
                     animate={{
-                      x: [-15, 15, -15],
-                      y: [15, -15, 15],
+                      x: [22, -22, 22],
+                      y: [0, 22, 0],
                     }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.5,
+                    }}
                   />
-                  {/* Center glow */}
+
+                  {/* Particle 3 - Cyan color */}
                   <motion.div
-                    className="w-6 h-6 rounded-full bg-accent/30 blur-sm"
-                    animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0.8, 0.5] }}
+                    className="absolute w-2 h-2 rounded-full bg-glow-cyan shadow-lg shadow-glow-cyan/60"
+                    animate={{
+                      x: [-17, 17, -17],
+                      y: [17, -17, 17],
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 1,
+                    }}
+                  />
+
+                  {/* Center glow pulse */}
+                  <motion.div
+                    className="w-7 h-7 rounded-full bg-accent/25 blur-md"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0.8, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
                 </div>
@@ -225,42 +274,50 @@ export function HeroSection() {
             >
               <FloatingCard delay={2} glowColor="cyan">
                 <div className="flex items-center gap-3 mb-4">
-                  <motion.div 
-                    className="w-10 h-10 rounded-xl bg-linear-to-br from-glow-cyan to-glow-blue flex items-center justify-center"
+                  <motion.div
+                    className="w-10 h-10 rounded-xl bg-linear-to-br from-glow-cyan to-glow-blue flex items-center justify-center shrink-0"
                     animate={{ rotateY: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   >
                     <Globe className="w-5 h-5 text-foreground" />
                   </motion.div>
                   <div>
-                    <div className="font-semibold text-foreground">Global Learning</div>
-                    <div className="text-xs text-muted-foreground">Connect worldwide</div>
+                    <div className="font-semibold text-foreground text-base">
+                      Global Learning
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Connect worldwide
+                    </div>
                   </div>
                 </div>
                 <div className="flex -space-x-2">
                   {[
-                    'bg-gradient-to-br from-primary to-accent',
-                    'bg-gradient-to-br from-accent to-glow-cyan',
-                    'bg-gradient-to-br from-glow-cyan to-glow-blue',
-                    'bg-gradient-to-br from-glow-blue to-primary',
+                    "bg-gradient-to-br from-primary to-accent",
+                    "bg-gradient-to-br from-accent to-glow-cyan",
+                    "bg-gradient-to-br from-glow-cyan to-glow-blue",
+                    "bg-gradient-to-br from-glow-blue to-primary",
                   ].map((bg, i) => (
                     <motion.div
                       key={i}
-                      className={`w-8 h-8 rounded-full ${bg} border-2 border-card flex items-center justify-center text-xs font-bold text-primary-foreground`}
+                      className={`w-9 h-9 rounded-full ${bg} border-2 border-card flex items-center justify-center text-xs font-bold text-primary-foreground cursor-default`}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 1 + i * 0.1, type: "spring" }}
-                      whileHover={{ scale: 1.2, zIndex: 10 }}
+                      whileHover={{ scale: 1.25, zIndex: 10 }}
                     >
-                      {['NG', 'UK', 'US', 'CA'][i]}
+                      {["NG", "UK", "US", "CA"][i]}
                     </motion.div>
                   ))}
-                  <motion.div 
-                    className="w-8 h-8 rounded-full bg-secondary border-2 border-card flex items-center justify-center text-xs font-medium text-muted-foreground"
+                  <motion.div
+                    className="w-9 h-9 rounded-full bg-secondary border-2 border-card flex items-center justify-center text-xs font-semibold text-muted-foreground cursor-default"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 1.4, type: "spring" }}
-                    whileHover={{ scale: 1.2 }}
+                    whileHover={{ scale: 1.25 }}
                   >
                     +46
                   </motion.div>
@@ -287,35 +344,70 @@ export function HeroSection() {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }
 
-function FloatingCard({ 
-  children, 
-  delay = 0, 
-  glowColor = "primary" 
-}: { 
-  children: React.ReactNode
-  delay?: number
-  glowColor?: "primary" | "accent" | "cyan"
+function FloatingCard({
+  children,
+  delay = 0,
+  glowColor = "primary",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  glowColor?: "primary" | "accent" | "cyan";
 }) {
+  const rotXValue = useMotionValue(0);
+  const rotYValue = useMotionValue(0);
+
   const glowColors = {
     primary: "rgba(139, 92, 246, 0.15)",
     accent: "rgba(6, 182, 212, 0.15)",
     cyan: "rgba(59, 130, 246, 0.15)",
-  }
+  };
+
+  const borderColors = {
+    primary: "rgba(139, 92, 246, 0.3)",
+    accent: "rgba(6, 182, 212, 0.3)",
+    cyan: "rgba(59, 130, 246, 0.3)",
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotX = ((y - centerY) / centerY) * 8;
+    const rotY = ((centerX - x) / centerX) * 8;
+
+    rotXValue.set(rotX);
+    rotYValue.set(rotY);
+  };
+
+  const handleMouseLeave = () => {
+    rotXValue.set(0);
+    rotYValue.set(0);
+  };
 
   return (
     <motion.div
       animate={{ y: [0, -10, 0] }}
       transition={{ duration: 4, repeat: Infinity, delay, ease: "easeInOut" }}
-      whileHover={{ scale: 1.02, y: -15 }}
-      className="relative bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-4 shadow-xl shadow-black/20 transition-shadow duration-300 hover:shadow-2xl"
+      whileHover={{ scale: 1.05, y: -20 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       style={{
-        boxShadow: `0 0 40px ${glowColors[glowColor]}`,
+        rotateX: rotXValue,
+        rotateY: rotYValue,
+        transformStyle: "preserve-3d",
+        boxShadow: `0 0 40px ${glowColors[glowColor]}, 0 20px 60px rgba(0,0,0,0.3)`,
+        borderColor: `${borderColors[glowColor]}`,
       }}
+      className="relative bg-card/80 backdrop-blur-xl border rounded-2xl p-6 shadow-xl shadow-black/20 transition-all duration-300 hover:shadow-2xl"
     >
-      {/* Subtle gradient border on hover */}
+      {/* Animated gradient border glow */}
       <motion.div
         className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300"
         style={{
@@ -323,20 +415,28 @@ function FloatingCard({
         }}
         whileHover={{ opacity: 1 }}
       />
+
+      {/* Shine effect on hover */}
+      <motion.div
+        className="absolute inset-0 rounded-2xl opacity-0"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 0.1 }}
+        style={{
+          background:
+            "linear-gradient(135deg, transparent, rgba(255,255,255,0.2), transparent)",
+        }}
+      />
+
       <div className="relative z-10">{children}</div>
     </motion.div>
-  )
+  );
 }
 
 function TypingIndicator() {
   return (
     <div className="flex items-center gap-1">
       <span className="text-foreground/80">{"Let me break it down"}</span>
-      <motion.span
-        className="flex gap-0.5"
-        initial="hidden"
-        animate="visible"
-      >
+      <motion.span className="flex gap-0.5" initial="hidden" animate="visible">
         {[0, 1, 2].map((i) => (
           <motion.span
             key={i}
@@ -347,5 +447,5 @@ function TypingIndicator() {
         ))}
       </motion.span>
     </div>
-  )
+  );
 }
