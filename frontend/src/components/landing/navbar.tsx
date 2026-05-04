@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
 import { Menu, X, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -16,7 +16,6 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Courses", href: "#courses", type: "anchor" },
-  // { label: "Simulations", href: "#simulation", type: "anchor" },
   { label: "Pricing", href: "#pricing", type: "anchor" },
   { label: "Global", href: "#global", type: "anchor" },
   { label: "Community", href: "/community", type: "route" },
@@ -87,20 +86,12 @@ export function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-4">
-              {/* <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
-                <Link to="/admin">Admin Portal</Link>
-              </Button> */}
-              <Button
-                asChild
-                className="rounded-xl bg-linear-to-r from-white to-sky-100 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]"
-              >
+              <button className="rounded-xl bg-linear-to-r from-white to-sky-100 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]">
                 <a href="#pricing">Get Started</a>
-              </Button>
+              </button>
             </div>
 
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
               className="md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -109,7 +100,7 @@ export function Navbar() {
               ) : (
                 <Menu className="w-6 h-6" />
               )}
-            </Button>
+            </button>
           </div>
         </div>
       </motion.nav>
@@ -147,25 +138,7 @@ export function Navbar() {
                   );
                 })}
               </div>
-              <div className="mt-8 flex flex-col gap-4">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="w-full rounded-xl py-6"
-                >
-                  <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                    Admin Portal
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  className="w-full rounded-xl bg-linear-to-r from-white to-sky-100 py-6 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]"
-                >
-                  <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>
-                    Get Started
-                  </a>
-                </Button>
-              </div>
+            
             </div>
           </motion.div>
         )}

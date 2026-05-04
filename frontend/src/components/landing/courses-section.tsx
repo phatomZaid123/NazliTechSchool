@@ -15,8 +15,6 @@ import {
   Star,
   Play,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTypewriterOnce } from "@/hooks/use-typewriter";
 
 const courses = [
   {
@@ -111,12 +109,7 @@ export function CoursesSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const { displayText: headingText } = useTypewriterOnce(
-    "Experience",
-    60,
-    isInView ? 300 : 99999,
-  );
-
+  
   return (
     <section
       id="courses"
@@ -147,14 +140,7 @@ export function CoursesSection() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
             <span className="text-foreground">Learn Through </span>
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {headingText}
-              {headingText !== "Experience" && (
-                <motion.span
-                  className="inline-block w-0.75 h-[0.8em] bg-primary ml-1 align-middle"
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                />
-              )}
+              Hands-On Projects
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -186,10 +172,10 @@ export function CoursesSection() {
           className="text-center mt-12"
         >
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Button size="lg" variant="outline" className="rounded-lg px-8">
+            <button className="rounded-lg px-8">
               View All Courses
               <ChevronRight className="w-5 h-5 ml-2" />
-            </Button>
+            </button>
           </motion.div>
         </motion.div>
       </div>
@@ -333,13 +319,13 @@ function CourseCard({
               ))}
             </div>
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button
+              <button
                 className={`mt-6 w-full rounded-xl bg-gradient-to-r ${course.color} text-primary-foreground hover:opacity-90 transition-opacity`}
                 onClick={(e) => e.stopPropagation()}
               >
                 Enroll Now
                 <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
+              </button>
             </motion.div>
           </motion.div>
         )}

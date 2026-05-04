@@ -1,10 +1,23 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Twitter, Instagram, Linkedin, Youtube, ExternalLink, Heart, MessageCircle, Repeat2, Play, TrendingUp, Users, Globe } from "lucide-react"
-import { useTypewriterOnce } from "@/hooks/use-typewriter"
-import { API_BASE } from "@/lib/api"
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Twitter,
+  Instagram,
+  Linkedin,
+  Youtube,
+  ExternalLink,
+  Heart,
+  MessageCircle,
+  Repeat2,
+  Play,
+  TrendingUp,
+  Users,
+  Globe,
+} from "lucide-react";
+
+import { API_BASE } from "@/lib/api";
 
 const fallbackPlatforms = [
   {
@@ -17,7 +30,8 @@ const fallbackPlatforms = [
     hoverGlow: "rgba(56, 189, 248, 0.3)",
     posts: [
       {
-        content: "Just launched our new AI Coding Lab! Students are already building incredible projects. Join the future of education. #EdTech #AILearning",
+        content:
+          "Just launched our new AI Coding Lab! Students are already building incredible projects. Join the future of education. #EdTech #AILearning",
         likes: "2.4K",
         comments: "189",
         shares: "456",
@@ -25,14 +39,15 @@ const fallbackPlatforms = [
         hasMedia: false,
       },
       {
-        content: "Congratulations to our Physics students who just won the National Science Olympiad! Proud moment for Nazli Tech School!",
+        content:
+          "Congratulations to our Physics students who just won the National Science Olympiad! Proud moment for Nazli Tech School!",
         likes: "5.1K",
         comments: "312",
         shares: "789",
         time: "1d ago",
         hasMedia: true,
-      }
-    ]
+      },
+    ],
   },
   {
     id: "instagram",
@@ -44,7 +59,8 @@ const fallbackPlatforms = [
     hoverGlow: "rgba(236, 72, 153, 0.3)",
     posts: [
       {
-        content: "Behind the scenes of our Hackathon 2024! Amazing innovations from our talented students! #NazliTech #StudentLife",
+        content:
+          "Behind the scenes of our Hackathon 2024! Amazing innovations from our talented students! #NazliTech #StudentLife",
         likes: "5.8K",
         comments: "324",
         shares: "890",
@@ -52,14 +68,15 @@ const fallbackPlatforms = [
         hasMedia: true,
       },
       {
-        content: "New campus tour video is up! Come see where the magic happens. Link in bio!",
+        content:
+          "New campus tour video is up! Come see where the magic happens. Link in bio!",
         likes: "3.2K",
         comments: "156",
         shares: "423",
         time: "2d ago",
         hasMedia: true,
-      }
-    ]
+      },
+    ],
   },
   {
     id: "linkedin",
@@ -71,7 +88,8 @@ const fallbackPlatforms = [
     hoverGlow: "rgba(37, 99, 235, 0.3)",
     posts: [
       {
-        content: "We're proud to announce partnerships with 10 new Fortune 500 companies for our internship program. #EdTech #FutureOfWork #CareerSuccess",
+        content:
+          "We're proud to announce partnerships with 10 new Fortune 500 companies for our internship program. #EdTech #FutureOfWork #CareerSuccess",
         likes: "1.2K",
         comments: "89",
         shares: "234",
@@ -79,14 +97,15 @@ const fallbackPlatforms = [
         hasMedia: false,
       },
       {
-        content: "98% of our graduates land jobs within 3 months of completion. Here's how we prepare students for success.",
+        content:
+          "98% of our graduates land jobs within 3 months of completion. Here's how we prepare students for success.",
         likes: "2.8K",
         comments: "156",
         shares: "567",
         time: "3d ago",
         hasMedia: true,
-      }
-    ]
+      },
+    ],
   },
   {
     id: "youtube",
@@ -98,7 +117,8 @@ const fallbackPlatforms = [
     hoverGlow: "rgba(239, 68, 68, 0.3)",
     posts: [
       {
-        content: "NEW VIDEO: Building a Neural Network from Scratch - Complete Tutorial",
+        content:
+          "NEW VIDEO: Building a Neural Network from Scratch - Complete Tutorial",
         likes: "12K",
         comments: "567",
         shares: "1.2K",
@@ -116,79 +136,77 @@ const fallbackPlatforms = [
         hasMedia: true,
         isVideo: true,
         views: "89K",
-      }
-    ]
+      },
+    ],
   },
-]
+];
 
 type SocialPost = {
-  content: string
-  likes: string
-  comments: string
-  shares: string
-  time: string
-  hasMedia: boolean
-  isVideo?: boolean
-  views?: string
-}
+  content: string;
+  likes: string;
+  comments: string;
+  shares: string;
+  time: string;
+  hasMedia: boolean;
+  isVideo?: boolean;
+  views?: string;
+};
 
 type SocialPlatform = {
-  id: string
-  name: string
-  icon: typeof Twitter
-  handle: string
-  followers: string
-  color: string
-  hoverGlow: string
-  posts: SocialPost[]
-}
+  id: string;
+  name: string;
+  icon: typeof Twitter;
+  handle: string;
+  followers: string;
+  color: string;
+  hoverGlow: string;
+  posts: SocialPost[];
+};
 
 const iconMap: Record<string, typeof Twitter> = {
   twitter: Twitter,
   instagram: Instagram,
   linkedin: Linkedin,
   youtube: Youtube,
-}
+};
 
-const normalizePlatforms = (platforms: Omit<SocialPlatform, "icon">[]): SocialPlatform[] =>
+const normalizePlatforms = (
+  platforms: Omit<SocialPlatform, "icon">[],
+): SocialPlatform[] =>
   platforms.map((platform) => ({
     ...platform,
     icon: iconMap[platform.id] || Globe,
-  }))
+  }));
 
 export function SocialMediaSection() {
-  const [platforms, setPlatforms] = useState<SocialPlatform[]>(fallbackPlatforms)
-  const [activePlatform, setActivePlatform] = useState("twitter")
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
-  
-  const { displayText: titleText, ref: titleRef, hasStarted: titleStarted } = useTypewriterOnce(
-    "Join the Conversation",
-    40
-  )
+  const [platforms, setPlatforms] =
+    useState<SocialPlatform[]>(fallbackPlatforms);
+  const [activePlatform, setActivePlatform] = useState("twitter");
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
     fetch(API_BASE + "/social")
       .then((res) => (res.ok ? res.json() : Promise.reject(res)))
       .then((data) => {
         if (isMounted && Array.isArray(data) && data.length) {
-          setPlatforms(normalizePlatforms(data))
+          setPlatforms(normalizePlatforms(data));
         }
       })
-      .catch(() => {})
+      .catch(() => {});
 
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (!platforms.find((platform) => platform.id === activePlatform)) {
-      setActivePlatform(platforms[0]?.id || "twitter")
+      setActivePlatform(platforms[0]?.id || "twitter");
     }
-  }, [activePlatform, platforms])
+  }, [activePlatform, platforms]);
 
-  const currentPlatform = platforms.find(p => p.id === activePlatform)!
+  const currentPlatform = platforms.find((p) => p.id === activePlatform)!;
 
   return (
     <section className="relative py-32 overflow-hidden">
@@ -207,19 +225,14 @@ export function SocialMediaSection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-pink-500/20 to-cyan-500/20 border border-pink-500/30 mb-6"
           >
             <Globe className="w-4 h-4 text-pink-400" />
-            <span className="text-sm font-medium text-pink-300">Stay Connected</span>
+            <span className="text-sm font-medium text-pink-300">
+              Stay Connected
+            </span>
           </motion.div>
 
-          <h2 
-            ref={titleRef}
-            className="text-4xl md:text-5xl font-bold text-foreground mb-6"
-          >
-            {titleStarted ? titleText : "Join the Conversation"}
-            {titleStarted && <span className="animate-pulse text-cyan-400">|</span>}
-          </h2>
-
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Posts approved by the admin team appear here as the public social wall.
+            Posts approved by the admin team appear here as the public social
+            wall.
           </p>
         </motion.div>
 
@@ -254,22 +267,26 @@ export function SocialMediaSection() {
             className="max-w-5xl mx-auto"
           >
             {/* Platform Header Card */}
-            <div 
+            <div
               className={`relative rounded-3xl p-6 md:p-8 mb-8 bg-gradient-to-br ${currentPlatform.color} overflow-hidden`}
             >
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              
+
               <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
                     <currentPlatform.icon className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">{currentPlatform.handle}</h3>
-                    <p className="text-white/80">{currentPlatform.followers} followers</p>
+                    <h3 className="text-2xl font-bold text-white">
+                      {currentPlatform.handle}
+                    </h3>
+                    <p className="text-white/80">
+                      {currentPlatform.followers} followers
+                    </p>
                   </div>
                 </div>
-                
+
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.05 }}
@@ -290,23 +307,32 @@ export function SocialMediaSection() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  onMouseEnter={() => setHoveredCard(`${activePlatform}-${index}`)}
+                  onMouseEnter={() =>
+                    setHoveredCard(`${activePlatform}-${index}`)
+                  }
                   onMouseLeave={() => setHoveredCard(null)}
                   className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-3xl p-6 hover:border-primary/30 transition-all duration-300"
                   style={{
-                    boxShadow: hoveredCard === `${activePlatform}-${index}` 
-                      ? `0 0 40px ${currentPlatform.hoverGlow}` 
-                      : "none"
+                    boxShadow:
+                      hoveredCard === `${activePlatform}-${index}`
+                        ? `0 0 40px ${currentPlatform.hoverGlow}`
+                        : "none",
                   }}
                 >
                   {/* Post Header */}
                   <div className="flex items-center gap-3 mb-4">
-                    <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${currentPlatform.color} flex items-center justify-center`}>
+                    <div
+                      className={`w-10 h-10 rounded-full bg-gradient-to-br ${currentPlatform.color} flex items-center justify-center`}
+                    >
                       <currentPlatform.icon className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">{currentPlatform.handle}</p>
-                      <p className="text-xs text-muted-foreground">{post.time}</p>
+                      <p className="font-medium text-foreground">
+                        {currentPlatform.handle}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {post.time}
+                      </p>
                     </div>
                   </div>
 
@@ -319,7 +345,7 @@ export function SocialMediaSection() {
                   {post.hasMedia && (
                     <div className="relative mb-4 rounded-2xl overflow-hidden bg-secondary/50 aspect-video">
                       <div className="absolute inset-0 flex items-center justify-center">
-                        {('isVideo' in post && post.isVideo) ? (
+                        {"isVideo" in post && post.isVideo ? (
                           <div className="flex flex-col items-center gap-2">
                             <motion.div
                               whileHover={{ scale: 1.1 }}
@@ -327,8 +353,10 @@ export function SocialMediaSection() {
                             >
                               <Play className="w-6 h-6 text-white fill-white ml-1" />
                             </motion.div>
-                            {'views' in post && (
-                              <span className="text-sm text-white/80">{post.views} views</span>
+                            {"views" in post && (
+                              <span className="text-sm text-white/80">
+                                {post.views} views
+                              </span>
                             )}
                           </div>
                         ) : (
@@ -340,21 +368,21 @@ export function SocialMediaSection() {
 
                   {/* Engagement */}
                   <div className="flex items-center gap-6 pt-4 border-t border-border/30">
-                    <motion.button 
+                    <motion.button
                       whileHover={{ scale: 1.1 }}
                       className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-pink-400 transition-colors"
                     >
                       <Heart className="w-4 h-4" />
                       {post.likes}
                     </motion.button>
-                    <motion.button 
+                    <motion.button
                       whileHover={{ scale: 1.1 }}
                       className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-cyan-400 transition-colors"
                     >
                       <MessageCircle className="w-4 h-4" />
                       {post.comments}
                     </motion.button>
-                    <motion.button 
+                    <motion.button
                       whileHover={{ scale: 1.1 }}
                       className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-emerald-400 transition-colors"
                     >
@@ -376,10 +404,30 @@ export function SocialMediaSection() {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
         >
           {[
-            { label: "Total Followers", value: "260K+", icon: Users, color: "text-purple-400" },
-            { label: "Daily Engagement", value: "15K+", icon: TrendingUp, color: "text-cyan-400" },
-            { label: "Content Pieces", value: "2.5K", icon: MessageCircle, color: "text-pink-400" },
-            { label: "Countries Reached", value: "50+", icon: Globe, color: "text-emerald-400" },
+            {
+              label: "Total Followers",
+              value: "260K+",
+              icon: Users,
+              color: "text-purple-400",
+            },
+            {
+              label: "Daily Engagement",
+              value: "15K+",
+              icon: TrendingUp,
+              color: "text-cyan-400",
+            },
+            {
+              label: "Content Pieces",
+              value: "2.5K",
+              icon: MessageCircle,
+              color: "text-pink-400",
+            },
+            {
+              label: "Countries Reached",
+              value: "50+",
+              icon: Globe,
+              color: "text-emerald-400",
+            },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -391,12 +439,14 @@ export function SocialMediaSection() {
               className="text-center p-6 rounded-2xl bg-card/50 border border-border/30 hover:border-primary/30 transition-all"
             >
               <stat.icon className={`w-8 h-8 mx-auto mb-3 ${stat.color}`} />
-              <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+              <div className="text-2xl font-bold text-foreground">
+                {stat.value}
+              </div>
               <div className="text-sm text-muted-foreground">{stat.label}</div>
             </motion.div>
           ))}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

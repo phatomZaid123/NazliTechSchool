@@ -4,8 +4,6 @@ import type { ReactNode } from "react";
 import { ArrowLeft, type LucideIcon } from "lucide-react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export type DashboardNavItem = {
@@ -48,9 +46,7 @@ export function DashboardWorkspaceLayout({
       <div className="flex min-h-screen">
         <aside className="sticky top-0 hidden h-screen w-72 shrink-0 self-start overflow-y-auto border-r border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.015))] backdrop-blur lg:flex lg:flex-col">
           <div className="border-b border-white/10 px-5 py-6">
-            <Badge className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-sky-100">
-              {workspaceLabel}
-            </Badge>
+           
             <h1 className="mt-4 bg-linear-to-r from-white via-slate-100 to-sky-100 bg-clip-text text-2xl font-semibold tracking-tight text-transparent">
               {workspaceName}
             </h1>
@@ -94,18 +90,7 @@ export function DashboardWorkspaceLayout({
             <div className="border-t border-white/10 px-4 py-4">{sidebarFooter}</div>
           ) : null}
 
-          <div className="border-t border-white/10 px-4 py-4">
-            <Button
-              asChild
-              variant="outline"
-              className="w-full rounded-full border-white/15 bg-white/[0.03]"
-            >
-              <Link to="/">
-                <ArrowLeft className="h-4 w-4" />
-            Log out
-              </Link>
-            </Button>
-          </div>
+          
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
@@ -113,9 +98,7 @@ export function DashboardWorkspaceLayout({
             <div className="grid gap-3 px-4 py-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:px-8">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] uppercase tracking-[0.18em] text-sky-100">
-                    {workspaceLabel}
-                  </Badge>
+                 
                   {headerMeta}
                 </div>
 

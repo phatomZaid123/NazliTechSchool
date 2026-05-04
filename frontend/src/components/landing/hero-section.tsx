@@ -1,17 +1,12 @@
 "use client";
 
 import { motion, useMotionValue } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
 import { ArrowRight, Bot, Globe, Cpu, Sparkles } from "lucide-react";
-import { useTypewriter } from "@/hooks/use-typewriter";
+
 
 export function HeroSection() {
-  const { text: typedWord, isTyping } = useTypewriter({
-    words: ["Doing.", "Building.", "Creating.", "Experimenting."],
-    typeSpeed: 120,
-    deleteSpeed: 80,
-    delayBetweenWords: 2500,
-  });
+ 
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -50,14 +45,7 @@ export function HeroSection() {
             <h1 className="text-4xl font-bold leading-[0.95] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
               <span className="text-foreground">Learn by </span>
               <br />
-              <span className="relative bg-linear-to-r from-sky-100 via-white to-cyan-200 bg-clip-text text-transparent [text-shadow:0_0_32px_rgba(125,211,252,0.22)]">
-                {typedWord}
-                <motion.span
-                  className="inline-block w-0.75 h-[1em] bg-primary ml-1 align-middle"
-                  animate={{ opacity: isTyping ? [1, 0, 1] : 1 }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                />
-              </span>
+            
               <br />
               <motion.span
                 className="text-foreground"
@@ -85,13 +73,13 @@ export function HeroSection() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button
-                  size="lg"
+                <button
+               
                   className="group rounded-xl bg-linear-to-r from-white to-sky-100 px-8 py-6 text-lg text-slate-950 shadow-[0_22px_55px_-24px_rgba(56,189,248,0.8)] hover:shadow-[0_28px_65px_-24px_rgba(96,165,250,0.88)]"
                 >
                   Explore the Experience
                   <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Button>
+                </button>
               </motion.div>
             </div>
 

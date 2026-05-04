@@ -9,7 +9,6 @@ import {
   ChevronRight,
   Users,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const testimonials = [
   {
@@ -213,20 +212,20 @@ export function TestimonialsSection() {
 
           {/* Navigation Buttons */}
           <div className="flex justify-center gap-4 mt-8">
-            <Button
+            <button
               onClick={() => scroll("left")}
-              size="icon"
+             
               className="rounded-full bg-primary/20 hover:bg-primary/40 border border-primary/50 text-foreground transition-all"
             >
               <ChevronLeft className="w-5 h-5" />
-            </Button>
-            <Button
+            </button>
+            <button
               onClick={() => scroll("right")}
-              size="icon"
+             
               className="rounded-full bg-primary/20 hover:bg-primary/40 border border-primary/50 text-foreground transition-all"
             >
               <ChevronRight className="w-5 h-5" />
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -258,15 +257,7 @@ export function TestimonialsSection() {
         </motion.div>
       </div>
 
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
+     
     </section>
   );
 }

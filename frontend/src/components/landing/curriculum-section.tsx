@@ -12,7 +12,6 @@ import {
   Users,
   Trophy,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const pillars = [
   {
@@ -247,10 +246,10 @@ export function CurriculumSection() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
               >
-                <Button className="w-full rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-accent/50 transition-all font-semibold py-6 text-base">
+                <button className="w-full rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-accent/50 transition-all font-semibold py-6 text-base">
                   <Trophy className="w-4 h-4 mr-2" />
                   Explore Curriculum
-                </Button>
+                </button>
               </motion.div>
             </div>
           </motion.div>

@@ -1,36 +1,21 @@
-"use client";
-
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Button } from "@/components/ui/button";
+
 import { ArrowRight, Sparkles, Zap, CheckCircle2 } from "lucide-react";
-import { useTypewriterOnce } from "@/hooks/use-typewriter";
 
 export function CTASection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const { displayText: line1, isComplete: line1Complete } = useTypewriterOnce(
-    "Don't just learn",
-    40,
-    isInView ? 200 : 99999,
-  );
-  const { displayText: line2, isComplete: line2Complete } = useTypewriterOnce(
-    "the future.",
-    40,
-    isInView && line1Complete ? 100 : 99999,
-  );
-  const { displayText: line3 } = useTypewriterOnce(
-    "Build it.",
-    60,
-    isInView && line2Complete ? 200 : 99999,
-  );
+  const line1 = "Don't just learn";
+  const line2 = "the future.";
+  const line3 = "Build it.";
 
   return (
     <section ref={sectionRef} className="relative py-32 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-primary/30 via-accent/20 to-transparent rounded-full blur-3xl opacity-40 animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-linear-to-br from-primary/30 via-accent/20 to-transparent rounded-full blur-3xl opacity-40 animate-pulse"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.05)_0%,transparent_100%)]"></div>
       </div>
 
@@ -47,7 +32,7 @@ export function CTASection() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.05 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-gradient-to-r from-primary/10 to-accent/5 mb-8 cursor-default"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-linear-to-r from-primary/10 to-accent/5 mb-8 cursor-default"
           >
             <motion.div
               animate={{ rotate: [0, 360] }}
@@ -61,14 +46,14 @@ export function CTASection() {
           </motion.div>
 
           {/* Main heading with typewriter effect */}
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 min-h-[280px] md:min-h-[320px] leading-tight">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 min-h-70 md:min-h-80 leading-tight">
             <span className="text-foreground block">{line1}</span>
             <span className="text-foreground block">{line2}</span>
-            <span className="bg-gradient-to-r from-primary via-accent to-cyan-400 bg-clip-text text-transparent block animate-pulse">
+            <span className="bg-linear-to-r from-primary via-accent to-cyan-400 bg-clip-text text-transparent block animate-pulse">
               {line3}
               {!line3.includes("Build it.") && (
                 <motion.span
-                  className="inline-block w-[4px] h-[0.9em] bg-primary ml-2 align-middle"
+                  className="inline-block w-1 h-[0.9em] bg-primary ml-2 align-middle"
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 0.8, repeat: Infinity }}
                 />
@@ -97,21 +82,14 @@ export function CTASection() {
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
           >
-            <Button
-              size="lg"
-              className="group rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/50 px-8 py-6 text-base font-semibold transition-all"
-            >
+            <button className="group rounded-xl bg-linear-to-r from-primary to-accent hover:shadow-xl hover:shadow-primary/50 px-8 py-6 text-base font-semibold transition-all text-white flex items-center justify-center">
               Start Your Journey
               <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-xl border-border/50 hover:bg-card/80 px-8 py-6 text-base font-semibold transition-all"
-            >
-              <Zap className="mr-2 w-5 h-5" />
+            </button>
+            <button className="rounded-xl border border-border/50 hover:bg-card/80 px-8 py-6 text-base font-semibold transition-all flex items-center justify-center gap-2">
+              <Zap className="w-5 h-5" />
               See Demo
-            </Button>
+            </button>
           </motion.div>
 
           {/* Trust badges */}

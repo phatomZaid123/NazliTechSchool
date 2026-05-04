@@ -1,15 +1,9 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { Mail, MessageCircle, PhoneCall } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { motion } from "framer-motion";
+import { Mail, MessageCircle, PhoneCall } from "lucide-react";
 
 export function QuestionsSection() {
   return (
     <section className="relative py-24 overflow-hidden">
-
       <div className="container relative z-10 px-4 md:px-6">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 max-w-6xl mx-auto">
           <motion.div
@@ -26,7 +20,8 @@ export function QuestionsSection() {
               Ask us anything about courses, pricing, or partnerships
             </h2>
             <p className="text-muted-foreground mt-3">
-              Our team will reply quickly with the guidance you need to choose the best learning path.
+              Our team will reply quickly with the guidance you need to choose
+              the best learning path.
             </p>
 
             <div className="mt-8 space-y-4 text-sm">
@@ -49,11 +44,26 @@ export function QuestionsSection() {
           >
             <form className="space-y-4">
               <div className="grid md:grid-cols-2 gap-4">
-                <Input placeholder="Name" />
-                <Input type="email" placeholder="Email" />
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="w-full px-4 py-2 rounded-lg border border-border/40 bg-background/50 text-foreground placeholder:text-muted-foreground"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full px-4 py-2 rounded-lg border border-border/40 bg-background/50 text-foreground placeholder:text-muted-foreground"
+                />
               </div>
-              <Input placeholder="Subject" />
-              <Textarea placeholder="Message" className="min-h-[140px]" />
+              <input
+                type="text"
+                placeholder="Subject"
+                className="w-full px-4 py-2 rounded-lg border border-border/40 bg-background/50 text-foreground placeholder:text-muted-foreground"
+              />
+              <textarea
+                placeholder="Message"
+                className="w-full min-h-35 px-4 py-2 rounded-lg border border-border/40 bg-background/50 text-foreground placeholder:text-muted-foreground"
+              />
 
               <label className="flex items-center gap-2 text-sm text-muted-foreground">
                 <input type="checkbox" className="accent-foreground" />
@@ -61,7 +71,9 @@ export function QuestionsSection() {
               </label>
 
               <div className="flex items-center justify-between gap-4 flex-wrap">
-                <Button className="rounded-lg px-6">Send Message</Button>
+                <button className="rounded-lg px-6 py-2 bg-primary text-white font-semibold hover:bg-primary/90 transition-colors">
+                  Send Message
+                </button>
                 <span className="text-xs text-muted-foreground">
                   We reply within 24 hours.
                 </span>
@@ -71,5 +83,5 @@ export function QuestionsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Users, Star, Clock, Play, ChevronRight, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export function LearningModesSection() {
   const containerVariants = {
@@ -200,10 +199,10 @@ export function LearningModesSection() {
 
               {/* Button */}
               <motion.div variants={itemVariants}>
-                <Button className="w-full rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all font-semibold">
+                <button className="w-full rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all font-semibold">
                   Explore Partner Courses
                   <ChevronRight className="w-4 h-4 ml-2" />
-                </Button>
+                </button>
               </motion.div>
             </motion.div>
           </motion.div>

@@ -10,7 +10,6 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
-import { useTypewriterOnce } from "@/hooks/use-typewriter";
 
 const regions = [
   {
@@ -81,12 +80,6 @@ export function GlobalLearningSection() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
-  const { displayText: headingText } = useTypewriterOnce(
-    "Borders",
-    60,
-    isInView ? 300 : 99999,
-  );
-
   return (
     <section
       id="global"
@@ -116,16 +109,6 @@ export function GlobalLearningSection() {
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance">
             <span className="text-foreground">Learning Without </span>
-            <span className="bg-gradient-to-r from-glow-cyan to-glow-blue bg-clip-text text-transparent">
-              {headingText}
-              {headingText !== "Borders" && (
-                <motion.span
-                  className="inline-block w-[3px] h-[0.8em] bg-glow-cyan ml-1 align-middle"
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                />
-              )}
-            </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Join a global community of learners and innovators from around the

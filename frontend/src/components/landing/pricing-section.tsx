@@ -14,8 +14,7 @@ import {
   FlaskConical,
   ChefHat,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTypewriterOnce } from "@/hooks/use-typewriter";
+
 
 const pricingPlans = [
   {
@@ -126,9 +125,6 @@ export function PricingSection() {
   const [selectedCategory, setSelectedCategory] = useState("programming");
   const titleRef = useRef<HTMLHeadingElement>(null);
 
-  const { displayText: titleText, hasStarted: titleStarted } =
-    useTypewriterOnce("Invest in Your Future", 50);
-
   return (
     <section id="pricing" className="relative py-32 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
@@ -151,15 +147,7 @@ export function PricingSection() {
             </span>
           </motion.div>
 
-          <h2
-            ref={titleRef}
-            className="text-4xl md:text-6xl font-bold text-foreground mb-6"
-          >
-            {titleStarted ? titleText : "Invest in Your Future"}
-            {titleStarted && (
-              <span className="animate-pulse text-purple-400">|</span>
-            )}
-          </h2>
+         
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Choose the perfect plan to unlock your potential. All plans include
@@ -293,7 +281,7 @@ export function PricingSection() {
               </ul>
 
               {/* CTA Button */}
-              <Button
+              <button
                 className={`w-full py-6 rounded-lg font-semibold text-lg transition-all duration-300 ${
                   plan.highlighted
                     ? "bg-foreground text-background shadow-sm hover:shadow-md"
@@ -301,7 +289,7 @@ export function PricingSection() {
                 }`}
               >
                 Get Started
-              </Button>
+              </button>
             </motion.div>
           ))}
         </div>
@@ -384,9 +372,9 @@ export function PricingSection() {
                             <p className="text-white/70">Students</p>
                           </div>
                         </div>
-                        <Button className="rounded-lg px-8 py-6 font-semibold">
+                        <button className="rounded-lg px-8 py-6 font-semibold">
                           Explore {category.name}
-                        </Button>
+                        </button>
                       </div>
 
                       {/* Preview Cards */}

@@ -12,9 +12,8 @@ import { SocialMediaSection } from "@/components/landing/social-media-section";
 import { QuestionsSection } from "@/components/landing/questions-section";
 import { CTASection } from "@/components/landing/cta-section";
 import { Footer } from "@/components/landing/footer";
-import { AIAssistant } from "@/components/landing/ai-assistant";
+
 import { ParticleBackground } from "@/components/landing/particle-background";
-import { SocialSidebar } from "@/components/landing/social-sidebar";
 
 export function LandingPage() {
   return (
@@ -38,8 +37,7 @@ export function LandingPage() {
         <Footer />
       </div>
 
-      <AIAssistant />
-      <SocialSidebar />
+     
     </main>
   );
 }
