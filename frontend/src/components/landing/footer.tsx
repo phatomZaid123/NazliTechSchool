@@ -13,25 +13,26 @@ import {
   Phone,
   ArrowRight,
 } from "lucide-react";
+import NazliLogo from "@/assets/NazliLogo.png";
 
 const footerLinks = {
   product: [
-    { label: "Courses", href: "#" },
-    { label: "Simulations", href: "#" },
-    { label: "AI Assistant", href: "#" },
-    { label: "Community", href: "#" },
+    { label: "Courses", href: "#courses" },
+    { label: "Simulations", href: "#simulation" },
+    { label: "Apps", href: "#apps" },
+    { label: "Videos", href: "#videos" },
   ],
   company: [
-    { label: "About Us", href: "#" },
-    { label: "Careers", href: "#" },
-    { label: "Press", href: "#" },
-    { label: "Partners", href: "#" },
+    { label: "About Us", href: "#about" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "Contact", href: "#contact" },
+    { label: "Digital Ecosystem", href: "#ecosystem" },
   ],
   resources: [
-    { label: "Documentation", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Help Center", href: "#" },
-    { label: "API", href: "#" },
+    { label: "Curriculum", href: "#curriculum" },
+    { label: "Articles", href: "#articles" },
+    { label: "Testimonials", href: "#videos" },
+    { label: "Udemy Courses", href: "https://www.udemy.com/" },
   ],
   legal: [
     { label: "Privacy", href: "#" },
@@ -70,10 +71,10 @@ const itemVariants = {
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-border/30 bg-gradient-to-b from-card/30 to-background/80 overflow-hidden">
-      {/* Background effects */}
+    <footer className="relative border-t border-border/30 bg-[#1a0f2e] overflow-hidden">
+      {/* Background effects - Optimized */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-primary/10 via-accent/5 to-transparent rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-primary/8 via-accent/3 to-transparent rounded-full blur-2xl opacity-20"></div>
       </div>
 
       <div className="container relative z-10 px-4 md:px-6 py-20">
@@ -83,30 +84,7 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-16 pb-16 border-b border-border/30"
-        >
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-3xl font-bold text-foreground mb-3">
-              Ready to transform your learning?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Join our community of learners and start your journey today.
-            </p>
-            <div className="flex gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 rounded-xl border border-border/50 bg-card/50 px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:bg-card/80 transition-all"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="rounded-xl bg-gradient-to-r from-primary to-accent px-6 py-3 font-semibold text-primary-foreground hover:shadow-lg hover:shadow-primary/50 transition-all"
-              >
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
+        ></motion.div>
 
         {/* Main Footer Content */}
         <motion.div
@@ -118,16 +96,12 @@ export function Footer() {
         >
           {/* Brand column */}
           <motion.div variants={itemVariants} className="lg:col-span-2">
-            <a href="/" className="flex items-center gap-2 mb-6">
+            <a href="#home" className="flex items-center gap-2 mb-6">
               <motion.div
                 whileHover={{ rotate: [0, -10, 10, -5, 0], scale: 1.1 }}
                 className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/50"
-              >
-                <Sparkles className="w-6 h-6 text-primary-foreground" />
-              </motion.div>
-              <span className="text-2xl font-bold text-foreground">
-                Nazli<span className="text-primary">Tech</span>
-              </span>
+              ></motion.div>
+              <img className="" src={NazliLogo} alt="" />
             </a>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-xs font-light">
               Transforming education through interactive learning, AI guidance,
@@ -141,7 +115,7 @@ export function Footer() {
                 className="flex items-center gap-2 cursor-pointer hover:text-accent transition-colors"
               >
                 <Mail className="w-4 h-4 text-accent flex-shrink-0" />
-                <span>hello@nazlitech.edu</span>
+                <span>info@nazlitechschool.org</span>
               </motion.div>
               <motion.div
                 whileHover={{ x: 5 }}
@@ -155,7 +129,7 @@ export function Footer() {
                 className="flex items-center gap-2 cursor-pointer hover:text-accent transition-colors"
               >
                 <MapPin className="w-4 h-4 text-accent flex-shrink-0" />
-                <span>San Francisco, CA</span>
+                <span>Rabat, Abuja, and remote</span>
               </motion.div>
             </div>
           </motion.div>
@@ -196,7 +170,7 @@ export function Footer() {
           className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-border/30"
         >
           <p className="text-sm text-muted-foreground font-light">
-            © 2024 Nazli Tech School. All rights reserved.
+            © 2026 Nazli Tech School. All rights reserved.
           </p>
 
           {/* Social links */}

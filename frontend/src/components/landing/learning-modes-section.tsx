@@ -26,14 +26,14 @@ export function LearningModesSection() {
 
   return (
     <section className="relative py-32 overflow-hidden">
-      {/* Background effects */}
+      {/* Background effects - Optimized */}
       <div className="absolute inset-0 overflow-hidden">
         <div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-l from-accent/20 to-primary/10 rounded-full blur-3xl opacity-30 animate-pulse"
+          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-l from-accent/15 to-primary/8 rounded-full blur-2xl opacity-20 animate-pulse"
           style={{ animationDelay: "0s" }}
         ></div>
         <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-primary/20 to-accent/10 rounded-full blur-3xl opacity-30 animate-pulse"
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-primary/15 to-accent/8 rounded-full blur-2xl opacity-20 animate-pulse"
           style={{ animationDelay: "2s" }}
         ></div>
       </div>
@@ -149,10 +149,10 @@ export function LearningModesSection() {
               <motion.div variants={itemVariants}>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/50 bg-gradient-to-r from-primary/10 to-accent/5 text-xs font-semibold text-primary mb-4">
                   <Play className="w-4 h-4" />
-                  Coursera Partnership
+                  Udemy Pathways
                 </div>
                 <h3 className="text-2xl font-bold text-foreground">
-                  Coursera-powered courses
+                  Udemy-connected courses
                 </h3>
               </motion.div>
 
@@ -160,8 +160,9 @@ export function LearningModesSection() {
                 variants={itemVariants}
                 className="text-sm text-muted-foreground font-light leading-relaxed"
               >
-                We integrate Coursera pathways so learners can earn globally
-                recognized certificates alongside Nazli Tech School projects.
+                Learners can preview Nazli Tech School courses here and continue
+                selected lessons on Udemy where hosted course materials already
+                live.
               </motion.p>
 
               {/* Features List */}
@@ -200,7 +201,7 @@ export function LearningModesSection() {
               {/* Button */}
               <motion.div variants={itemVariants}>
                 <button className="w-full rounded-xl bg-gradient-to-r from-primary to-accent hover:shadow-lg hover:shadow-primary/50 transition-all font-semibold">
-                  Explore Partner Courses
+                  View Udemy Courses
                   <ChevronRight className="w-4 h-4 ml-2" />
                 </button>
               </motion.div>

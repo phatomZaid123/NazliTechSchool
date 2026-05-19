@@ -1,0 +1,155 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Compass, Globe2, GraduationCap, UsersRound } from "lucide-react";
+import SocialHub from "./social-media-section";
+import { FaLocationPin } from "react-icons/fa6";
+import Founder from "@/assets/founder.png";
+import CoFounder from "@/assets/cofounder.png";
+
+const people = [
+  {
+    role: "CEO & Founder",
+    name: "Dr. Nazha Habibi",
+    note: "A Moroccan medical doctor with extensive international working experience. Dr. Habibi established and successfully runs Nazli Tech School, building the online platform to provide students with unique learning experiences globally. Her team includes talented, global-minded instructors who have developed academically challenging and practical course outlines.",
+    linkedIn: "https://www.linkedin.com/in/nazha-habibi-b59a3983/?originalSubdomain=ma",
+    imagePlaceholder: Founder,
+  },
+  {
+    role: "Co-founder",
+    name: "Engr. Alisia Habibi",
+    note: "A Moroccan software engineer with extensive teaching experience since 2012 and a background as an academic content creator. Alasia develops professional academic courses and ensures that learning at Nazli Tech School integrates practical understanding with real-life scenarios.",
+    linkedIn: "https://www.linkedin.com/in/alisia-habibi-1205a663/",
+    imagePlaceholder: CoFounder,
+  },
+];
+
+export function AboutSection() {
+  return (
+    <section id="about" className="relative py-32 overflow-x-hidden scroll-mt-28">
+      <div className="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-nazli-purple/20 blur-[120px]" />
+      <div className="container relative z-10 px-4 md:px-6">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.42em] text-nazli-golden">
+              About Us
+            </p>
+            <h2 className="text-5xl font-bold md:text-6xl">
+              A global tech school built for{" "}
+              <span className="bg-linear-to-r from-nazli-purple to-nazli-golden bg-clip-text text-transparent">
+                modern learners
+              </span>
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+              Nazli Tech School helps learners move from curiosity to capability
+              through guided courses, simulation classes, project work, and
+              flexible learning modes. The prototype keeps the story simple
+              while leaving clear space for official founder and co-founder
+              content.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              {[
+                "68+ countries reached",
+                "10k+ active learners",
+                "Live + self-paced options",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-nazli-golden/40 bg-nazli-golden/10 px-4 py-2 text-xs font-semibold text-foreground"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {[
+                { icon: Globe2, label: "Remote-first international learning" },
+                {
+                  icon: GraduationCap,
+                  label: "IB, AP, IGCSE, YAK, and NECO aware",
+                },
+                { icon: Compass, label: "Cognoscentia curriculum direction" },
+                {
+                  icon: UsersRound,
+                  label: "Students, educators, and families",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-2xl border border-border/40 bg-card/55 p-4 text-sm font-semibold text-muted-foreground"
+                >
+                  <item.icon className="mb-3 h-5 w-5 text-nazli-golden" />
+                  {item.label}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="grid gap-5"
+          >
+            {people.map((person, index) => (
+              <article
+                key={person.role}
+                className="rounded-3xl border border-border/45 bg-linear-to-br from-card/75 to-background/70 p-6 backdrop-blur-xl transition-colors duration-300 hover:border-nazli-golden/35"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-3xl border border-nazli-purple/35 bg-nazli-purple/15 text-center">
+                    {person.imagePlaceholder ? (
+                      <div className="h-full w-full flex items-center justify-center rounded-2xl bg-gradient-to-br from-nazli-purple/20 to-nazli-golden/20 text-xs font-semibold text-muted-foreground">
+                        <img src={person.imagePlaceholder} alt={person.name} className="h-full w-full object-cover" />
+                      </div>
+                    ) : (
+                      <span className="text-2xl font-black text-nazli-golden">{index + 1}</span>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-bold uppercase tracking-[0.24em] text-nazli-golden">
+                      {person.role}
+                    </p>
+                    <h3 className="mt-2 text-2xl font-bold text-foreground">
+                      {person.name}
+                    </h3>
+                    <p className="mt-3 leading-relaxed text-muted-foreground text-sm">
+                      {person.note}
+                    </p>
+                    {person.linkedIn && (
+                      <a
+                        href={person.linkedIn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-nazli-golden hover:text-nazli-golden/80 transition-colors"
+                      >
+                        LinkedIn Profile →
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+
+            <div className="rounded-3xl border border-nazli-golden/35 bg-nazli-golden/10 p-6">
+              <p className="text-sm font-semibold leading-relaxed text-foreground">
+                <FaLocationPin className="text-nazli-golden mr-2 inline-block" /> Nazli Tech School operates globally with presence in Rabat, Morocco and Abuja, Nigeria, with remote international support.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                <span className="rounded-full bg-background/50 px-3 py-1">Timezone-friendly sessions</span>
+                <span className="rounded-full bg-background/50 px-3 py-1">Mentorship-led community</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+      <SocialHub />
+    </section>
+  );
+}

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,84 +6,151 @@
 
 /* Futuristic Dark Theme - Nazli Tech School */
 :root {
+  /* Official NazliTech Brand Colors - Minimalist Palette */
+  --nazli-purple: #470047; /* Primary Purple */
+  --nazli-golden: #dbac34; /* Secondary Golden/Amber */
+  --nazli-gray: #dbdbdb; /* Tertiary Gray */
+  /* --nazli-black: oklch(0.09 0.02 260); Background Black */
+  --nazli-white: #ffffff; /* Foreground White */
+
+  /* Material Design 3 Video Feed Colors */
+  --material-primary: #dfb7ff; /* Purple */
+  --material-secondary: #e9c349; /* Golden */
+  --material-tertiary: #4cd7f6; /* Cyan */
+  /* --material-surface: #12131a; Dark background */
+  --material-surface-container: #1e1f26; /* Container background */
+  --material-outline: #988d9e; /* Outline color */
+
+  /* Base Theme Variables */
   --background: oklch(0.09 0.02 260);
   --foreground: oklch(0.95 0 0);
   --card: oklch(0.12 0.02 260);
   --card-foreground: oklch(0.95 0 0);
   --popover: oklch(0.1 0.02 260);
   --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.65 0.2 280);
+
+  /* Primary - Purple */
+  --primary: var(--material-primary);
   --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.18 0.02 260);
-  --secondary-foreground: oklch(0.95 0 0);
+
+  /* Secondary - Golden */
+  --secondary: var(--material-secondary);
+  --secondary-foreground: oklch(0.09 0.02 260);
+
+  /* Tertiary - Cyan */
+  --tertiary: var(--material-tertiary);
+  --tertiary-foreground: oklch(0.15 0.02 260);
+
   --muted: oklch(0.15 0.02 260);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.7 0.18 200);
+
+  /* Accent - Gray */
+  --accent: var(--nazli-gray);
   --accent-foreground: oklch(0.98 0 0);
+
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.22 0.03 260);
   --input: oklch(0.15 0.02 260);
-  --ring: oklch(0.65 0.2 280);
-  --chart-1: oklch(0.65 0.2 280);
-  --chart-2: oklch(0.7 0.18 200);
-  --chart-3: oklch(0.6 0.15 250);
-  --chart-4: oklch(0.75 0.2 170);
-  --chart-5: oklch(0.55 0.22 300);
+  --ring: var(--material-primary);
+
+  /* Chart Colors - using official brand palette */
+  --chart-1: var(--nazli-purple); /* Purple */
+  --chart-2: var(--nazli-golden); /* Golden */
+  --chart-3: var(--nazli-gray); /* Gray */
+  --chart-4: var(--nazli-white); /* White */
+  --chart-5: var(--nazli-black); /* Black */
+
   --radius: 0.75rem;
   --sidebar: oklch(0.08 0.02 260);
   --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.65 0.2 280);
+  --sidebar-primary: var(--material-primary);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.15 0.02 260);
   --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(0.22 0.03 260);
-  --sidebar-ring: oklch(0.65 0.2 280);
+  --sidebar-ring: var(--material-primary);
 
-  /* Custom accent colors for glowing effects */
-  --glow-purple: oklch(0.65 0.25 280);
-  --glow-cyan: oklch(0.75 0.15 200);
-  --glow-blue: oklch(0.6 0.2 250);
+  /* Custom Glow Effects - using official brand colors */
+  --glow-purple: #470047;
+  --glow-golden: #dbac34;
 }
 
 .dark {
+  /* Official NazliTech Brand Colors - Minimalist Palette */
+  --nazli-purple: #470047; /* Primary Purple */
+  --nazli-golden: #dbac34; /* Secondary Golden/Amber */
+  --nazli-gray: #dbdbdb; /* Tertiary Gray */
+  --nazli-black: oklch(0.09 0.02 260); /* Background Black */
+  --nazli-white: #ffffff; /* Foreground White */
+
+  /* Material Design 3 Video Feed Colors */
+  --material-primary: #dfb7ff; /* Purple */
+  --material-secondary: #e9c349; /* Golden */
+  --material-tertiary: #4cd7f6; /* Cyan */
+  --material-surface: #12131a; /* Dark background */
+  --material-surface-container: #1e1f26; /* Container background */
+  --material-outline: #988d9e; /* Outline color */
+
+  /* Base Theme Variables */
   --background: oklch(0.09 0.02 260);
   --foreground: oklch(0.95 0 0);
   --card: oklch(0.12 0.02 260);
   --card-foreground: oklch(0.95 0 0);
   --popover: oklch(0.1 0.02 260);
   --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.65 0.2 280);
+
+  /* Primary - Purple */
+  --primary: var(--material-primary);
   --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.18 0.02 260);
-  --secondary-foreground: oklch(0.95 0 0);
+
+  /* Secondary - Golden */
+  --secondary: var(--material-secondary);
+  --secondary-foreground: oklch(0.09 0.02 260);
+
+  /* Tertiary - Cyan */
+  --tertiary: var(--material-tertiary);
+  --tertiary-foreground: oklch(0.15 0.02 260);
+
   --muted: oklch(0.15 0.02 260);
   --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.7 0.18 200);
+
+  /* Accent - Gray */
+  --accent: var(--nazli-gray);
   --accent-foreground: oklch(0.98 0 0);
+
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.22 0.03 260);
   --input: oklch(0.15 0.02 260);
-  --ring: oklch(0.65 0.2 280);
-  --chart-1: oklch(0.65 0.2 280);
-  --chart-2: oklch(0.7 0.18 200);
-  --chart-3: oklch(0.6 0.15 250);
-  --chart-4: oklch(0.75 0.2 170);
-  --chart-5: oklch(0.55 0.22 300);
+  --ring: var(--material-primary);
+
+  /* Chart Colors - using official brand palette */
+  --chart-1: var(--nazli-purple); /* Purple */
+  --chart-2: var(--nazli-golden); /* Golden */
+  --chart-3: var(--nazli-gray); /* Gray */
+  --chart-4: var(--nazli-white); /* White */
+  --chart-5: var(--nazli-black); /* Black */
+
   --sidebar: oklch(0.08 0.02 260);
   --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.65 0.2 280);
+  --sidebar-primary: var(--material-primary);
   --sidebar-primary-foreground: oklch(0.98 0 0);
   --sidebar-accent: oklch(0.15 0.02 260);
   --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(0.22 0.03 260);
-  --sidebar-ring: oklch(0.65 0.2 280);
+  --sidebar-ring: var(--material-primary);
+
+  /* Custom Glow Effects - using official brand colors */
+  --glow-purple: #470047;
+  --glow-golden: #dbac34;
 }
 
 @theme inline {
   --font-sans: "Geist", "Geist Mono Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
+
+  /* Base Theme Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -94,10 +161,30 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
+  /* NazliTech Brand Colors - Official Palette */
+  --color-nazli-purple: var(--nazli-purple);
+  --color-nazli-golden: var(--nazli-golden);
+  --color-nazli-gray: var(--nazli-gray);
+  --color-nazli-white: var(--nazli-white);
+
+  /* Material Design 3 Video Feed Colors */
+  --color-material-primary: var(--material-primary);
+  --color-material-secondary: var(--material-secondary);
+  --color-material-tertiary: var(--material-tertiary);
+  --color-material-surface: var(--material-surface);
+  --color-material-surface-container: var(--material-surface-container);
+  --color-material-outline: var(--material-outline);
+
+  /* Glow Effects */
+  --color-glow-purple: var(--glow-purple);
+  --color-glow-golden: var(--glow-golden);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -121,9 +208,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-glow-purple: var(--glow-purple);
-  --color-glow-cyan: var(--glow-cyan);
-  --color-glow-blue: var(--glow-blue);
 }
 
 @layer base {
@@ -133,6 +217,12 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  html.landing-snap {
+    scroll-behavior: auto;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 7rem;
   }
 
   body {
@@ -148,6 +238,12 @@
     letter-spacing: -0.02em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  body.landing-snap-body [data-landing-page="true"] section[id] {
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 
   /* Typography Scale Improvements */
@@ -235,6 +331,37 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
 
+  /* Glass card for video feed */
+  .glass-card {
+    background: rgba(30, 31, 38, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Video card glow effects */
+  .video-card-gold-glow {
+    box-shadow: 0 0 20px rgba(233, 195, 73, 0.15);
+  }
+
+  .video-card-purple-glow {
+    box-shadow: 0 0 20px rgba(223, 183, 255, 0.15);
+  }
+
+  /* Surface container color */
+  .surface-container {
+    background-color: #1e1f26;
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   /* Smooth scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
@@ -260,17 +387,12 @@
     animation: glow 2s ease-in-out infinite;
   }
 
-  .animate-gradient-shift {
-    animation: gradient-shift 8s ease infinite;
-    background-size: 200% 200%;
-  }
-
   .animate-shimmer {
     animation: shimmer 2s infinite;
   }
 
   /* Responsive text sizes */
-  @screen sm {
+  @media (min-width: 640px) {
     .text-responsive-lg {
       @apply text-4xl md:text-5xl;
     }
@@ -297,16 +419,6 @@
   }
 }
 
-@keyframes gradient-shift {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 @keyframes shimmer {
   0%,
   100% {
@@ -315,4 +427,431 @@
   50% {
     opacity: 1;
   }
+}
+
+/* Training Matrix Styles */
+.bg-deep-space {
+  background: radial-gradient(circle at 50% 50%, #120a20 0%, #05050a 100%);
+}
+
+.hex-glow {
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.15));
+}
+
+.energy-streak {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.3),
+    transparent
+  );
+  animation: streak-pulse 10s linear infinite;
+}
+
+@keyframes streak-pulse {
+  0% {
+    transform: translateX(-100%) scaleX(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(100vw) scaleX(2);
+    opacity: 0;
+  }
+}
+
+/* Card Effects */
+.tech-card {
+  background: linear-gradient(
+    145deg,
+    rgba(30, 31, 38, 0.4) 0%,
+    rgba(13, 14, 21, 0.6) 100%
+  );
+  box-shadow:
+    0 4px 24px -1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.tech-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(139, 92, 246, 0.05) 50%
+  );
+  background-size: 100% 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 0.75rem;
+}
+
+.tech-card:hover::before {
+  opacity: 1;
+  animation: scanline 4s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100px;
+  }
+}
+
+.card-glow-purple:hover {
+  box-shadow:
+    0 0 40px rgba(139, 92, 246, 0.4),
+    inset 0 0 20px rgba(139, 92, 246, 0.1);
+  border-color: #8b5cf6;
+  transform: translateY(-8px);
+}
+
+.card-glow-gold:hover {
+  box-shadow:
+    0 0 40px rgba(233, 195, 73, 0.4),
+    inset 0 0 20px rgba(233, 195, 73, 0.1);
+  border-color: #e9c349;
+  transform: translateY(-8px);
+}
+
+.card-glow-grey:hover {
+  box-shadow:
+    0 0 40px rgba(76, 215, 246, 0.3),
+    inset 0 0 20px rgba(76, 215, 246, 0.1);
+  border-color: #4cd7f6;
+  transform: translateY(-8px);
+}
+
+.icon-pulse {
+  animation: pulse-icon 2s infinite;
+}
+
+@keyframes pulse-icon {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.5);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+.pulse-slow {
+  animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Additional color mappings */
+.on-surface-variant {
+  color: #cfc2d4;
+}
+
+.on-surface {
+  color: #e3e1ec;
+}
+
+.on-primary-container {
+  color: #d7a8ff;
+}
+
+/* ===== TECHY EFFECTS - NAZLI TECH COLORS ONLY ===== */
+
+/* Neon Glow Effect - Purple (Primary) */
+.neon-glow-purple {
+  text-shadow:
+    0 0 10px rgba(71, 0, 71, 0.8),
+    0 0 20px rgba(71, 0, 71, 0.5);
+  filter: drop-shadow(0 0 8px rgba(71, 0, 71, 0.6));
+}
+
+.neon-glow-purple-box {
+  box-shadow:
+    0 0 15px rgba(71, 0, 71, 0.5),
+    inset 0 0 15px rgba(71, 0, 71, 0.2);
+  border: 1px solid rgba(71, 0, 71, 0.6);
+}
+
+/* Neon Glow Effect - Golden (Secondary) */
+.neon-glow-golden {
+  text-shadow:
+    0 0 10px rgba(219, 172, 52, 0.5),
+    0 0 20px rgba(219, 172, 52, 0.3);
+  filter: drop-shadow(0 0 8px rgba(219, 172, 52, 0.4));
+}
+
+.neon-glow-golden-box {
+  box-shadow:
+    0 0 15px rgba(219, 172, 52, 0.3),
+    inset 0 0 15px rgba(219, 172, 52, 0.12);
+  border: 1px solid rgba(219, 172, 52, 0.4);
+}
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-anim 0.3s infinite;
+  color: rgba(71, 0, 71, 0.8);
+  z-index: -1;
+  text-shadow: -2px 0 #dbac34;
+}
+
+.glitch::after {
+  animation: glitch-anim-2 0.3s infinite;
+  color: rgba(219, 172, 52, 0.8);
+  z-index: -2;
+  text-shadow: 2px 0 #470047;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip-path: rect(0, 900px, 0, 0);
+  }
+  5% {
+    clip-path: rect(80px, 900px, 90px, 0);
+  }
+  10% {
+    clip-path: rect(5px, 900px, 10px, 0);
+  }
+  15% {
+    clip-path: rect(50px, 900px, 55px, 0);
+  }
+  20% {
+    clip-path: rect(130px, 900px, 140px, 0);
+  }
+  25% {
+    clip-path: rect(0, 900px, 0, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip-path: rect(0, 900px, 0, 0);
+  }
+  5% {
+    clip-path: rect(10px, 900px, 5px, 0);
+  }
+  10% {
+    clip-path: rect(50px, 900px, 40px, 0);
+  }
+  15% {
+    clip-path: rect(5px, 900px, 0px, 0);
+  }
+  20% {
+    clip-path: rect(0, 900px, 0, 0);
+  }
+  25% {
+    clip-path: rect(0, 900px, 0, 0);
+  }
+}
+
+/* Typewriter Effect */
+.typewriter {
+  border-right: 0.15em solid rgba(71, 0, 71, 0.8);
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: rgba(71, 0, 71, 0.8);
+  }
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Code Block Styling */
+.code-block {
+  font-family: "JetBrains Mono", "Geist Mono", monospace;
+  background: linear-gradient(
+    145deg,
+    rgba(20, 20, 30, 0.8),
+    rgba(10, 10, 20, 0.9)
+  );
+  border: 1px solid rgba(71, 0, 71, 0.3);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  color: #ffffff;
+  overflow-x: auto;
+}
+
+.code-block::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(71, 0, 71, 0.5),
+    rgba(219, 172, 52, 0.5),
+    rgba(71, 0, 71, 0.5)
+  );
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* Code Inline */
+.code-inline {
+  font-family: "JetBrains Mono", "Geist Mono", monospace;
+  background: rgba(71, 0, 71, 0.15);
+  border: 1px solid rgba(71, 0, 71, 0.3);
+  color: #dbac34;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+}
+
+/* Code Comments */
+.code-comment {
+  color: rgba(219, 172, 52, 0.7);
+  font-style: italic;
+}
+
+/* Code Tags/Badges */
+.code-tag {
+  font-family: "JetBrains Mono", monospace;
+  display: inline-block;
+  background: rgba(71, 0, 71, 0.2);
+  border: 1px solid rgba(71, 0, 71, 0.4);
+  color: #dbac34;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.code-tag:hover {
+  background: rgba(219, 172, 52, 0.2);
+  border-color: rgba(219, 172, 52, 0.6);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(219, 172, 52, 0.4);
+}
+
+/* Terminal-style Text */
+.terminal-text {
+  font-family: "JetBrains Mono", monospace;
+  color: #dbac34;
+  text-shadow: 0 0 10px rgba(219, 172, 52, 0.5);
+  letter-spacing: 0.1em;
+}
+
+.terminal-text-secondary {
+  color: rgba(219, 172, 52, 0.8);
+}
+
+/* Scanline Effect - Enhanced */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(71, 0, 71, 0.05) 0px,
+    rgba(71, 0, 71, 0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  animation: scanline-drift 8s linear infinite;
+}
+
+@keyframes scanline-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 10px;
+  }
+}
+
+/* Function Call Style */
+.function-call {
+  font-family: "JetBrains Mono", monospace;
+  color: #dbac34;
+  font-weight: 600;
+}
+
+.function-call::before {
+  content: "< ";
+  color: rgba(71, 0, 71, 0.7);
+}
+
+.function-call::after {
+  content: " />";
+  color: rgba(71, 0, 71, 0.7);
+}
+
+/* Feature List Markdown Style */
+.feature-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.95em;
+}
+
+.feature-check::before {
+  content: "// ✓";
+  color: #dbac34;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+/* Method/Property Style */
+.method-highlight {
+  color: #dbac34;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Data Display */
+.data-display {
+  font-family: "JetBrains Mono", monospace;
+  background: rgba(71, 0, 71, 0.1);
+  border-left: 3px solid rgba(219, 172, 52, 0.6);
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  color: #ffffff;
+  font-size: 0.95em;
+}
+
+/* Active/Highlight States */
+.tech-active {
+  color: #dbac34;
+  text-shadow: 0 0 8px rgba(219, 172, 52, 0.6);
+  border-color: #dbac34;
+}
+
+.tech-inactive {
+  color: rgba(219, 172, 52, 0.5);
+  text-shadow: 0 0 4px rgba(219, 172, 52, 0.3);
 }
