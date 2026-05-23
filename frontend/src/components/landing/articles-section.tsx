@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import { Search, Sparkles, Clock, ArrowRight } from "lucide-react";
 import SocialHub from "./social-media-section";
-import { SolarWindBandsBackground } from "./section-background-effects";
+// import { SolarWindBandsBackground } from "./section-background-effects";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import ArticlesBackground from "../../assets/Globalbackground.png";
 
 const ARTICLES = [
   {
@@ -38,8 +43,22 @@ export default function Articles() {
     <section
       id="articles"
       className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
+      style={{
+        backgroundImage: `url(${ArticlesBackground})`,
+        backgroundAttachment: "fixed",
+      }}
     >
-      <SolarWindBandsBackground />
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(
+            LANDING_OVERLAY_DIMNESS.simulation,
+          ),
+        }}
+      />
+
+      {/* <SolarWindBandsBackground /> */}
 
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
@@ -49,7 +68,9 @@ export default function Articles() {
         >
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-5xl font-bold tracking-tighter mb-6 uppercase">
-              <span className="text-purple-600">&lt;News /&gt;</span> <span className="text-gray-300">&amp;</span> <span className="text-nazli-golden">&lt;Insights /&gt;</span>
+              <span className="text-purple-600">&lt;News /&gt;</span>{" "}
+              <span className="text-gray-300">&amp;</span>{" "}
+              <span className="text-nazli-golden">&lt;Insights /&gt;</span>
             </h1>
             <p className="text-white/50 text-xl code-inline px-4 py-2">
               // The latest updates from tech, education & AI
@@ -84,6 +105,8 @@ export default function Articles() {
                 <img
                   src={article.image}
                   alt={article.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   referrerPolicy="no-referrer"
                 />
@@ -96,7 +119,7 @@ export default function Articles() {
                   <Clock size={12} /> {article.date}
                 </span>
                 <span className="flex items-center gap-1 text-nazli-golden">
-                   AI_Summary
+                  AI_Summary
                 </span>
               </div>
               <h3 className="text-2xl font-bold mb-4 group-hover:text-nazli-golden transition-colors leading-tight">
@@ -112,7 +135,7 @@ export default function Articles() {
           ))}
         </div>
       </div>
-      
+
       <div className="relative z-10">
         <SocialHub />
       </div>

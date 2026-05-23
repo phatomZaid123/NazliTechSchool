@@ -16,9 +16,9 @@ const navItems: NavItem[] = [
   { label: "Simulation", href: "#simulation" },
   { label: "Apps", href: "#apps" },
   { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
   { label: "Articles", href: "#articles" },
   { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
@@ -79,20 +79,38 @@ export function Navbar() {
     const observedElements = new Set<Element>();
 
     const syncObservedSections = () => {
+      let allObserved = true;
       navItems.forEach((item) => {
         const section = document.querySelector(item.href);
         if (section && !observedElements.has(section)) {
           observer.observe(section);
           observedElements.add(section);
         }
+        if (!section) {
+          allObserved = false;
+        }
       });
+
+      return allObserved;
     };
 
-    syncObservedSections();
-    const observerSync = window.setInterval(syncObservedSections, 1200);
+    const initiallySynced = syncObservedSections();
+    let observerSync: number | null = null;
+
+    if (!initiallySynced) {
+      observerSync = window.setInterval(() => {
+        const isFullySynced = syncObservedSections();
+        if (isFullySynced && observerSync) {
+          window.clearInterval(observerSync);
+          observerSync = null;
+        }
+      }, 1200);
+    }
 
     return () => {
-      window.clearInterval(observerSync);
+      if (observerSync) {
+        window.clearInterval(observerSync);
+      }
       observer.disconnect();
     };
   }, []);
@@ -115,7 +133,7 @@ export function Navbar() {
             <img
               src={NazliLogo}
               alt="Nazli Logo"
-              className="h-9 md:h-10 w-auto object-contain"
+              className="h-9 md:h-10 lg:h-20 w-auto object-contain"
             />
           </a>
 
@@ -154,7 +172,6 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <a
               href="https://calendar.app.google/eq7krfDvWy73Gk8o9"
-              
               className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-nazli-purple text-white text-sm font-bold shadow-[0_10px_26px_-15px_rgba(138,77,197,0.8)] hover:brightness-110 transition-all duration-150 hover:-translate-y-0.5 active:translate-y-0"
             >
               <span className="flex text-nazli-golden">

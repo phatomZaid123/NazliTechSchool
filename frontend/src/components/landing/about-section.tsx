@@ -6,13 +6,19 @@ import SocialHub from "./social-media-section";
 import { FaLocationPin } from "react-icons/fa6";
 import Founder from "@/assets/founder.png";
 import CoFounder from "@/assets/cofounder.png";
+import AboutBackground from "../../assets/Globalbackground.png";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
 
 const people = [
   {
     role: "CEO & Founder",
     name: "Dr. Nazha Habibi",
     note: "A Moroccan medical doctor with extensive international working experience. Dr. Habibi established and successfully runs Nazli Tech School, building the online platform to provide students with unique learning experiences globally. Her team includes talented, global-minded instructors who have developed academically challenging and practical course outlines.",
-    linkedIn: "https://www.linkedin.com/in/nazha-habibi-b59a3983/?originalSubdomain=ma",
+    linkedIn:
+      "https://www.linkedin.com/in/nazha-habibi-b59a3983/?originalSubdomain=ma",
     imagePlaceholder: Founder,
   },
   {
@@ -26,7 +32,24 @@ const people = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="relative py-32 overflow-x-hidden scroll-mt-28">
+    <section
+      id="about"
+      className="relative py-32 overflow-x-hidden scroll-mt-28"
+      style={{
+        backgroundImage: `url(${AboutBackground})`,
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(
+            LANDING_OVERLAY_DIMNESS.simulation,
+          ),
+        }}
+      />
+
       <div className="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-nazli-purple/20 blur-[120px]" />
       <div className="container relative z-10 px-4 md:px-6">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -106,10 +129,19 @@ export function AboutSection() {
                   <div className="flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-3xl border border-nazli-purple/35 bg-nazli-purple/15 text-center">
                     {person.imagePlaceholder ? (
                       <div className="h-full w-full flex items-center justify-center rounded-2xl bg-gradient-to-br from-nazli-purple/20 to-nazli-golden/20 text-xs font-semibold text-muted-foreground">
-                        <img src={person.imagePlaceholder} alt={person.name} className="h-full w-full object-cover" />
+                        <img
+                          src={person.imagePlaceholder}
+                          alt={person.name}
+                          loading="lazy"
+                          decoding="async"
+                          fetchPriority="low"
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                     ) : (
-                      <span className="text-2xl font-black text-nazli-golden">{index + 1}</span>
+                      <span className="text-2xl font-black text-nazli-golden">
+                        {index + 1}
+                      </span>
                     )}
                   </div>
                   <div className="flex-1">
@@ -139,11 +171,17 @@ export function AboutSection() {
 
             <div className="rounded-3xl border border-nazli-golden/35 bg-nazli-golden/10 p-6">
               <p className="text-sm font-semibold leading-relaxed text-foreground">
-                <FaLocationPin className="text-nazli-golden mr-2 inline-block" /> Nazli Tech School operates globally with presence in Rabat, Morocco and Abuja, Nigeria, with remote international support.
+                <FaLocationPin className="text-nazli-golden mr-2 inline-block" />{" "}
+                Nazli Tech School operates globally with presence in Rabat,
+                Morocco and Abuja, Nigeria, with remote international support.
               </p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
-                <span className="rounded-full bg-background/50 px-3 py-1">Timezone-friendly sessions</span>
-                <span className="rounded-full bg-background/50 px-3 py-1">Mentorship-led community</span>
+                <span className="rounded-full bg-background/50 px-3 py-1">
+                  Timezone-friendly sessions
+                </span>
+                <span className="rounded-full bg-background/50 px-3 py-1">
+                  Mentorship-led community
+                </span>
               </div>
             </div>
           </motion.div>

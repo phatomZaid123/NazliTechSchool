@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Play,
   Heart,
@@ -13,6 +13,11 @@ import {
   Star,
   Rocket,
 } from "lucide-react";
+import VideoSectionImage from "../../assets/Globalbackground.png";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
 
 // Types
 interface Particle {
@@ -157,11 +162,25 @@ export default function VideoFeedSection() {
   const [isMuted, setIsMuted] = useState(true);
   const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const [isInView, setIsInView] = useState(true);
+  const [isPageVisible, setIsPageVisible] = useState(true);
 
+  const sectionRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef<Mouse>({ x: null, y: null, radius: 150 });
+  const shouldReduceMotion = useReducedMotion();
+  const navWithHardwareHints = navigator as Navigator & {
+    deviceMemory?: number;
+  };
+  const lowPowerDevice =
+    (typeof navWithHardwareHints.deviceMemory === "number" &&
+      navWithHardwareHints.deviceMemory <= 4) ||
+    (typeof navigator.hardwareConcurrency === "number" &&
+      navigator.hardwareConcurrency <= 4);
+  const enableParticleEffects =
+    !shouldReduceMotion && !lowPowerDevice && isInView && isPageVisible;
 
   // Filtered Data
   const filteredVideos =
@@ -169,8 +188,37 @@ export default function VideoFeedSection() {
       ? staticVideoData
       : staticVideoData.filter((v) => v.type === filter);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { root: null, threshold: 0.01, rootMargin: "200px 0px" },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      setIsPageVisible(document.visibilityState === "visible");
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange, {
+      passive: true,
+    });
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, []);
+
   // Background Particles Engine (Optimized)
   useEffect(() => {
+    if (!enableParticleEffects) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -179,15 +227,15 @@ export default function VideoFeedSection() {
 
     let animationId: number;
     let lastFrameTime = 0;
-    const frameInterval = 1000 / 30; // 30fps
+    const frameInterval = 1000 / 24;
 
     const handleResize = () => {
       canvas.width = Math.min(window.innerWidth, 1920);
       canvas.height = Math.min(window.innerHeight, 1080);
 
       const numberOfParticles = Math.max(
-        20,
-        Math.floor((canvas.width * canvas.height) / 25000),
+        12,
+        Math.floor((canvas.width * canvas.height) / 42000),
       );
       particlesRef.current = [];
 
@@ -275,10 +323,12 @@ export default function VideoFeedSection() {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [enableParticleEffects]);
 
   // Throttle mouse movements for particles
   useEffect(() => {
+    if (!enableParticleEffects) return;
+
     let lastMouseUpdate = 0;
     const mouseThrottle = 100;
 
@@ -295,11 +345,18 @@ export default function VideoFeedSection() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [enableParticleEffects]);
 
   // Smooth Auto-scroll carousel
   useEffect(() => {
-    if (!scrollRef.current || !isAutoScrolling) return;
+    if (
+      !scrollRef.current ||
+      !isAutoScrolling ||
+      shouldReduceMotion ||
+      !isInView ||
+      !isPageVisible
+    )
+      return;
 
     const interval = setInterval(() => {
       if (scrollRef.current) {
@@ -317,7 +374,7 @@ export default function VideoFeedSection() {
     }, 3500);
 
     return () => clearInterval(interval);
-  }, [isAutoScrolling]);
+  }, [isAutoScrolling, shouldReduceMotion, isInView, isPageVisible]);
 
   // Smooth manual scroll
   const scroll = (direction: "left" | "right") => {
@@ -328,14 +385,31 @@ export default function VideoFeedSection() {
   };
 
   return (
-    <section className="relative py-32 overflow-hidden bg-[#080808] text-white">
+    <section
+      ref={sectionRef}
+      className="relative py-32 overflow-hidden bg-[#080808] text-white bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${VideoSectionImage})`,
+        backgroundAttachment: "fixed",
+      }}
+    >
       {/* Background & Particles */}
       <div className="absolute inset-0 z-0 pointer-events-none">
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: createOverlayGradient(
+              LANDING_OVERLAY_DIMNESS.video,
+            ),
+          }}
+        />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/10 blur-[120px] rounded-full" />
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 z-30 opacity-30"
-        ></canvas>
+        {enableParticleEffects && (
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 z-30 opacity-30"
+          ></canvas>
+        )}
       </div>
 
       <div className="container max-w-7xl mx-auto relative z-10 px-6">
@@ -346,10 +420,12 @@ export default function VideoFeedSection() {
               <Film size={16} /> Student Showcase
             </h4>
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
-           <span className="text-gray-300">The</span>    <span className="text-purple-500">Vision</span>{" "}
+              <span className="text-gray-300">The</span>{" "}
+              <span className="text-purple-500">Vision</span>{" "}
               <span className="bg-linear-to-t from-nazli-purple to-nazli-golden bg-clip-text text-transparent">
                 in
-              </span><br/>
+              </span>
+              <br />
               <span className="text-nazli-golden">Motion</span>
             </h2>
           </div>
@@ -473,6 +549,7 @@ const VideoCard = React.memo(function VideoCard({
           alt={`${video.title} thumbnail`}
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
+          decoding="async"
         />
       ) : (
         <div

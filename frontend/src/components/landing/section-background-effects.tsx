@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 type Point = {
@@ -361,7 +361,28 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
-function useSectionMousePosition() {
+function useLowPerformanceMode() {
+  const prefersReducedMotion = useReducedMotion();
+  const [isLowPowerHardware, setIsLowPowerHardware] = useState(false);
+
+  useEffect(() => {
+    const navWithHints = navigator as Navigator & { deviceMemory?: number };
+
+    const lowMemory =
+      typeof navWithHints.deviceMemory === "number" &&
+      navWithHints.deviceMemory <= 4;
+    const lowCpuCores =
+      typeof navigator.hardwareConcurrency === "number" &&
+      navigator.hardwareConcurrency <= 4;
+    const updateSlow = window.matchMedia("(update: slow)").matches;
+
+    setIsLowPowerHardware(lowMemory || lowCpuCores || updateSlow);
+  }, []);
+
+  return prefersReducedMotion || isLowPowerHardware;
+}
+
+function useSectionMousePosition(enabled = true) {
   const containerRef = useRef<HTMLDivElement>(null);
   const nextStateRef = useRef<MousePosition>({
     x: 50,
@@ -375,6 +396,8 @@ function useSectionMousePosition() {
   });
 
   useEffect(() => {
+    if (!enabled) return;
+
     let frameId: number | null = null;
 
     const flushFrame = () => {
@@ -420,15 +443,27 @@ function useSectionMousePosition() {
         window.cancelAnimationFrame(frameId);
       }
     };
-  }, []);
+  }, [enabled]);
 
   return { containerRef, mouse };
 }
 
 export function NebulaDriftBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
   const lineShiftX = mouse.active ? ((mouse.x - 50) / 50) * 7 : 0;
   const lineShiftY = mouse.active ? ((mouse.y - 50) / 50) * 5 : 0;
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -537,7 +572,19 @@ export function NebulaDriftBackground() {
 }
 
 export function ElectricRootfieldBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -655,7 +702,19 @@ export function ElectricRootfieldBackground() {
 }
 
 export function AuroraMeshBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -775,9 +834,21 @@ export function AuroraMeshBackground() {
 }
 
 export function IsometricNeonCityBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
   const glowX = mouse.active ? mouse.x : 58;
   const glowY = mouse.active ? mouse.y : 42;
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -867,7 +938,8 @@ export function IsometricNeonCityBackground() {
 }
 
 export function MagneticSandFieldBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef(mouse);
 
@@ -876,6 +948,8 @@ export function MagneticSandFieldBackground() {
   }, [mouse]);
 
   useEffect(() => {
+    if (lowPerformanceMode) return;
+
     const canvas = canvasRef.current;
     const host = containerRef.current;
     if (!canvas || !host) return;
@@ -1006,7 +1080,18 @@ export function MagneticSandFieldBackground() {
       resizeObserver.disconnect();
       window.cancelAnimationFrame(rafId);
     };
-  }, [containerRef]);
+  }, [containerRef, lowPerformanceMode]);
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -1041,7 +1126,19 @@ export function MagneticSandFieldBackground() {
 }
 
 export function PrismGlassShardsBackground() {
+  const lowPerformanceMode = useLowPerformanceMode();
   const containerRef = useRef<HTMLDivElement>(null);
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -1098,7 +1195,19 @@ export function PrismGlassShardsBackground() {
 }
 
 export function BioluminescentReefBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -1194,7 +1303,8 @@ export function BioluminescentReefBackground() {
 }
 
 export function CircuitPulseMatrixBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
   const cols = 12;
   const rows = 8;
   const pulseTracks = Array.from({ length: 18 }, (_, index) => {
@@ -1210,6 +1320,17 @@ export function CircuitPulseMatrixBackground() {
       duration: 2.6 + (index % 4) * 0.5,
     };
   });
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -1315,7 +1436,8 @@ export function CircuitPulseMatrixBackground() {
 }
 
 export function SolarWindBandsBackground() {
-  const { containerRef, mouse } = useSectionMousePosition();
+  const lowPerformanceMode = useLowPerformanceMode();
+  const { containerRef, mouse } = useSectionMousePosition(!lowPerformanceMode);
   const bands = Array.from({ length: 8 }, (_, index) => ({
     y: 10 + index * 11.6,
     height: 8 + (index % 3) * 2,
@@ -1323,6 +1445,17 @@ export function SolarWindBandsBackground() {
     duration: 8 + (index % 4) * 1.4,
     opacity: 0.15 + (index % 4) * 0.06,
   }));
+
+  if (lowPerformanceMode) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none z-0"
+        style={{ background: SHARED_PURPLE_SPACE }}
+      >
+        <div className="absolute inset-0" style={{ background: BASE_VIGNETTE }} />
+      </div>
+    );
+  }
 
   return (
     <div

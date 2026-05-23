@@ -5,6 +5,11 @@ import type { IconType } from "react-icons";
 import SocialHub from "./social-media-section";
 import { ElectricRootfieldBackground } from "./section-background-effects";
 import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import CoursesImage from "../../assets/Globalbackground.png";
+import {
   FaBrain,
   FaRobot,
   FaCode,
@@ -459,9 +464,21 @@ export default function Courses() {
   return (
     <section
       id="courses"
-      className="min-h-screen pt-32 pb-20 px-6 relative overflow-x-hidden scroll-mt-28"
+      className="min-h-screen pt-32 pb-20 px-6 relative overflow-x-hidden scroll-mt-28 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${CoursesImage})`,
+        backgroundAttachment: "fixed",
+      }}
     >
-      <ElectricRootfieldBackground />
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(
+            LANDING_OVERLAY_DIMNESS.courses,
+          ),
+        }}
+      />
 
       <motion.div
         className="absolute inset-0 opacity-45 blur-[120px] pointer-events-none z-[1]"
@@ -486,13 +503,17 @@ export default function Courses() {
                 <span className="text-white">Our </span>
                 <span
                   className="relative inline-block bg-gradient-to-r from-purple-300 via-purple-400 to-amber-300 bg-clip-text pr-8 text-transparent"
-                  style={{ clipPath: "polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%)" }}
+                  style={{
+                    clipPath: "polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%)",
+                  }}
                 >
                   Courses
                 </span>
               </h1>
               <p className="text-white/70 text-xl max-w-2xl mx-auto font-medium">
-                <span className="code-tag">Select a path to begin your journey</span>
+                <span className="code-tag">
+                  Select a path to begin your journey
+                </span>
               </p>
             </motion.div>
 
@@ -650,11 +671,13 @@ export default function Courses() {
                     </p>
 
                     <div className="flex flex-wrap gap-4 mb-12">
-                      <a 
-                      className="bg-nazli-purple text-nazli-golden px-10 py-5 rounded-2xl font-bold flex items-center gap-2 hover:brightness-110 transition-all duration-150 hover:scale-[1.02] active:scale-95"
-                      href="https://calendar.app.google/eq7krfDvWy73Gk8o9" target="_blank" rel="noopener noreferrer"> 
+                      <a
+                        className="bg-nazli-purple text-nazli-golden px-10 py-5 rounded-2xl font-bold flex items-center gap-2 hover:brightness-110 transition-all duration-150 hover:scale-[1.02] active:scale-95"
+                        href="https://calendar.app.google/eq7krfDvWy73Gk8o9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Calendar size={18} /> Book Consultation
-                        
                       </a>
                       <a
                         href={selectedCourse.udemy}
@@ -703,6 +726,8 @@ export default function Courses() {
                       src={selectedCourse.video}
                       className="w-full h-full"
                       title="Course Teaser"
+                      loading="lazy"
+                      referrerPolicy="strict-origin-when-cross-origin"
                       allowFullScreen
                     />
                   </div>

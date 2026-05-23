@@ -5,6 +5,11 @@ import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import SocialHub from "./social-media-section";
 import { NebulaDriftBackground } from "./section-background-effects";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import HeroImage from "../../assets/Globalbackground.png";
 
 export function HeroSection() {
   const sentences = [
@@ -51,16 +56,26 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden pt-28 pb-16 md:py-28 scroll-mt-28"
+      className="relative min-h-screen overflow-hidden pt-28 pb-16 md:py-28 scroll-mt-28 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${HeroImage})`,
+        backgroundAttachment: "fixed",
+      }}
     >
-      <NebulaDriftBackground />
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(LANDING_OVERLAY_DIMNESS.hero),
+        }}
+      />
 
-      <div className="container relative z-10 px-4 md:px-6 max-w-4xl min-h-[76vh] md:min-h-[78vh] flex items-start md:items-center justify-center">
+      <div className="container relative z-10 px-4 md:px-6 max-w-8xl min-h-[76vh] md:min-h-[78vh] flex items-start md:items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full text-center space-y-8 pt-10 sm:pt-12 md:pt-0"
+          className="w-full max-w-5xl mx-auto text-center space-y-8 pt-10 sm:pt-12 md:pt-0 flex flex-col items-center"
         >
           {/* Badge */}
           <motion.div
@@ -76,22 +91,22 @@ export function HeroSection() {
           </motion.div>
 
           {/* Main Heading */}
-          <div className="space-y-4">
+          <div className="w-full space-y-4">
             <motion.h1
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
             >
-              <span className="text-nazli-white">Online</span>
-              <br />
+              {/* <span className="text-nazli-purple neon-glow-golden">Nazli</span> */}
+
               <motion.span
                 className="text-nazli-purple neon-glow-golden"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
-                Tech School
+                Nazli Tech School
               </motion.span>
             </motion.h1>
           </div>
@@ -101,7 +116,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-2xl md:text-3xl text-nazli-gray font-light h-16 md:h-20 flex items-center justify-center"
+            className="w-full text-2xl md:text-3xl text-nazli-gray font-light h-16 md:h-20 flex items-center justify-center"
           >
             <span className="typewriter drop-shadow-[0_0_22px_rgba(168,85,247,0.35)]">
               {displayText}
@@ -113,9 +128,9 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="space-y-4"
+            className="w-full space-y-4"
           >
-            <p className="text-lg md:text-xl text-nazli-gray leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-nazli-gray leading-relaxed max-w-3xl mx-auto text-center">
               Nazli Tech School's{" "}
               <span className="code-tag font-semibold text-nazli-white">
                 Cognoscentia
@@ -160,7 +175,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="grid grid-cols-3 gap-6 md:gap-12 pt-12 md:pt-16 "
+            className="w-full max-w-3xl mx-auto grid grid-cols-3 gap-6 md:gap-12 pt-12 md:pt-16"
           >
             {[
               { value: "10K+", label: "Students" },
@@ -169,7 +184,7 @@ export function HeroSection() {
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
-                className="space-y-2 data-display"
+                className="space-y-2 data-display text-center"
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
               >

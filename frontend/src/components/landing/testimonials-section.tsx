@@ -3,6 +3,12 @@
 import { motion } from "framer-motion";
 import SocialHub from "./social-media-section";
 import { CircuitPulseMatrixBackground } from "./section-background-effects";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import TestimonialBackground from "../../assets/Globalbackground.png";
+import { ArrowUpRight, Code, Cpu, Puzzle } from "lucide-react";
 const testimonials = [
   {
     name: "Abu Khadijah",
@@ -102,11 +108,23 @@ export function TestimonialsSection() {
       <section
         id="reviews"
         className="py-32 relative overflow-x-hidden scroll-mt-28"
+        style={{
+          backgroundImage: `url(${TestimonialBackground})`,
+          backgroundAttachment: "fixed",
+        }}
       >
-        <CircuitPulseMatrixBackground />
         <div className="pointer-events-none absolute right-10 top-16 h-64 w-64 rounded-full bg-purple-600/20 blur-[110px]" />
         <div className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-cyan-400/15 blur-[120px]" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+        {/* Overlay for better text readability */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: createOverlayGradient(
+              LANDING_OVERLAY_DIMNESS.simulation,
+            ),
+          }}
+        />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <motion.div
@@ -125,10 +143,15 @@ export function TestimonialsSection() {
               </span>
             </h2>
             <p className="mt-5 text-base md:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-              Real voices from learners building confidence, projects, and careers through Nazli Tech School.
+              Real voices from learners building confidence, projects, and
+              careers through Nazli Tech School.
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs">
-              {["Verified learners", "Global community", "Mentor-led support"].map((item) => (
+              {[
+                "Verified learners",
+                "Global community",
+                "Mentor-led support",
+              ].map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-purple-300/40 bg-purple-500/15 px-4 py-2 font-semibold text-white/85 backdrop-blur-sm"
@@ -208,7 +231,20 @@ export function TestimonialsSection() {
       <section
         id="flexibility"
         className="py-32 relative overflow-x-hidden scroll-mt-28 bg-[radial-gradient(circle_at_top,rgba(99,33,197,0.2),rgba(0,0,0,1)_54%)]"
+        style={{
+          backgroundImage: `url(${TestimonialBackground})`,
+          backgroundAttachment: "fixed",
+        }}
       >
+        {/* Overlay for better text readability */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: createOverlayGradient(
+              LANDING_OVERLAY_DIMNESS.simulation,
+            ),
+          }}
+        />
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

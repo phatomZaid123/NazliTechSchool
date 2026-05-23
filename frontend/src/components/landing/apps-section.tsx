@@ -2,6 +2,12 @@
 
 import { motion } from "framer-motion";
 import SocialHub from "./social-media-section";
+import AppBackground from "../../assets/Globalbackground.png";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import { ArrowUpRight, Code, Cpu, Puzzle } from "lucide-react";
 
 const APPS = [
   {
@@ -134,13 +140,22 @@ export function AppsSection() {
     <section
       id="apps"
       className="relative min-h-screen bg-gradient-to-b from-background to-background/50 pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
+      style={{
+        backgroundImage: `url(${AppBackground})`,
+        backgroundAttachment: "fixed",
+      }}
     >
-      {/* Cosmic Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-600/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 blur-[120px] rounded-full" />
-      </div>
     
+       {/* Overlay for better text readability */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: createOverlayGradient(
+              LANDING_OVERLAY_DIMNESS.simulation,
+            ),
+          }}
+        />
+
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -157,7 +172,8 @@ export function AppsSection() {
             <span className="text-purple-500">Yourself</span>
           </h1>
           <p className="text-white/60 text-xl max-w-2xl mx-auto font-medium">
-          Explore Nazli Tech’s AI toolchain for notes, project ideas, quizzes, labs, learning styles, and creative study workflows.
+            Explore Nazli Tech’s AI toolchain for notes, project ideas, quizzes,
+            labs, learning styles, and creative study workflows.
           </p>
         </motion.div>
 

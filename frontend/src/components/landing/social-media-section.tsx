@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { memo } from "react";
 
 // --- Custom Official Brand SVG Components ---
 const TikTokIcon = () => (
@@ -73,22 +74,9 @@ const SOCIAL_PLATFORMS = [
   { name: "TPT", handle: "Nazli Tech", url: "https://teacherspayteachers.com", icon: TPTIcon, brandColor: "#55B336" },
 ];
 
-export default function SocialHub() {
+const SocialHub = memo(function SocialHub() {
   return (
     <section className="relative z-10 mt-16 w-full px-4 md:mt-20">
-      {/* Animation Definition (React Safe) */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes spin-gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-border-spin {
-          background-size: 200% 200%;
-          animation: spin-gradient 3s linear infinite;
-        }
-      `}} />
-
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-10 text-center md:text-left">
           <h4 className="mb-2 text-[11px] font-black uppercase tracking-[0.3em] text-amber-300 sm:text-xs">
@@ -150,4 +138,6 @@ export default function SocialHub() {
       </div>
     </section>
   );
-}
+});
+
+export default SocialHub;

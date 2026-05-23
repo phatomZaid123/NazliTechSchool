@@ -4,20 +4,27 @@ import { UdemyCoursesModal } from "@/components/landing/udemy-courses-modal";
 import { MascotGuide } from "@/components/landing/mascot-guide";
 import { HeroSection } from "@/components/landing/hero-section";
 import { Suspense, lazy, useEffect, useState } from "react";
-import VideoFeedSection from "@/components/landing/video-feed-section";
-import { TestimonialsSection } from "@/components/landing/testimonials-section";
-import { AppsSection } from "@/components/landing/apps-section";
-import  Courses  from "@/components/landing/courses-section";
-import SimulationSection from "@/components/landing/simulation-section";
 
 // Lazy load components that appear below the fold
+const VideoFeedSection = lazy(() => import("@/components/landing/video-feed-section"));
+const Courses = lazy(() => import("@/components/landing/courses-section"));
+const SimulationSection = lazy(() => import("@/components/landing/simulation-section"));
+const AppsSection = lazy(() =>
+  import("@/components/landing/apps-section").then((m) => ({
+    default: m.AppsSection,
+  })),
+);
+const TestimonialsSection = lazy(() =>
+  import("@/components/landing/testimonials-section").then((m) => ({
+    default: m.TestimonialsSection,
+  })),
+);
 
 const CurriculumSection = lazy(() =>
   import("@/components/landing/curriculum-section").then((m) => ({
     default: m.CurriculumSection,
   })),
 );
-
 
 const Articles = lazy(() => import("@/components/landing/articles-section"));
 const AboutSection = lazy(() =>
@@ -26,11 +33,6 @@ const AboutSection = lazy(() =>
   })),
 );
 
-// const GlobalLearningSection = lazy(() =>
-//   import("@/components/landing/global-learning-section").then((m) => ({
-//     default: m.GlobalLearningSection,
-//   })),
-// );
 const PricingSection = lazy(() =>
   import("@/components/landing/pricing-section").then((m) => ({
     default: m.PricingSection,
@@ -42,25 +44,21 @@ const QuestionsSection = lazy(() =>
     default: m.QuestionsSection,
   })),
 );
-// const CTASection = lazy(() =>
-//   import("@/components/landing/cta-section").then((m) => ({
-//     default: m.CTASection,
+
+// const Footer = lazy(() =>
+//   import("@/components/landing/footer").then((m) => ({
+//     default: m.Footer,
 //   })),
 // );
-const Footer = lazy(() =>
-  import("@/components/landing/footer").then((m) => ({
-    default: m.Footer,
-  })),
-);
 
 export function LandingPage() {
   const [showUdemyModal, setShowUdemyModal] = useState(false);
 
   useEffect(() => {
-    // Show modal after loading screen finishes (4 seconds)
-    const timer = setTimeout(() => {
+    // Let the page settle before showing the modal.
+    const timer = window.setTimeout(() => {
       setShowUdemyModal(true);
-    }, 4000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -75,6 +73,67 @@ export function LandingPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const root = document.documentElement;
+    const keyboardScrollKeys = new Set([
+      "ArrowUp",
+      "ArrowDown",
+      "PageUp",
+      "PageDown",
+      "Home",
+      "End",
+      " ",
+    ]);
+    let releaseTimer: number | undefined;
+
+    const isEditableTarget = () => {
+      const active = document.activeElement;
+      if (!(active instanceof HTMLElement)) return false;
+      if (active.isContentEditable) return true;
+
+      const tag = active.tagName;
+      return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+    };
+
+    const releaseKeyboardScroll = () => {
+      if (releaseTimer) {
+        window.clearTimeout(releaseTimer);
+      }
+
+      releaseTimer = window.setTimeout(() => {
+        root.classList.remove("landing-keyboard-scroll");
+      }, 140);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!keyboardScrollKeys.has(event.key)) return;
+      if (isEditableTarget()) return;
+
+      if (event.repeat) {
+        root.classList.add("landing-keyboard-scroll");
+      } else {
+        releaseKeyboardScroll();
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (!keyboardScrollKeys.has(event.key)) return;
+      releaseKeyboardScroll();
+    };
+
+    window.addEventListener("keydown", handleKeyDown, { passive: true });
+    window.addEventListener("keyup", handleKeyUp, { passive: true });
+
+    return () => {
+      if (releaseTimer) {
+        window.clearTimeout(releaseTimer);
+      }
+      root.classList.remove("landing-keyboard-scroll");
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
   return (
     <main data-landing-page="true" className="relative min-h-screen">
       <AnnouncementBar />
@@ -85,29 +144,22 @@ export function LandingPage() {
 
       <div className="relative z-10 pt-28">
         <Navbar />
-        {/* <BackgroundPreview /> */}
-        <HeroSection />
-        <VideoFeedSection />
-        <Courses />
-        <CurriculumSection />
-
-        {/* Lazy loaded sections */}
-        {/* <Suspense fallback={null}> */}
       
-       
-        
+        <HeroSection />
+        <Suspense fallback={null}>
+          <VideoFeedSection />
+          <Courses />
+          <CurriculumSection />
           <SimulationSection />
           <AppsSection />
-
           <PricingSection />
           <TestimonialsSection />
-
           <Articles />
           <AboutSection />
           <QuestionsSection />
           {/* <CTASection /> */}
-          <Footer />
-        {/* </Suspense> */}
+          {/* <Footer /> */}
+        </Suspense>
 
         {/* <MascotGuide /> */}
       </div>

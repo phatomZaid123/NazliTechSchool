@@ -1,203 +1,245 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, Sparkles, Zap, Crown, Users } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, Crown, Gem, Medal, Shield, Sparkles } from "lucide-react";
 import SocialHub from "./social-media-section";
-import { BioluminescentReefBackground } from "./section-background-effects";
+import PricingBackground from "../../assets/Globalbackground.png";
+import {
+   LANDING_OVERLAY_DIMNESS,
+   createOverlayGradient,
+ } from "./section-overlay-dimness";
 
 const pricingPlans = [
   {
-    id: "starter",
-    name: "Explorer",
-    description: "Perfect for curious minds starting their journey",
-    icon: Zap,
-    color: "from-cyan-500 to-blue-600",
-    glowColor: "rgba(6, 182, 212, 0.3)",
+    id: "silver",
+    name: "Silver",
+    duration: "1 month package",
+    months: 1,
+    icon: Shield,
+    color: "from-slate-300 via-slate-400 to-slate-500",
+    cardTone:
+      "from-nazli-purple/20 via-background/82 to-nazli-golden/10 border-nazli-gray/35",
+    iconTint: "text-slate-200/70",
     features: [
-      "Access to 10+ foundational courses",
-      "Basic physics & chemistry simulations",
-      "Community forum access",
-      "Weekly live Q&A sessions",
-      "Progress tracking dashboard",
-      "Mobile app access",
+      "Ideal for learners getting started",
+      "Flexible and short commitment",
+      "Billed in euro currency (EUR)",
     ],
-    highlighted: false,
   },
   {
-    id: "pro",
-    name: "Innovator",
-    description: "For ambitious learners ready to excel",
+    id: "gold",
+    name: "Gold",
+    duration: "3 month package",
+    months: 3,
+    icon: Medal,
+    color: "from-amber-300 via-yellow-400 to-amber-500",
+    cardTone:
+      "from-nazli-golden/22 via-background/80 to-nazli-purple/12 border-nazli-golden/40",
+    iconTint: "text-amber-300/65",
+    features: [
+      "Balanced pace for sustained growth",
+      "Great for building consistency",
+      "Billed in euro currency (EUR)",
+    ],
+  },
+  {
+    id: "ruby",
+    name: "Ruby",
+    duration: "6 month package",
+    months: 6,
+    icon: Gem,
+    color: "from-rose-400 via-red-500 to-rose-600",
+    cardTone:
+      "from-rose-500/20 via-background/80 to-nazli-purple/10 border-rose-400/35",
+    iconTint: "text-rose-300/65",
+    features: [
+      "Strong medium-term momentum",
+      "Perfect for deeper skill building",
+      "Billed in euro currency (EUR)",
+    ],
+  },
+  {
+    id: "safire",
+    name: "Safire",
+    duration: "9 month package",
+    months: 9,
+    icon: Sparkles,
+    color: "from-sky-300 via-cyan-500 to-blue-600",
+    cardTone:
+      "from-cyan-500/18 via-background/80 to-nazli-purple/12 border-cyan-400/35",
+    iconTint: "text-cyan-300/65",
+    features: [
+      "Extended track for long-term mastery",
+      "Designed for steady advanced progress",
+      "Billed in euro currency (EUR)",
+    ],
+  },
+  {
+    id: "diamond",
+    name: "Diamond",
+    duration: "12 month package",
+    months: 12,
     icon: Crown,
-    color: "from-purple-500 to-pink-600",
-    glowColor: "rgba(168, 85, 247, 0.4)",
+    color: "from-violet-400 via-fuchsia-500 to-pink-600",
+    cardTone:
+      "from-nazli-purple/28 via-background/75 to-nazli-golden/14 border-violet-400/45",
+    iconTint: "text-violet-200/70",
     features: [
-      "All Explorer features",
-      "Access to 60+ premium courses",
-      "Advanced lab simulations",
-      "AI-powered personalized learning",
-      "1-on-1 mentor sessions (2/month)",
-      "Project-based certifications",
-      "Priority support",
-      "Offline downloads",
+      "Full-year commitment package",
+      "Best for complete learning journeys",
+      "Billed in euro currency (EUR)",
     ],
-    highlighted: true,
-   
-  },
-  {
-    id: "enterprise",
-    name: "Institution",
-    description: "Complete solution for schools & organizations",
-    icon: Users,
-    color: "from-amber-500 to-orange-600",
-    glowColor: "rgba(245, 158, 11, 0.3)",
-    features: [
-      "All Innovator features",
-      "Unlimited team seats",
-      "Custom curriculum builder",
-      "White-label options",
-      "Analytics & reporting dashboard",
-      "Dedicated success manager",
-      "API access",
-      "SLA guarantee",
-    ],
-    highlighted: false,
   },
 ];
 
-export function PricingSection() {
-  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+function createPackageMailto(plan: (typeof pricingPlans)[number]) {
+  const recipient = "admissions@nazlitech.org";
+  const subject = `Package Request - ${plan.name} (${plan.months} ${plan.months === 1 ? "Month" : "Months"})`;
+  const body = `Hello Nazli Tech Team,
 
+I would like to enroll in this package:
+- Package: ${plan.name}
+- Duration: ${plan.duration}
+- Currency: EUR (€)
+
+My details:
+- Full name:
+- Student age:
+- Preferred course:
+- Country / Timezone:
+- Preferred start date:
+
+Thank you.`;
+
+  return `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+export function PricingSection() {
   return (
     <section
       id="pricing"
-      className="relative py-32 overflow-hidden scroll-mt-28"
+      className="relative overflow-hidden py-32 scroll-mt-28"
+      style={{
+        backgroundImage: `url(${PricingBackground})`,
+        backgroundAttachment: "fixed",
+      }}
     >
-      {/* <BioluminescentReefBackground /> */}
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(
+            LANDING_OVERLAY_DIMNESS.simulation,
+          ),
+        }}
+      />
 
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+      <div className="pointer-events-none absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-nazli-golden/20 blur-[120px]" />
+      <div className="pointer-events-none absolute right-0 top-1/3 h-80 w-80 rounded-full bg-nazli-purple/15 blur-[140px]" />
+      <div className="container relative z-10 mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mx-auto mb-16 max-w-3xl text-center"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
-            className="code-tag inline-flex mb-6"
+            className="code-tag mb-6 inline-flex"
           >
-            // Flexible Plans for Everyone
+            // Packages Billed in Euro (EUR)
           </motion.div>
 
-          <h2 className="text-5xl md:text-6xl font-bold mb-5">
-            Simple{" "}
-            <span className="bg-gradient-to-r from-nazli-golden to-nazli-purple bg-clip-text text-transparent ">
-              Pricing
+          <h2 className="mb-5 text-5xl font-bold md:text-6xl">
+            Choose Your{" "}
+            <span className="bg-linear-to-r from-nazli-golden to-nazli-purple bg-clip-text text-transparent">
+              Learning Package
             </span>
           </h2>
 
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose the perfect plan to unlock your potential. All plans include
-            access to our global learning community.
+            Pick a package duration that fits your goals. All plans are billed
+            in euro currency and designed for flexible learning paths.
           </p>
         </motion.div>
 
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-24 md:mb-35">
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-5 mb-24 md:mb-35">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onMouseEnter={() => setHoveredPlan(plan.id)}
-              onMouseLeave={() => setHoveredPlan(null)}
-              className={`relative rounded-3xl p-8 transition-all duration-500 ${
-                plan.highlighted
-                  ? "bg-gradient-to-b from-purple-500/20 to-cyan-500/10 border-2 border-purple-500/50 scale-105"
-                  : "bg-secondary/30 border border-border hover:border-purple-500/30"
-              }`}
-              style={{
-                boxShadow:
-                  hoveredPlan === plan.id
-                    ? `0 0 60px ${plan.glowColor}`
-                    : "none",
-              }}
+              transition={{ delay: index * 0.08 }}
+              whileHover={{ y: -6, scale: 1.01 }}
+              className={`group relative overflow-hidden rounded-3xl border bg-linear-to-br p-6 transition-all duration-300 hover:shadow-xl hover:shadow-nazli-purple/10 ${plan.cardTone}`}
             >
-             
-              {/* Plan Icon */}
-              <div
-                className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${plan.color} flex items-center justify-center mb-6`}
+              <motion.div
+                aria-hidden="true"
+                animate={{ y: [0, -8, 0], rotate: [0, 4, 0] }}
+                transition={{
+                  duration: 5.5 + index * 0.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+                className={`pointer-events-none absolute -right-7 -top-7 ${plan.iconTint} opacity-25`}
               >
-                <plan.icon className="w-8 h-8 text-white" />
+                <plan.icon className="h-24 w-24" strokeWidth={1.4} />
+              </motion.div>
+
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(219,172,52,0.18),transparent_45%),radial-gradient(circle_at_10%_100%,rgba(71,0,71,0.22),transparent_40%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+              />
+
+              <div className="relative z-10 mb-5 flex items-center gap-3">
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br ${plan.color} shadow-sm ring-1 ring-white/20`}
+                >
+                  <plan.icon className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground">
+                  {plan.name}
+                </h3>
               </div>
 
-              {/* Plan Name */}
-              <h3 className="text-2xl font-bold text-foreground mb-2 function-call">
-                {plan.name}
-              </h3>
-              <p className="text-muted-foreground mb-6 code-inline px-3 py-1 w-fit">
-                {plan.description}
+              <div className="relative z-10 mb-5 rounded-2xl border border-border/40 bg-background/60 p-4 backdrop-blur-xs">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                  Duration
+                </p>
+                <p className="mt-2 text-4xl font-black leading-none text-foreground">
+                  {plan.months}
+                </p>
+                <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                  {plan.months === 1 ? "Month" : "Months"}
+                </p>
+              </div>
+
+              <p className="relative z-10 mb-4 inline-flex rounded-full bg-foreground/5 px-3 py-1 text-xs font-semibold text-muted-foreground">
+                {plan.duration}
               </p>
 
-              {/* Price */}
-              <div className="mb-8 data-display">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="flex items-baseline gap-2"
-                  >
-                    <span className="text-3xl font-bold text-foreground"> 
-                      {plan.id === "starter"
-                        ? "$9"
-                        : plan.id === "pro"
-                        ? "$29"
-                        : "$99"}
-                    </span>
-                    <span className="text-sm text-muted-foreground">/month</span>
-                  </motion.div>
-                </AnimatePresence>
-              </div>  
-                
-
-              {/* Features */}
-              <ul className="space-y-4 mb-8">
+              <ul className="relative z-10 mb-6 space-y-3">
                 {plan.features.map((feature, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.05 }}
-                    className="flex items-start gap-3 font-mono text-sm"
-                  >
-                    <span className="text-nazli-golden font-bold">✓</span>
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-nazli-golden" />
                     <span className="text-muted-foreground">{feature}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
 
-              {/* CTA Button */}
-              <button
-                className={`w-full py-6 rounded-lg font-semibold text-lg transition-all duration-300 ${
-                  plan.highlighted
-                    ? "bg-foreground text-background shadow-sm hover:shadow-md"
-                    : "border border-foreground/20 bg-transparent text-foreground hover:bg-foreground/5"
-                }`}
+              <a
+                href={createPackageMailto(plan)}
+                className="relative z-10 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
               >
-                Get Started
-              </button>
+                Get Package
+              </a>
             </motion.div>
           ))}
         </div>
       </div>
-
       <SocialHub />
     </section>
   );

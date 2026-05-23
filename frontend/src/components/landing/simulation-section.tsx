@@ -13,6 +13,11 @@ import {
   PrismGlassShardsBackground,
 } from "./section-background-effects";
 import SocialHub from "./social-media-section";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import SimulationImage from "../../assets/Globalbackground.png";
 
 // Mock data structure: Courses -> Subjects -> Topics with YouTube links
 const COURSE_DATA = {
@@ -131,9 +136,21 @@ export default function Simulation() {
     return (
       <section
         id="simulation"
-        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden scroll-mt-28"
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden scroll-mt-28 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${SimulationImage})`,
+          backgroundAttachment: 'fixed'
+        }}
       >
-        <IsometricNeonCityBackground />
+        {/* Overlay for better text readability */}
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: createOverlayGradient(
+              LANDING_OVERLAY_DIMNESS.simulation,
+            ),
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -183,8 +200,21 @@ export default function Simulation() {
   return (
     <section
       id="simulation"
-      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
+      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${SimulationImage})`,
+        backgroundAttachment: 'fixed'
+      }}
     >
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(
+            LANDING_OVERLAY_DIMNESS.simulation,
+          ),
+        }}
+      />
       <PrismGlassShardsBackground />
 
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -309,9 +339,11 @@ export default function Simulation() {
           >
             <div className="aspect-video bg-black rounded-[2.5rem] border border-white/10 overflow-hidden relative group shadow-2xl">
               <img
-                src={`https://picsum.photos/seed/${filters.topics}/1920/1080`}
+                src={`https://picsum.photos/seed/${filters.topics}/1280/720`}
                 alt="Simulation Environment"
                 className="w-full h-full object-cover opacity-40"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center p-12 text-center">

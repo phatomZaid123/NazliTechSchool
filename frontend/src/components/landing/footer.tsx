@@ -101,7 +101,14 @@ export function Footer() {
                 whileHover={{ rotate: [0, -10, 10, -5, 0], scale: 1.1 }}
                 className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/50"
               ></motion.div>
-              <img className="" src={NazliLogo} alt="" />
+              <img
+                className=""
+                src={NazliLogo}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+              />
             </a>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-xs font-light">
               Transforming education through interactive learning, AI guidance,

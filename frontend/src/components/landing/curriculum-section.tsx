@@ -3,6 +3,11 @@
 import { motion } from "framer-motion";
 import { MagneticSandFieldBackground } from "./section-background-effects";
 import SocialHub from "./social-media-section";
+import {
+  LANDING_OVERLAY_DIMNESS,
+  createOverlayGradient,
+} from "./section-overlay-dimness";
+import CurriculumImage from "../../assets/Globalbackground.png";
 
 export function CurriculumSection() {
   const highlights = [
@@ -15,9 +20,21 @@ export function CurriculumSection() {
   return (
     <section
       id="curriculum"
-      className="relative overflow-x-hidden py-32 scroll-mt-28"
+      className="relative overflow-x-hidden py-32 scroll-mt-28 bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: `url(${CurriculumImage})`,
+        backgroundAttachment: "fixed",
+      }}
     >
-      <MagneticSandFieldBackground />
+      {/* Overlay for better text readability */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: createOverlayGradient(
+            LANDING_OVERLAY_DIMNESS.curriculum,
+          ),
+        }}
+      />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         <motion.div
@@ -33,10 +50,11 @@ export function CurriculumSection() {
             Our Curriculum
           </h2>
           <p className="mx-auto max-w-3xl text-xl leading-relaxed text-white/60">
-            Nazli Tech School&apos;s <span className="code-inline">Cognoscentia</span>{" "}
-            curriculum is an educational journey that forges the next generation
-            of tech experts. Our methodology combines theoretical foundations
-            with hands-on practice.
+            Nazli Tech School&apos;s{" "}
+            <span className="code-inline">Cognoscentia</span> curriculum is an
+            educational journey that forges the next generation of tech experts.
+            Our methodology combines theoretical foundations with hands-on
+            practice.
           </p>
         </motion.div>
 
@@ -51,6 +69,7 @@ export function CurriculumSection() {
               className="h-full w-full"
               src="https://www.youtube.com/embed/LO8YHDjxCiM?si=lRhndyT0pMyeelpk"
               title="Nazli Tech School Intro"
+              loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
               allowFullScreen
               referrerPolicy="strict-origin-when-cross-origin"
