@@ -8,11 +8,28 @@ type LoadingScreenProps = {
 
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (!prefersReducedMotion) {
+      const interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) return 100;
+          return prev + Math.random() * 25;
+        });
+      }, 250);
+
+      return () => clearInterval(interval);
+    }
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
     const delay = prefersReducedMotion ? 1000 : 4000;
-    const timer = window.setTimeout(() => setLoading(false), delay);
+    const timer = window.setTimeout(() => {
+      setProgress(100);
+      setLoading(false);
+    }, delay);
     return () => clearTimeout(timer);
   }, [prefersReducedMotion]);
 
@@ -22,73 +39,159 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
     }
   }, [loading, onComplete]);
 
+  const bars = Array.from({ length: 12 });
+  const circles = Array.from({ length: 6 });
+
   return (
     <AnimatePresence>
       {loading && (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[1000] flex items-center justify-center overflow-hidden"
-          style={{
-            background:
-              "radial-gradient(circle at 78% 84%, rgba(122, 56, 244, 0.24) 0%, rgba(122, 56, 244, 0) 42%), radial-gradient(circle at 18% 16%, rgba(78, 26, 168, 0.32) 0%, rgba(78, 26, 168, 0) 38%), linear-gradient(145deg, #080013 0%, #130028 46%, #1f0340 100%)",
-          }}
+          transition={{ duration: 0.6 }}
+          className="fixed inset-0 z-[1000] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950"
         >
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(11, 2, 30, 0) 36%, rgba(4, 0, 10, 0.58) 100%)",
+          {/* Animated grid background */}
+          <div className="pointer-events-none absolute inset-0 opacity-30">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <motion.div
+                key={`h-${i}`}
+                className="absolute w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+                style={{ top: `${i * 5}%` }}
+                animate={prefersReducedMotion ? {} : { opacity: [0.1, 0.3, 0.1] }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: i * 0.1,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Animated corner elements */}
+          <motion.div
+            className="pointer-events-none absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-purple-500/40"
+            animate={prefersReducedMotion ? {} : { opacity: [0.3, 0.6, 0.3] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_28%,rgba(255,255,255,0.08),transparent_52%),radial-gradient(circle_at_72%_76%,rgba(219,172,52,0.16),transparent_44%)]" />
-
           <motion.div
-            initial={{ scale: 0.96, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-            className="relative z-10 flex w-[min(92vw,26rem)] flex-col items-center rounded-3xl border border-white/10 bg-black/35 px-6 py-8 backdrop-blur-lg"
-          >
-            <div className="relative mb-6">
-              <motion.div
-                className="absolute -inset-5 rounded-full border border-nazli-purple/35"
-                animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-                transition={
-                  prefersReducedMotion
-                    ? undefined
-                    : { duration: 10, repeat: Infinity, ease: "linear" }
-                }
-              />
-              <NLogo className="h-24 w-auto md:h-28" interactive={false} loadingFx />
-            </div>
+            className="pointer-events-none absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-yellow-500/40"
+            animate={prefersReducedMotion ? {} : { opacity: [0.3, 0.6, 0.3] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.3,
+            }}
+          />
 
-            <div className="w-full max-w-[16rem]">
-              <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div className="relative z-10 flex flex-col items-center justify-center">
+            {/* Animated circular rings */}
+            <div className="relative mb-12 w-32 h-32 flex items-center justify-center">
+              {circles.map((_, i) => (
                 <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-nazli-purple via-nazli-golden to-nazli-purple"
-                  initial={{ x: "-100%" }}
-                  animate={{ x: "100%" }}
+                  key={i}
+                  className="absolute border border-purple-400/30 rounded-full"
+                  style={{
+                    width: `${(i + 1) * 18}px`,
+                    height: `${(i + 1) * 18}px`,
+                  }}
+                  animate={
+                    prefersReducedMotion
+                      ? {}
+                      : {
+                          rotate: [0, 360],
+                          opacity: [0.2, 0.5, 0.2],
+                        }
+                  }
                   transition={{
-                    duration: prefersReducedMotion ? 0.6 : 1.2,
-                    repeat: Infinity,
-                    ease: "linear",
+                    rotate: {
+                      duration: 8 + i * 1.2,
+                      repeat: Infinity,
+                      ease: "linear",
+                    },
+                    opacity: {
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
                   }}
                 />
-              </div>
+              ))}
+
+              {/* NLogo in center */}
+              <NLogo className="h-20 w-auto relative z-10" interactive={false} loadingFx />
             </div>
 
-            <motion.p
-              className="mt-4 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/45"
-              animate={prefersReducedMotion ? undefined : { opacity: [0.45, 0.9, 0.45] }}
-              transition={
-                prefersReducedMotion
-                  ? undefined
-                  : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }
+            {/* Animated bars at bottom */}
+            <div className="flex items-end gap-1.5 h-20 mb-8">
+              {bars.map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-2 bg-gradient-to-t from-yellow-400 via-purple-500 to-transparent rounded-t-sm"
+                  animate={
+                    prefersReducedMotion
+                      ? { height: "20px" }
+                      : {
+                          height: [8, 40, 12, 35, 20],
+                        }
+                  }
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.08,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Progress text */}
+            <motion.div
+              className="text-center mb-6"
+              animate={
+                prefersReducedMotion ? {} : { y: [0, -2, 0] }
               }
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
-              Initializing Nazli Engine
-            </motion.p>
-          </motion.div>
+              <div className="text-5xl font-light bg-gradient-to-r from-purple-400 via-yellow-400 to-purple-400 bg-clip-text text-transparent mb-2">
+                {Math.min(Math.round(progress), 100)}
+              </div>
+              <div className="text-xs font-medium uppercase tracking-widest text-purple-300/60">
+                Initializing Nazli Engine...
+              </div>
+            </motion.div>
+
+            {/* Loading indicator text */}
+            <div className="flex gap-1">
+              {["L", "O", "A", "D", "I", "N", "G"].map((letter, i) => (
+                <motion.span
+                  key={i}
+                  className="text-sm font-light text-purple-400/60"
+                  animate={
+                    prefersReducedMotion
+                      ? { opacity: 1 }
+                      : { opacity: [0.3, 1, 0.3] }
+                  }
+                  transition={{
+                    duration: 1.2,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                  }}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

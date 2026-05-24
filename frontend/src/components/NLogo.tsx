@@ -88,55 +88,41 @@ export default function NLogo({
         </div>
 
         {/* Text Part */}
-        <div className="ml-1 flex flex-col justify-center">
-          <div className="flex items-baseline">
-            <motion.span
-              className="text-3xl leading-none font-serif font-light tracking-widest text-transparent md:text-5xl"
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, #7f4ea9 0%, #b777d7 32%, #dbac34 52%, #b777d7 72%, #7f4ea9 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                backgroundSize: "220% 100%",
-              }}
-              animate={
-                loadingFx
-                  ? { backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }
-                  : undefined
-              }
-              transition={
-                loadingFx
-                  ? { duration: 2.1, repeat: Infinity, ease: "linear" }
-                  : undefined
-              }
-            >
-              {letters.map((letter, index) => (
-                <motion.span
-                  key={`${letter}-${index}`}
-                  className="inline-block"
-                  animate={
-                    loadingFx
-                      ? {
-                          y: [0, -2.5, 0],
-                          opacity: [0.8, 1, 0.8],
-                        }
-                      : undefined
-                  }
-                  transition={
-                    loadingFx
-                      ? {
-                          duration: 1.1,
-                          delay: index * 0.08,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }
-                      : undefined
-                  }
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </motion.span>
+        <div className="ml-2 md:ml-3 flex flex-col justify-center">
+          <div className="flex items-baseline gap-0">
+            {letters.map((letter, index) => (
+              <motion.span
+                key={`${letter}-${index}`}
+                className="text-2xl md:text-3xl font-serif font-light"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #7f4ea9 0%, #dbac34 50%, #7f4ea9 100%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+                animate={
+                  loadingFx
+                    ? {
+                        y: [0, -2.5, 0],
+                        opacity: [0.8, 1, 0.8],
+                      }
+                    : {}
+                }
+                transition={
+                  loadingFx
+                    ? {
+                        duration: 1.1,
+                        delay: index * 0.08,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                    : {}
+                }
+              >
+                {letter}
+              </motion.span>
+            ))}
           </div>
           <div className="relative mt-1 overflow-hidden rounded-[2px]">
             <div className="flex">
