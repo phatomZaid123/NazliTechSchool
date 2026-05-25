@@ -2,9 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import PerfumeIcon from "@/assets/perfumeicon.png";
+import SpraySound from "@/assets/spray-sound.mp3";
 
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const mouseX = useRef(0);
   const mouseY = useRef(0);
   const displayX = useRef(0);
@@ -16,8 +18,19 @@ export function CustomCursor() {
       mouseY.current = e.clientY;
     };
 
+    const handleClick = () => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0; // Reset sound to start
+        audioRef.current.play();
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("click", handleClick);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("click", handleClick);
+    };
   }, []);
 
   useEffect(() => {
@@ -42,6 +55,9 @@ export function CustomCursor() {
 
   return (
     <>
+      {/* Audio element for spray sound */}
+      <audio ref={audioRef} src={SpraySound} preload="auto" />
+
       {/* Hide default cursor */}
       <style>{`
         * {
