@@ -1,12 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import appsAudio from "@/assets/appsaudio.mp3";
 import SocialHub from "./social-media-section";
-import AppBackground from "../../assets/Globalbackground.png";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
 import { ArrowUpRight, Code, Cpu, Puzzle } from "lucide-react";
 
 const APPS = [
@@ -136,27 +133,17 @@ const buildGmailComposeLink = (app: (typeof APPS)[0]) => {
 };
 
 export function AppsSection() {
+  const sectionRef = useSectionAudio({
+    audioSrc: appsAudio,
+    sectionId: "apps",
+  });
+
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       id="apps"
-      className="relative min-h-screen bg-gradient-to-b from-background to-background/50 pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
-      style={{
-        backgroundImage: `url(${AppBackground})`,
-        backgroundAttachment: "fixed",
-      }}
+      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-    
-       {/* Overlay for better text readability */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: createOverlayGradient(
-              LANDING_OVERLAY_DIMNESS.simulation,
-            ),
-          }}
-        />
-
-
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -171,7 +158,7 @@ export function AppsSection() {
             <span className="text-nazli-golden"> Appify </span>{" "}
             <span className="text-purple-500">Yourself</span>
           </h1>
-          <p className="text-white/60 text-xl max-w-2xl mx-auto font-medium">
+          <p className="text-nazli-white text-xl max-w-2xl mx-auto font-medium">
             Explore Nazli Tech’s AI toolchain for notes, project ideas, quizzes,
             labs, learning styles, and creative study workflows.
           </p>
@@ -185,27 +172,28 @@ export function AppsSection() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -6 }}
             >
-              <div className="relative w-full h-full bg-white/5 border border-white/10 rounded-[3rem] p-8 flex flex-col items-center text-center overflow-hidden backdrop-blur-md">
+              <div className="relative w-full h-full bg-white/[0.04] border border-white/8 hover:border-white/15 rounded-3xl p-8 flex flex-col items-center text-center overflow-hidden backdrop-blur-md transition-all duration-250 shadow-lg shadow-black/20 hover:shadow-black/40 hover:bg-white/[0.06]">
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${app.color} opacity-5 group-hover:opacity-15 transition-opacity duration-500`}
+                  className={`absolute inset-0 bg-gradient-to-br ${app.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}
                 />
 
-                <div className="w-32 h-32 rounded-[2.5rem] bg-white/5 flex items-center justify-center text-6xl mb-8 border border-white/10 shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                <motion.div className="w-32 h-32 rounded-2xl bg-white/5 flex items-center justify-center text-6xl mb-8 border border-white/10 shadow-lg shadow-black/20 transition-all duration-300" whileHover={{ scale: 1.12 }}>
                   {app.icon}
-                </div>
+                </motion.div>
 
                 <div className="flex-1 flex flex-col items-center">
                   <h3 className="text-2xl font-black mb-4 tracking-tight leading-tight">
                     {app.name}
                   </h3>
                   <div
-                    className={`text-[10px] font-black px-3 py-1 rounded-full mb-6 tracking-widest ${app.status === "AVAILABLE" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "bg-purple-500/20 text-purple-400 border border-purple-500/30"}`}
+                    className={`text-[10px] font-black px-3 py-1 rounded-full mb-6 tracking-widest transition-all duration-250 ${app.status === "AVAILABLE" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/30" : "bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30"}`}
                   >
                     {app.status}
                   </div>
-                  <p className="text-white/40 text-sm leading-relaxed font-medium">
+                  <p className="text-white/60 text-sm leading-[1.65] font-medium">
                     {app.desc}
                   </p>
                 </div>

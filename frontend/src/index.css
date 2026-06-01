@@ -311,6 +311,7 @@
   }
 }
 
+
 @layer components {
   /* Gradient text utility */
   .gradient-text {
@@ -877,6 +878,44 @@
   animation: spin-gradient 3s linear infinite;
 }
 
+/* Enhanced transition utilities for card animations */
+@layer utilities {
+  .transition-250 {
+    @apply transition-all duration-250;
+  }
+
+  .transition-smooth {
+    @apply transition-all ease-out duration-300;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply hover:shadow-lg hover:shadow-black/40 transition-all duration-250;
+  }
+
+  .card-lift-sm {
+    @apply hover:translate-y-[-4px] transition-transform duration-250;
+  }
+
+  .card-lift {
+    @apply hover:translate-y-[-8px] transition-transform duration-250;
+  }
+
+  /* Text improvements for better readability */
+  .text-body {
+    @apply text-base leading-[1.65];
+  }
+
+  .text-subtitle {
+    @apply text-lg leading-[1.6];
+  }
+
+  /* Border enhancements */
+  .border-gradient {
+    border-image: linear-gradient(135deg, rgba(219, 172, 52, 0.2), rgba(139, 92, 246, 0.2)) 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce), (update: slow) {
   *,
   *::before,
@@ -887,3 +926,4 @@
     scroll-behavior: auto !important;
   }
 }
+

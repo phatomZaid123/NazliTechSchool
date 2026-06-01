@@ -2,12 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Check, Crown, Gem, Medal, Shield, Sparkles } from "lucide-react";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import pricingAudio from "@/assets/pricingaudio.mp3";
 import SocialHub from "./social-media-section";
-import PricingBackground from "../../assets/Globalbackground.png";
-import {
-   LANDING_OVERLAY_DIMNESS,
-   createOverlayGradient,
- } from "./section-overlay-dimness";
 
 const pricingPlans = [
   {
@@ -15,6 +12,7 @@ const pricingPlans = [
     name: "Silver",
     duration: "1 month package",
     months: 1,
+    price: 120,
     icon: Shield,
     color: "from-slate-300 via-slate-400 to-slate-500",
     cardTone:
@@ -23,7 +21,7 @@ const pricingPlans = [
     features: [
       "Ideal for learners getting started",
       "Flexible and short commitment",
-      "Billed in euro currency (EUR)",
+    
     ],
   },
   {
@@ -31,6 +29,7 @@ const pricingPlans = [
     name: "Gold",
     duration: "3 month package",
     months: 3,
+    price: 345,
     icon: Medal,
     color: "from-amber-300 via-yellow-400 to-amber-500",
     cardTone:
@@ -39,7 +38,7 @@ const pricingPlans = [
     features: [
       "Balanced pace for sustained growth",
       "Great for building consistency",
-      "Billed in euro currency (EUR)",
+      
     ],
   },
   {
@@ -47,6 +46,7 @@ const pricingPlans = [
     name: "Ruby",
     duration: "6 month package",
     months: 6,
+    price: 660,
     icon: Gem,
     color: "from-rose-400 via-red-500 to-rose-600",
     cardTone:
@@ -55,14 +55,15 @@ const pricingPlans = [
     features: [
       "Strong medium-term momentum",
       "Perfect for deeper skill building",
-      "Billed in euro currency (EUR)",
+      
     ],
   },
   {
     id: "safire",
-    name: "Safire",
+    name: "Sapphire",
     duration: "9 month package",
     months: 9,
+    price: 945,
     icon: Sparkles,
     color: "from-sky-300 via-cyan-500 to-blue-600",
     cardTone:
@@ -71,7 +72,7 @@ const pricingPlans = [
     features: [
       "Extended track for long-term mastery",
       "Designed for steady advanced progress",
-      "Billed in euro currency (EUR)",
+    
     ],
   },
   {
@@ -79,6 +80,7 @@ const pricingPlans = [
     name: "Diamond",
     duration: "12 month package",
     months: 12,
+    price: 1200,
     icon: Crown,
     color: "from-violet-400 via-fuchsia-500 to-pink-600",
     cardTone:
@@ -87,7 +89,7 @@ const pricingPlans = [
     features: [
       "Full-year commitment package",
       "Best for complete learning journeys",
-      "Billed in euro currency (EUR)",
+     
     ],
   },
 ];
@@ -115,33 +117,23 @@ Thank you.`;
 }
 
 export function PricingSection() {
+  const sectionRef = useSectionAudio({
+    audioSrc: pricingAudio,
+    sectionId: "pricing",
+  });
+
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       id="pricing"
       className="relative overflow-hidden py-32 scroll-mt-28"
-      style={{
-        backgroundImage: `url(${PricingBackground})`,
-        backgroundAttachment: "fixed",
-      }}
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.simulation,
-          ),
-        }}
-      />
-
-      <div className="pointer-events-none absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-nazli-golden/20 blur-[120px]" />
-      <div className="pointer-events-none absolute right-0 top-1/3 h-80 w-80 rounded-full bg-nazli-purple/15 blur-[140px]" />
-      <div className="container relative z-10 mx-auto px-4">
+      <div className="container relative z-10 mx-auto px-4 ">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-3xl text-center"
+          className="mx-auto mb-16 max-w-5xl text-center"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -152,17 +144,15 @@ export function PricingSection() {
             // Packages Billed in Euro (EUR)
           </motion.div>
 
-          <h2 className="mb-5 text-5xl font-bold md:text-6xl">
-            Choose Your{" "}
-            <span className="bg-linear-to-r from-nazli-golden to-nazli-purple bg-clip-text text-transparent">
-              Learning Package
-            </span>
+          <h2 className="text-5xl md:text-6xl font-black tracking-tight bg-gradient-to-r from-purple-400 to-amber-300 bg-clip-text text-transparent mb-6">
+            Choose Your Learning Package
           </h2>
 
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-4xl mx-auto leading-[1.7]">
             Pick a package duration that fits your goals. All plans are billed
-            in euro currency and designed for flexible learning paths.
+            in euro currency and designed for flexible learning paths. Each package will be tailored to fit your specific need instead of just dumped on you
           </p>
+           
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-5 mb-24 md:mb-35">
@@ -173,8 +163,8 @@ export function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
-              whileHover={{ y: -6, scale: 1.01 }}
-              className={`group relative overflow-hidden rounded-3xl border bg-linear-to-br p-6 transition-all duration-300 hover:shadow-xl hover:shadow-nazli-purple/10 ${plan.cardTone}`}
+              whileHover={{ y: plan.id === "diamond" ? -6 : -4, scale: plan.id === "diamond" ? 1.02 : 1.01 }}
+              className={`group relative overflow-hidden rounded-2xl border bg-linear-to-br p-6 transition-all duration-250 hover:shadow-xl hover:shadow-nazli-purple/15 ${plan.id === "diamond" ? "ring-1 ring-nazli-golden/40 shadow-lg shadow-nazli-golden/20" : ""} ${plan.cardTone}`}
             >
               <motion.div
                 aria-hidden="true"
@@ -206,15 +196,30 @@ export function PricingSection() {
               </div>
 
               <div className="relative z-10 mb-5 rounded-2xl border border-border/40 bg-background/60 p-4 backdrop-blur-xs">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                  Duration
-                </p>
-                <p className="mt-2 text-4xl font-black leading-none text-foreground">
-                  {plan.months}
-                </p>
-                <p className="mt-1 text-sm font-semibold text-muted-foreground">
-                  {plan.months === 1 ? "Month" : "Months"}
-                </p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      Duration
+                    </p>
+                    <p className="mt-2 text-3xl font-black leading-none text-foreground">
+                      {plan.months}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                      {plan.months === 1 ? "Month" : "Months"}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      Total Price
+                    </p>
+                    <p className="mt-2 text-3xl font-black leading-none bg-gradient-to-r from-nazli-golden to-amber-300 bg-clip-text text-transparent">
+                      €{plan.price}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                      EUR
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <p className="relative z-10 mb-4 inline-flex rounded-full bg-foreground/5 px-3 py-1 text-xs font-semibold text-muted-foreground">
@@ -239,6 +244,7 @@ export function PricingSection() {
             </motion.div>
           ))}
         </div>
+       
       </div>
       <SocialHub />
     </section>

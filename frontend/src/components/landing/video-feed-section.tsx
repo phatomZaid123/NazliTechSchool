@@ -13,11 +13,6 @@ import {
   Star,
   Rocket,
 } from "lucide-react";
-import VideoSectionImage from "../../assets/Globalbackground.png";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
 
 // Types
 interface Particle {
@@ -387,31 +382,8 @@ export default function VideoFeedSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 overflow-hidden bg-[#080808] text-white bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${VideoSectionImage})`,
-        backgroundAttachment: "fixed",
-      }}
+      className="relative py-32 overflow-hidden text-white"
     >
-      {/* Background & Particles */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: createOverlayGradient(
-              LANDING_OVERLAY_DIMNESS.video,
-            ),
-          }}
-        />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-600/10 blur-[120px] rounded-full" />
-        {enableParticleEffects && (
-          <canvas
-            ref={canvasRef}
-            className="absolute inset-0 z-30 opacity-30"
-          ></canvas>
-        )}
-      </div>
-
       <div className="container max-w-7xl mx-auto relative z-10 px-6">
         {/* Header and Filter Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -420,9 +392,9 @@ export default function VideoFeedSection() {
               <Film size={16} /> Student Showcase
             </h4>
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
-              <span className="text-gray-300">The</span>{" "}
+              <span className="text-white">The</span>{" "}
               <span className="text-purple-500">Vision</span>{" "}
-              <span className="bg-linear-to-t from-nazli-purple to-nazli-golden bg-clip-text text-transparent">
+              <span className="text-white">
                 in
               </span>
               <br />

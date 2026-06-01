@@ -8,16 +8,9 @@ import {
   Globe,
   ArrowLeft,
 } from "lucide-react";
-import {
-  IsometricNeonCityBackground,
-  PrismGlassShardsBackground,
-} from "./section-background-effects";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import simulationAudio from "@/assets/simulationaudio.mp3";
 import SocialHub from "./social-media-section";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import SimulationImage from "../../assets/Globalbackground.png";
 
 // Mock data structure: Courses -> Subjects -> Topics with YouTube links
 const COURSE_DATA = {
@@ -84,6 +77,11 @@ export default function Simulation() {
     youtubeLink: "",
   });
 
+  const sectionRef = useSectionAudio({
+    audioSrc: simulationAudio,
+    sectionId: "simulation",
+  });
+
   // Get available subjects for selected course
   const availableSubjects = Object.keys(
     COURSE_DATA[filters.courses as CourseKey] || {}
@@ -135,32 +133,19 @@ export default function Simulation() {
   if (!role) {
     return (
       <section
+        ref={sectionRef as React.RefObject<HTMLElement>}
         id="simulation"
-        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden scroll-mt-28 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${SimulationImage})`,
-          backgroundAttachment: 'fixed'
-        }}
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden scroll-mt-28"
       >
-        {/* Overlay for better text readability */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: createOverlayGradient(
-              LANDING_OVERLAY_DIMNESS.simulation,
-            ),
-          }}
-        />
-
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="relative z-10 text-center max-w-2xl"
         >
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 uppercase">
-            <span className="text-nazli-purple">Launch</span>  <span className="text-nazli-golden">Simulation</span>
+            <span className="text-purple-500">Launch</span>  <span className="text-nazli-golden">Simulation</span>
           </h1>
-          <p className="text-white/50 text-xl mb-12">
+          <p className="text-nazli-white text-xl mb-12">
            Select your role to initialize a personalized learning simulation with lessons, labs, and guided content paths.
           </p>
 
@@ -200,23 +185,8 @@ export default function Simulation() {
   return (
     <section
       id="simulation"
-      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${SimulationImage})`,
-        backgroundAttachment: 'fixed'
-      }}
+      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.simulation,
-          ),
-        }}
-      />
-      <PrismGlassShardsBackground />
-
       <div className="relative z-10 max-w-7xl mx-auto">
         <button
           onClick={() => setRole(null)}

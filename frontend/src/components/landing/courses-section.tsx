@@ -2,13 +2,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useState, type CSSProperties } from "react";
 import { ExternalLink, Video, Calendar, ArrowLeft } from "lucide-react";
 import type { IconType } from "react-icons";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import coursesAudio from "@/assets/coursesaudio.mp3";
 import SocialHub from "./social-media-section";
-import { ElectricRootfieldBackground } from "./section-background-effects";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import CoursesImage from "../../assets/Globalbackground.png";
 import {
   FaBrain,
   FaRobot,
@@ -456,38 +452,17 @@ export default function Courses() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [hoveredCourse, setHoveredCourse] = useState<string | null>(null);
   const prefersReducedMotion = useReducedMotion();
-
-  const activeGlow = selectedCourse
-    ? selectedCourse.theme.surfaceGlow
-    : "rgba(147, 51, 234, 0.22)";
+  const sectionRef = useSectionAudio({
+    audioSrc: coursesAudio,
+    sectionId: "courses",
+  });
 
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       id="courses"
-      className="min-h-screen pt-32 pb-20 px-6 relative overflow-x-hidden scroll-mt-28 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${CoursesImage})`,
-        backgroundAttachment: "fixed",
-      }}
+      className="min-h-screen pt-32 pb-20 px-6 relative overflow-x-hidden scroll-mt-28"
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.courses,
-          ),
-        }}
-      />
-
-      <motion.div
-        className="absolute inset-0 opacity-45 blur-[120px] pointer-events-none z-[1]"
-        animate={{
-          background: `radial-gradient(circle at 50% 45%, ${activeGlow}, transparent 72%)`,
-        }}
-        transition={{ duration: 0.28 }}
-      />
-
       <div className="max-w-[90rem] mx-auto relative z-10">
         {!selectedCourse ? (
           <>
@@ -500,9 +475,9 @@ export default function Courses() {
                 Program Catalog
               </p>
               <h1 className="text-5xl md:text-8xl font-black tracking-tighter mb-6 uppercase leading-none">
-                <span className="text-white">Our </span>
+                <span className="text-nazli-golden">Our </span>
                 <span
-                  className="relative inline-block bg-gradient-to-r from-purple-300 via-purple-400 to-amber-300 bg-clip-text pr-8 text-transparent"
+                  className="relative inline-block bg-gradient-to-r from-purple-500 via-purple-500 to-amber-500 bg-clip-text pr-8 text-transparent"
                   style={{
                     clipPath: "polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%)",
                   }}
@@ -529,11 +504,11 @@ export default function Courses() {
                     type="button"
                     initial={{ opacity: 0, y: 26, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: i * 0.028, duration: 0.32 }}
+                    transition={{ delay: i * 0.035, duration: 0.4 }}
                     whileHover={{
-                      y: -6,
-                      scale: 1.008,
-                      transition: { duration: 0.16 },
+                      y: -8,
+                      scale: 1.01,
+                      transition: { duration: 0.2 },
                     }}
                     whileTap={{ scale: 0.995 }}
                     onMouseEnter={() => setHoveredCourse(course.id)}
@@ -541,11 +516,11 @@ export default function Courses() {
                     onFocus={() => setHoveredCourse(course.id)}
                     onBlur={() => setHoveredCourse(null)}
                     onClick={() => setSelectedCourse(course)}
-                    className="group relative min-h-[19rem] sm:min-h-[20rem] rounded-[2rem] p-7 sm:p-8 border border-white/10 bg-white/[0.03] text-left overflow-hidden backdrop-blur-md flex flex-col justify-between transition-all duration-150"
+                    className="group relative min-h-[19rem] sm:min-h-[20rem] rounded-[2rem] p-6 sm:p-8 border border-white/8 hover:border-white/20 bg-white/[0.03] hover:bg-white/[0.05] text-left overflow-hidden backdrop-blur-md flex flex-col justify-between transition-all duration-250 shadow-lg shadow-black/20 hover:shadow-lg hover:shadow-black/40"
                     style={{
                       boxShadow: isHovered
-                        ? `0 20px 36px -24px ${course.theme.surfaceGlow}`
-                        : "0 0 0 0 transparent",
+                        ? `0 25px 50px -20px ${course.theme.surfaceGlow}, inset 0 0 0 1px ${course.theme.surfaceGlow}40`
+                        : "0 10px 30px -15px rgba(0, 0, 0, 0.3)",
                     }}
                   >
                     <div
@@ -561,7 +536,7 @@ export default function Courses() {
 
                     <div className="relative z-10 flex items-start justify-between">
                       <div
-                        className={`relative w-16 h-16 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl flex items-center justify-center ${course.theme.iconTint}`}
+                        className={`relative w-16 h-16 rounded-2xl border border-white/15 hover:border-white/40 bg-white/10 hover:bg-white/15 backdrop-blur-xl flex items-center justify-center ${course.theme.iconTint} transition-all duration-250 shadow-md shadow-black/30`}
                       >
                         <motion.span
                           animate={
@@ -573,7 +548,7 @@ export default function Courses() {
                             prefersReducedMotion
                               ? { duration: 0.12 }
                               : {
-                                  duration: 0.16,
+                                  duration: 0.2,
                                   ease: "easeOut",
                                 }
                           }
@@ -588,11 +563,11 @@ export default function Courses() {
                       </span>
                     </div>
 
-                    <div className="relative z-10 space-y-4">
-                      <h3 className="text-2xl font-bold leading-tight text-white group-hover:text-amber-200 transition-colors duration-150">
+                    <div className="relative z-10 space-y-3">
+                      <h3 className="text-xl md:text-2xl font-bold leading-tight text-white group-hover:text-amber-200 transition-colors duration-250 tracking-tight">
                         {course.name}
                       </h3>
-                      <p className="text-sm leading-relaxed text-white/70 max-h-[4.6rem] overflow-hidden">
+                      <p className="text-sm leading-[1.65] text-white/70 max-h-[4.8rem] overflow-hidden">
                         {course.bio}
                       </p>
                     </div>

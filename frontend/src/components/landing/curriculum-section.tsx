@@ -1,13 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MagneticSandFieldBackground } from "./section-background-effects";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import curriculumAudio from "@/assets/curriculumaudio.mp3";
 import SocialHub from "./social-media-section";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import CurriculumImage from "../../assets/Globalbackground.png";
 
 export function CurriculumSection() {
   const highlights = [
@@ -17,25 +13,17 @@ export function CurriculumSection() {
     "International curriculum standards (IB, AP, IGCSE)",
   ];
 
+  const sectionRef = useSectionAudio({
+    audioSrc: curriculumAudio,
+    sectionId: "curriculum",
+  });
+
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       id="curriculum"
-      className="relative overflow-x-hidden py-32 scroll-mt-28 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${CurriculumImage})`,
-        backgroundAttachment: "fixed",
-      }}
+      className="relative overflow-x-hidden py-32 scroll-mt-28"
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.curriculum,
-          ),
-        }}
-      />
-
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -49,7 +37,7 @@ export function CurriculumSection() {
           <h2 className="mb-6 text-4xl font-bold tracking-tight text-nazli-golden md:text-5xl">
             Our Curriculum
           </h2>
-          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-white/60">
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-nazli-white">
             Nazli Tech School&apos;s{" "}
             <span className="code-inline">Cognoscentia</span> curriculum is an
             educational journey that forges the next generation of tech experts.
@@ -63,7 +51,7 @@ export function CurriculumSection() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-white/5 neon-glow-purple-box scanlines"
+            className="group relative aspect-video w-full cursor-pointer overflow-hidden rounded-2xl border border-white/8 hover:border-white/15 bg-white/[0.04] hover:bg-white/[0.06] neon-glow-purple-box scanlines transition-all duration-250 shadow-lg shadow-black/20 hover:shadow-black/40"
           >
             <iframe
               className="h-full w-full"
@@ -92,7 +80,7 @@ export function CurriculumSection() {
                 <span className="text-4xl neon-glow-golden">🧙‍♀️</span>
                 <span className="neon-glow-golden">Cognoscentia</span>
               </h3>
-              <p className="text-sm font-medium tracking-wide text-nazli-golden/85">
+              <p className="text-base font-medium tracking-wide text-nazli-white leading-[1.6]">
                 A structured, modern learning method designed for real-world
                 confidence.
               </p>
@@ -103,7 +91,7 @@ export function CurriculumSection() {
                 <h4 className="code-inline mb-4 w-fit px-4 py-2 text-2xl font-bold text-nazli-purple">
                   The Cognoscentia Method
                 </h4>
-                <p className="leading-relaxed text-white/70">
+                <p className="leading-[1.65] text-nazli-white">
                   Our unique pedagogical approach combines the rigor of
                   university-level curriculum with the engagement of modern
                   digital learning. Students don&apos;t just learn to code, they

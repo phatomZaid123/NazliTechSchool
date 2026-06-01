@@ -5,11 +5,7 @@ type OverlayStops = {
 };
 
 export const LANDING_OVERLAY_DIMNESS: Record<string, OverlayStops> = {
-  hero: { top:0.10, middle: 0.10, bottom: 0.10 },
-  video: { top: 0.10, middle: 0.10, bottom: 0.10 },
-  courses: { top: 0.10, middle: 0.10, bottom: 0.10 },
-  curriculum: { top: 0.10, middle: 0.10, bottom: 0.10 },
-  simulation: { top: 0.10, middle: 0.10, bottom: 0.10 },
+  globaloverlay: { top: 0.20, middle: 0.20, bottom: 0.20 },
 };
 
 const clampOpacity = (value: number): number => {

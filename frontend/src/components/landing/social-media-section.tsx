@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FacebookIcon } from "lucide-react";
 import { memo } from "react";
 
 // --- Custom Official Brand SVG Components ---
@@ -64,14 +65,72 @@ const TPTIcon = () => (
 
 // --- Updated Platform Configuration ---
 const SOCIAL_PLATFORMS = [
-  { name: "Tiktok", handle: "@nazlitechschool", url: "https://tiktok.com", icon: TikTokIcon, brandColor: "#25F4EE" },
-  { name: "LinkedIn", handle: "Nazli Tech School", url: "https://linkedin.com", icon: LinkedInIcon, brandColor: "#0A66C2" },
-  { name: "Instagram", handle: "@nazlitechschool", url: "https://instagram.com", icon: InstagramIcon, brandColor: "#E1306C" },
-  { name: "X (Twitter)", handle: "@NazliTechSchool", url: "https://x.com", icon: XIcon, brandColor: "#FFFFFF" },
-  { name: "YouTube", handle: "Nazli Tech School", url: "https://youtube.com", icon: YoutubeIcon, brandColor: "#FF0000" },
-  { name: "Blogger", handle: "Nazli Tech", url: "https://blogspot.com", icon: BloggerIcon, brandColor: "#FF6A3D" },
-  { name: "Pinterest", handle: "@nazlitech", url: "https://pinterest.com", icon: PinterestIcon, brandColor: "#E60023" },
-  { name: "TPT", handle: "Nazli Tech", url: "https://teacherspayteachers.com", icon: TPTIcon, brandColor: "#55B336" },
+  {
+    name: "YouTube",
+    handle: "Nazli Tech School",
+    url: "https://www.youtube.com/@nazlitechschool/",
+    icon: YoutubeIcon,
+    brandColor: "#FF0000",
+  },
+
+  {
+    name: "Blogger",
+    handle: "Nazli Tech",
+    url: "https://nazlitechschool.blogspot.com/",
+    icon: BloggerIcon,
+    brandColor: "#FF6A3D",
+  },
+  {
+    name: "LinkedIn",
+    handle: "Nazli Tech School",
+    url: "https://www.linkedin.com/company/nazli-tech-school/",
+    icon: LinkedInIcon,
+    brandColor: "#0A66C2",
+  },
+  {
+    name: "Facebook",
+    handle: "@NazliTechSchool",
+    url: " https://www.facebook.com/profile.php?id=61572922659307",
+    icon: FacebookIcon,
+    brandColor: "#1877F2",
+  },
+  {
+    name: "Instagram",
+    handle: "@nazlitechschool",
+    url: "https://www.instagram.com/nazli_tech/",
+    icon: InstagramIcon,
+    brandColor: "#E1306C",
+  },
+
+  {
+    name: "X (Twitter)",
+    handle: "@NazliTechSchool",
+    url: "https://x.com/NazliTechSchool",
+    icon: XIcon,
+    brandColor: "#FFFFFF",
+  },
+  {
+    name: "Tiktok",
+    handle: "@nazlitechschool",
+    url: "https://www.tiktok.com/@nazlitechschool",
+    icon: TikTokIcon,
+    brandColor: "#25F4EE",
+  },
+
+  {
+    name: "Pinterest",
+    handle: "@nazlitech",
+    url: "https://www.pinterest.com/alisia_habibi92/",
+    icon: PinterestIcon,
+    brandColor: "#E60023",
+  },
+  {
+    name: "TPT",
+    handle: "Nazli Tech",
+    url: "https://www.teacherspayteachers.com/store/nazli-tech-school",
+    icon: TPTIcon,
+    brandColor: "#55B336",
+  },
 ];
 
 const SocialHub = memo(function SocialHub() {
@@ -82,7 +141,7 @@ const SocialHub = memo(function SocialHub() {
           <h4 className="mb-2 text-[11px] font-black uppercase tracking-[0.3em] text-amber-300 sm:text-xs">
             Connect With Us
           </h4>
-          <h2 className="text-2xl font-black uppercase leading-tight tracking-tight text-white sm:text-3xl md:text-4xl">
+          <h2 className="text-2xl text-purple-400 font-black uppercase leading-tight tracking-tight sm:text-3xl md:text-4xl">
             Digital{" "}
             <span className="bg-gradient-to-r from-purple-400 to-amber-300 bg-clip-text text-transparent">
               Ecosystem

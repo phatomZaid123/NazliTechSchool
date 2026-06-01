@@ -1,13 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import testimonialAudio from "@/assets/testimonialaudio.mp3";
 import SocialHub from "./social-media-section";
-import { CircuitPulseMatrixBackground } from "./section-background-effects";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import TestimonialBackground from "../../assets/Globalbackground.png";
 import { ArrowUpRight, Code, Cpu, Puzzle } from "lucide-react";
 const testimonials = [
   {
@@ -102,30 +98,18 @@ const stats = [
 ];
 
 export function TestimonialsSection() {
+  const sectionRef = useSectionAudio({
+    audioSrc: testimonialAudio,
+    sectionId: "testimonials",
+  });
+
   return (
-    <>
+    <div ref={sectionRef as React.RefObject<HTMLDivElement>}>
       {/* Reviews Section */}
       <section
         id="reviews"
         className="py-32 relative overflow-x-hidden scroll-mt-28"
-        style={{
-          backgroundImage: `url(${TestimonialBackground})`,
-          backgroundAttachment: "fixed",
-        }}
       >
-        <div className="pointer-events-none absolute right-10 top-16 h-64 w-64 rounded-full bg-purple-600/20 blur-[110px]" />
-        <div className="pointer-events-none absolute -left-20 bottom-0 h-72 w-72 rounded-full bg-cyan-400/15 blur-[120px]" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
-        {/* Overlay for better text readability */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: createOverlayGradient(
-              LANDING_OVERLAY_DIMNESS.simulation,
-            ),
-          }}
-        />
-
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -142,7 +126,7 @@ export function TestimonialsSection() {
                 Students Say
               </span>
             </h2>
-            <p className="mt-5 text-base md:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-5 text-base md:text-lg text-nazli-white max-w-2xl mx-auto leading-relaxed">
               Real voices from learners building confidence, projects, and
               careers through Nazli Tech School.
             </p>
@@ -214,7 +198,7 @@ export function TestimonialsSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 border-t border-white/10"
           >
             {stats.map((stat, index) => (
-              <div key={stat.label} className="text-center">
+              <div key={stat.label} className="text-center bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-md shadow-[0_18px_60px_-36px_rgba(157,78,221,0.9)]">
                 <p className="mb-2 text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-purple-300 to-cyan-200 bg-clip-text text-transparent">
                   {stat.value}
                 </p>
@@ -230,21 +214,8 @@ export function TestimonialsSection() {
       {/* Flexibility Section */}
       <section
         id="flexibility"
-        className="py-32 relative overflow-x-hidden scroll-mt-28 bg-[radial-gradient(circle_at_top,rgba(99,33,197,0.2),rgba(0,0,0,1)_54%)]"
-        style={{
-          backgroundImage: `url(${TestimonialBackground})`,
-          backgroundAttachment: "fixed",
-        }}
+        className="py-32 relative overflow-x-hidden scroll-mt-28"
       >
-        {/* Overlay for better text readability */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: createOverlayGradient(
-              LANDING_OVERLAY_DIMNESS.simulation,
-            ),
-          }}
-        />
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -252,13 +223,13 @@ export function TestimonialsSection() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <p className="text-sm font-bold uppercase tracking-[0.45em] text-purple-500 mb-4">
+            <span className="rounded-lg p-1 text-center text-lg neon-glow-golden font-bold bg-nazli-golden uppercase tracking-[0.45em] text-nazli-purple/90 mb-4">
               FLEXIBILITY
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter">
+            </span>
+            <h2 className="text-nazli-golden text-4xl md:text-5xl font-bold tracking-tighter">
               Choose What Works For You
             </h2>
-            <p className="text-xl text-white/60 mt-6 max-w-2xl mx-auto">
+            <p className="text-xl text-nazli-white mt-6 max-w-2xl mx-auto">
               We offer multiple learning formats to fit your lifestyle, budget,
               and learning preferences.
             </p>
@@ -273,7 +244,8 @@ export function TestimonialsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-3xl p-8 hover:border-purple-500/50 transition-all duration-300 group"
+                whileHover={{ y: -6 }}
+                className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-md shadow-[0_18px_60px_-36px_rgba(157,78,221,0.9)]"
               >
                 <div className="text-5xl mb-6">{format.icon}</div>
                 <h3 className="text-2xl font-bold text-white mb-3">
@@ -298,6 +270,6 @@ export function TestimonialsSection() {
 
         <SocialHub />
       </section>
-    </>
+    </div>
   );
 }

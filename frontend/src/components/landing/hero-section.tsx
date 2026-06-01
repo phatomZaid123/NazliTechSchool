@@ -2,14 +2,10 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useAudioContext } from "@/context/audio-context";
 import SocialHub from "./social-media-section";
-import { NebulaDriftBackground } from "./section-background-effects";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import HeroImage from "../../assets/Globalbackground.png";
+import heroAudio from "@/assets/heroaudio.mp3";
 
 export function HeroSection() {
   const sentences = [
@@ -22,6 +18,16 @@ export function HeroSection() {
   const [displayText, setDisplayText] = useState("");
   const [sentenceIndex, setSentenceIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const audioPlayedRef = useRef(false);
+  const { playAudio } = useAudioContext();
+
+  // Play hero audio once on component mount
+  useEffect(() => {
+    if (!audioPlayedRef.current) {
+      playAudio(heroAudio, "hero");
+      audioPlayedRef.current = true;
+    }
+  }, [playAudio]);
 
   useEffect(() => {
     const currentSentence = sentences[sentenceIndex];
@@ -56,20 +62,8 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden pt-28 pb-16 md:py-28 scroll-mt-28 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${HeroImage})`,
-        backgroundAttachment: "fixed",
-      }}
+      className="relative min-h-screen overflow-hidden pt-28 pb-16 md:py-28 scroll-mt-28"
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(LANDING_OVERLAY_DIMNESS.hero),
-        }}
-      />
-
       <div className="container relative z-10 px-4 md:px-6 max-w-8xl min-h-[76vh] md:min-h-[78vh] flex items-start md:items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -96,12 +90,12 @@ export function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
+              className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.2] tracking-tight"
             >
               {/* <span className="text-nazli-purple neon-glow-golden">Nazli</span> */}
 
               <motion.span
-                className="text-nazli-purple neon-glow-golden"
+                className="bg-gradient-to-t from-purple-700 to-amber-500  bg-clip-text text-transparent"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
@@ -116,9 +110,9 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="w-full text-2xl md:text-3xl text-nazli-gray font-light h-16 md:h-20 flex items-center justify-center"
+            className="w-full text-2xl md:text-3xl text-nazli-gray font-light h-auto md:h-auto flex items-center justify-center leading-relaxed"
           >
-            <span className="typewriter drop-shadow-[0_0_22px_rgba(168,85,247,0.35)]">
+            <span className="typewriter drop-shadow-[0_0_22px_rgba(168,85,247,0.35)] h-12">
               {displayText}
             </span>
           </motion.p>
@@ -164,7 +158,7 @@ export function HeroSection() {
               href="#curriculum"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 border-2 border-nazli-golden text-nazli-golden font-semibold rounded-full hover:bg-nazli-golden/20 transition-all duration-300 neon-glow-golden-box"
+              className="px-8 py-4 border-2 bg-nazli-purple/50 border-nazli-golden text-nazli-golden font-semibold rounded-full hover:bg-nazli-purple/80 transition-all duration-300 neon-glow-golden-box"
             >
               Our Curriculum
             </motion.a>

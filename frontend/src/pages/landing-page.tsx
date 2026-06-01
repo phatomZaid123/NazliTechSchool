@@ -3,6 +3,7 @@ import { AnnouncementBar } from "@/components/landing/announcement-bar";
 import { UdemyCoursesModal } from "@/components/landing/udemy-courses-modal";
 import { MascotGuide } from "@/components/landing/mascot-guide";
 import { HeroSection } from "@/components/landing/hero-section";
+import { GlobalBackground } from "@/components/landing/global-background";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 // Lazy load components that appear below the fold
@@ -136,33 +137,35 @@ export function LandingPage() {
 
   return (
     <main data-landing-page="true" className="relative min-h-screen">
-      <AnnouncementBar />
-      <UdemyCoursesModal
-        isOpen={showUdemyModal}
-        onClose={() => setShowUdemyModal(false)}
-      />
+      <GlobalBackground>
+        <AnnouncementBar />
+        <UdemyCoursesModal
+          isOpen={showUdemyModal}
+          onClose={() => setShowUdemyModal(false)}
+        />
 
-      <div className="relative z-10 pt-28">
-        <Navbar />
-      
-        <HeroSection />
-        <Suspense fallback={null}>
-          <VideoFeedSection />
-          <Courses />
-          <CurriculumSection />
-          <SimulationSection />
-          <AppsSection />
-          <PricingSection />
-          <TestimonialsSection />
-          <Articles />
-          <AboutSection />
-          <QuestionsSection />
-          {/* <CTASection /> */}
-          {/* <Footer /> */}
-        </Suspense>
+        <div className="relative z-10 pt-28">
+          <Navbar />
 
-        {/* <MascotGuide /> */}
-      </div>
+          <HeroSection />
+          {/* <Suspense fallback={null}> */}
+            <VideoFeedSection />
+            <Courses />
+            <CurriculumSection />
+            <SimulationSection />
+            <AppsSection />
+            <PricingSection />
+            <TestimonialsSection />
+            <Articles />
+            <AboutSection />
+            <QuestionsSection />
+            {/* <CTASection /> */}
+            {/* <Footer /> */}
+          {/* </Suspense> */}
+
+          {/* <MascotGuide /> */}
+        </div>
+      </GlobalBackground>
     </main>
   );
 }

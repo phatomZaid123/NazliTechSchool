@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
 import { Search, Sparkles, Clock, ArrowRight } from "lucide-react";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import articlesAudio from "@/assets/articlesaudio.mp3";
 import SocialHub from "./social-media-section";
 // import { SolarWindBandsBackground } from "./section-background-effects";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import ArticlesBackground from "../../assets/Globalbackground.png";
 
 const ARTICLES = [
   {
@@ -16,7 +13,7 @@ const ARTICLES = [
     date: "March 15, 2026",
     category: "AI & Tech",
     image: "https://picsum.photos/seed/ai-edu/800/600",
-    url: "https://blog.example.com/ai-education-future",
+    url: "https://sites.google.com/nazlitechschool.org/nazli-tech-school-news/home",
   },
   {
     title: "Mastering Python: Why it's still the King of Languages",
@@ -25,7 +22,7 @@ const ARTICLES = [
     date: "March 12, 2026",
     category: "Programming",
     image: "https://picsum.photos/seed/python-king/800/600",
-    url: "https://blog.example.com/python-mastery-guide",
+    url: "https://sites.google.com/nazlitechschool.org/nazli-tech-school-news/home",
   },
   {
     title: "Web3 and the Decentralized Learning Revolution",
@@ -34,30 +31,22 @@ const ARTICLES = [
     date: "March 10, 2026",
     category: "Blockchain",
     image: "https://picsum.photos/seed/web3-edu/800/600",
-    url: "https://blog.example.com/web3-learning-revolution",
+    url: "https://sites.google.com/nazlitechschool.org/nazli-tech-school-news/home",
   },
 ];
 
 export default function Articles() {
+  const sectionRef = useSectionAudio({
+    audioSrc: articlesAudio,
+    sectionId: "articles",
+  });
+
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       id="articles"
       className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
-      style={{
-        backgroundImage: `url(${ArticlesBackground})`,
-        backgroundAttachment: "fixed",
-      }}
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.simulation,
-          ),
-        }}
-      />
-
       {/* <SolarWindBandsBackground /> */}
 
       <div className="relative z-10 max-w-7xl mx-auto">
@@ -96,36 +85,38 @@ export default function Articles() {
               href={article.url}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -4 }}
               className="group cursor-pointer block"
             >
-              <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden border border-white/10 mb-8 relative scanlines">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-white/8 hover:border-white/15 mb-8 relative scanlines shadow-lg shadow-black/20 hover:shadow-black/40 transition-all duration-250">
                 <img
                   src={article.image}
                   alt={article.title}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-250" />
                 <div className="absolute top-6 left-6 code-tag">
                   #{article.category}
                 </div>
               </div>
               <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-white/30 mb-4 font-mono">
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 text-nazli-white">
                   <Clock size={12} /> {article.date}
                 </span>
                 <span className="flex items-center gap-1 text-nazli-golden">
                   AI_Summary
                 </span>
               </div>
-              <h3 className="text-2xl font-bold mb-4 group-hover:text-nazli-golden transition-colors leading-tight">
+              <h3 className="text-2xl font-bold mb-4 group-hover:text-nazli-golden transition-colors duration-250 leading-tight tracking-tight">
                 {article.title}
               </h3>
-              <p className="text-white/50 text-sm leading-relaxed mb-6 line-clamp-2">
+              <p className="text-white text-sm leading-[1.65] mb-6 line-clamp-2">
                 {article.excerpt}
               </p>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white group-hover:gap-4 transition-all font-mono method-highlight">

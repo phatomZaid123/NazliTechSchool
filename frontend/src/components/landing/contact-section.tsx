@@ -2,31 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, MessageSquare } from "lucide-react";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
-import ContactBackground from "../../assets/Globalbackground.png";
 export function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative min-h-screen bg-gradient-to-b from-background to-background/50 pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
-        style={{
-        backgroundImage: `url(${ContactBackground})`,
-        backgroundAttachment: "fixed",
-      }}
+      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.simulation,
-          ),
-        }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -107,7 +88,7 @@ export function ContactSection() {
             initial={{ x: 20, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true }}
-            className="bg-white/5 border border-white/10 rounded-[3rem] p-12 backdrop-blur-xl"
+            className="bg-white/5 border border-white/10 rounded-[3rem] p-12 backdrop-blur-sm"
           >
             <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import NazliLogo from "@/assets/NazliLogo.png";
 
+
 interface NavItem {
   label: string;
   href: `#${string}`;

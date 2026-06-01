@@ -2,15 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Compass, Globe2, GraduationCap, UsersRound } from "lucide-react";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import aboutAudio from "@/assets/aboutaudio.mp3";
 import SocialHub from "./social-media-section";
 import { FaLocationPin } from "react-icons/fa6";
 import Founder from "@/assets/founder.png";
 import CoFounder from "@/assets/cofounder.png";
-import AboutBackground from "../../assets/Globalbackground.png";
-import {
-  LANDING_OVERLAY_DIMNESS,
-  createOverlayGradient,
-} from "./section-overlay-dimness";
 
 const people = [
   {
@@ -31,26 +28,17 @@ const people = [
 ];
 
 export function AboutSection() {
+  const sectionRef = useSectionAudio({
+    audioSrc: aboutAudio,
+    sectionId: "about",
+  });
+
   return (
     <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
       id="about"
       className="relative py-32 overflow-x-hidden scroll-mt-28"
-      style={{
-        backgroundImage: `url(${AboutBackground})`,
-        backgroundAttachment: "fixed",
-      }}
     >
-      {/* Overlay for better text readability */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: createOverlayGradient(
-            LANDING_OVERLAY_DIMNESS.simulation,
-          ),
-        }}
-      />
-
-      <div className="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-nazli-purple/20 blur-[120px]" />
       <div className="container relative z-10 px-4 md:px-6">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <motion.div
@@ -61,13 +49,10 @@ export function AboutSection() {
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.42em] text-nazli-golden">
               About Us
             </p>
-            <h2 className="text-5xl font-bold md:text-6xl">
-              A global tech school built for{" "}
-              <span className="bg-linear-to-r from-nazli-purple to-nazli-golden bg-clip-text text-transparent">
-                modern learners
-              </span>
+            <h2 className="uppercase bg-gradient-to-t  from-purple-600 to-amber-400 bg-clip-text text-transparent">
+              A global tech school built for modern learners
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-6 text-lg ">
               Nazli Tech School helps learners move from curiosity to capability
               through guided courses, simulation classes, project work, and
               flexible learning modes. The prototype keeps the story simple
