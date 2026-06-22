@@ -1,599 +1,411 @@
-"use client";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { Play, Download, User, BookOpen, Globe, ArrowLeft } from "lucide-react";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import simulationAudio from "@/assets/simulationaudio.mp3";
+import SocialHub from "./social-media-section";
 
-import { useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import { Slider } from "@/components/ui/slider";
-import { Button } from "@/components/ui/button";
-import {
-  Atom,
-  Bot,
-  ChevronLeft,
-  ChevronRight,
-  Code2,
-  FlaskConical,
-  Pause,
-  Play,
-  RotateCcw,
-  Sparkles,
-  Zap,
-} from "lucide-react";
-import { useTypewriterOnce } from "@/hooks/use-typewriter";
-
-const simulations = [
-  {
-    id: "physics",
-    label: "Physics Lab",
-    description: "Manipulate gravity, mass, and velocity in real time.",
-    icon: Atom,
-    tag: "Mechanics",
-    highlights: [
-      "Force and energy update instantly",
-      "Perfect for class walkthroughs",
-      "Great for landing-page demos",
+// Mock data structure: Courses -> Subjects -> Topics with YouTube links
+const COURSE_DATA = {
+  "AI Prompt Engineering": {
+    "Computer Science": [
+      {
+        name: "Introduction to Prompting",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+      {
+        name: "Advanced Prompt Techniques",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+    ],
+    Mathematics: [
+      {
+        name: "Math in AI",
+        youtubeLink: "https://youtu.be/jNgP6d9HraI?si=6ZCmGQxwgQHqBLax",
+      },
     ],
   },
-  {
-    id: "coding",
-    label: "Coding Studio",
-    description:
-      "Build logic paths and preview algorithm outcomes without leaving the browser.",
-    icon: Code2,
-    tag: "Programming",
-    highlights: [
-      "Step-by-step problem solving",
-      "Instant AI feedback prompts",
-      "Project checkpoints for students",
+  "AI and Machine Learning": {
+    "Computer Science": [
+      {
+        name: "ML Basics",
+        youtubeLink: "https://youtu.be/aircAruvnKk?si=6ZCmGQxwgQHqBLax",
+      },
+      {
+        name: "Neural Networks",
+        youtubeLink: "https://youtu.be/aircAruvnKk?si=6ZCmGQxwgQHqBLax",
+      },
+    ],
+    Mathematics: [
+      {
+        name: "Linear Algebra for ML",
+        youtubeLink: "https://youtu.be/RowM3UbWGpI?si=6ZCmGQxwgQHqBLax",
+      },
     ],
   },
-  {
-    id: "chemistry",
-    label: "Chemistry Lab",
-    description:
-      "Explore reactions safely with visual experiment guides and result summaries.",
-    icon: FlaskConical,
-    tag: "Science",
-    highlights: [
-      "Reaction setup previews",
-      "Lab safety callouts",
-      "Results ready for instructor review",
+  "High Level Programming": {
+    "Computer Science": [
+      {
+        name: "Python Basics",
+        youtubeLink: "https://youtu.be/kqtZrmDm4A8?si=6ZCmGQxwgQHqBLax",
+      },
+      {
+        name: "Object Oriented Programming",
+        youtubeLink: "https://youtu.be/JeznW_7DlrQ?si=6ZCmGQxwgQHqBLax",
+      },
     ],
   },
-  {
-    id: "robotics",
-    label: "Robotics Studio",
-    description:
-      "Test motion logic and workflow planning before students build the physical prototype.",
-    icon: Bot,
-    tag: "Engineering",
-    highlights: [
-      "Motion checkpoints",
-      "Sensor workflow planning",
-      "Mentor review snapshots",
+  "Software Engineering": {
+    "Computer Science": [
+      {
+        name: "Design Patterns",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+      {
+        name: "System Design",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
     ],
   },
-];
+  Mathematics: {
+    Mathematics: [
+      {
+        name: "Calculus Derivatives",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+      {
+        name: "Linear Algebra",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+    ],
+  },
+  Science: {
+    Physics: [
+      {
+        name: "Newton's Laws",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+    ],
+    Chemistry: [
+      {
+        name: "Chemical Equations",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+      {
+        name: "Organic Chemistry",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+    ],
+    Biology: [
+      {
+        name: "Human Anatomy",
+        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+      },
+    ],
+  },
+} as const;
 
-export function SimulationSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [activeSimulation, setActiveSimulation] = useState(0);
-  const [gravity, setGravity] = useState([9.8]);
-  const [mass, setMass] = useState([1]);
-  const [velocity, setVelocity] = useState([5]);
-  const [speed, setSpeed] = useState(1);
+type CourseKey = keyof typeof COURSE_DATA;
 
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-  const prefersReducedMotion = useReducedMotion();
+const COURSES = Object.keys(COURSE_DATA) as CourseKey[];
 
-  const applyPreset = (name: string) => {
-    switch (name) {
-      case "low-gravity":
-        setGravity([3.7]); // Moon gravity
-        setMass([2]);
-        setVelocity([5]);
-        break;
-      case "high-gravity":
-        setGravity([25]); // Jupiter-like
-        setMass([1]);
-        setVelocity([3]);
-        break;
-      case "balanced":
-        setGravity([9.8]);
-        setMass([2]);
-        setVelocity([8]);
-        break;
+export default function Simulation() {
+  const [role, setRole] = useState<"student" | "educator" | null>(null);
+  const [filters, setFilters] = useState({
+    courses: "AI Prompt Engineering",
+    subjects: "",
+    topics: "",
+    youtubeLink: "",
+  });
+
+  const sectionRef = useSectionAudio({
+    audioSrc: simulationAudio,
+    sectionId: "simulation",
+  });
+
+  // Get available subjects for selected course
+  const availableSubjects = Object.keys(
+    COURSE_DATA[filters.courses as CourseKey] || {},
+  );
+
+  // Get available topics for selected course and subject
+  const availableTopics = (
+    filters.subjects && filters.courses
+      ? (COURSE_DATA[filters.courses as CourseKey] as any)[filters.subjects] ||
+        []
+      : []
+  ) as any[];
+
+  // Handle course change - reset subject and topic
+  const handleCourseChange = (course: string) => {
+    const subjects = Object.keys(COURSE_DATA[course as CourseKey] || {});
+    setFilters({
+      courses: course,
+      subjects: subjects[0] || "",
+      topics: "",
+      youtubeLink: "",
+    });
+  };
+
+  // Handle subject change - reset topic
+  const handleSubjectChange = (subject: string) => {
+    setFilters({
+      ...filters,
+      subjects: subject,
+      topics: "",
+      youtubeLink: "",
+    });
+  };
+
+  // Handle topic change - set youtube link
+  const handleTopicChange = (topicName: string) => {
+    const selectedTopic = availableTopics.find(
+      (t: any) => t.name === topicName,
+    );
+    setFilters({
+      ...filters,
+      topics: topicName,
+      youtubeLink: selectedTopic?.youtubeLink || "",
+    });
+  };
+
+  // Launch Engine - open YouTube link in new tab
+  const handleLaunchEngine = () => {
+    if (filters.youtubeLink) {
+      window.open(filters.youtubeLink, "_blank");
     }
   };
 
-  const { displayText: headingText } = useTypewriterOnce(
-    "Real Physics",
-    60,
-    isInView ? 300 : 99999,
-  );
+  if (!role) {
+    return (
+      <section
+        ref={sectionRef as React.RefObject<HTMLElement>}
+        id="simulation"
+        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden scroll-mt-28"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 text-center max-w-2xl"
+        >
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 uppercase">
+            <span className="text-purple-500">Launch</span>{" "}
+            <span className="text-nazli-golden">Simulation</span>
+          </h1>
+          <p className="text-nazli-white text-xl mb-12">
+            Select your role to initialize a personalized learning simulation
+            with lessons, labs, and guided content paths.
+          </p>
 
-  const calculatedForce = (mass[0] * gravity[0]).toFixed(2);
-  const calculatedEnergy = (0.5 * mass[0] * velocity[0] * velocity[0]).toFixed(
-    2,
-  );
-  const activeSimulationData = simulations[activeSimulation];
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <button
+              onClick={() => setRole("educator")}
+              className="p-10 bg-purple-600 border border-white/10 rounded-[2.5rem] text-left"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+                <BookOpen size={32} />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Educator</h3>
+              <p className="text-white/80">
+                Access teaching simulations and lesson planning tools.
+              </p>
+            </button>
 
-  const markerSize = 30 + mass[0] * 6;
-  const markerX = Math.min(80, 18 + velocity[0] * 2.8);
-  const markerY = Math.max(16, 72 - gravity[0] * 1.7 - velocity[0] * 0.7);
+            <button
+              onClick={() => setRole("student")}
+              className="p-10 bg-indigo-600 border border-white/10 rounded-[2.5rem] text-left"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
+                <User size={32} />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Student</h3>
+              <p className="text-white/80">
+                Access study simulations and interactive revision materials.
+              </p>
+            </button>
+          </div>
+        </motion.div>
+        <SocialHub />
+      </section>
+    );
+  }
 
   return (
     <section
       id="simulation"
-      ref={sectionRef}
-      className="relative py-32 overflow-hidden"
+      className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-      <div className="container relative z-10 px-4 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
+      <div className="relative z-10 max-w-7xl mx-auto">
+        <button
+          onClick={() => setRole(null)}
+          className="mb-8 inline-flex items-center gap-2 text-white/65 hover:text-amber-200 transition-colors uppercase text-sm font-bold tracking-widest group"
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 shadow-[0_18px_46px_-30px_rgba(56,189,248,0.55)]">
-            <Zap className="h-4 w-4 text-accent" />
-            <span className="bg-linear-to-r from-sky-100 via-white to-cyan-100 bg-clip-text text-sm font-medium text-transparent">
-              Interactive Learning
-            </span>
-          </div>
-          <h2 className="mb-6 text-4xl font-bold text-balance md:text-5xl">
-            <span className="text-foreground">Experience </span>
-            <span className="bg-linear-to-r from-sky-100 via-white to-cyan-200 bg-clip-text text-transparent [text-shadow:0_0_28px_rgba(125,211,252,0.2)]">
-              {headingText}
-              {headingText !== "Real Physics" && (
-                <span className="ml-1 inline-block h-[0.8em] w-[3px] animate-pulse bg-accent align-middle" />
-              )}
-            </span>
-          </h2>
-          <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-            A lighter simulation demo that still shows live controls, clear
-            outcomes, and how the product could be presented in class or on the
-            landing page.
-          </p>
-        </motion.div>
+          <ArrowLeft
+            size={16}
+            className="group-hover:-translate-x-1 transition-transform duration-150"
+          />
+          Back to Role Selection
+        </button>
 
-        <div className="mx-auto grid max-w-6xl items-start gap-6 lg:grid-cols-2">
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Controls Panel */}
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8 rounded-3xl border border-border/50 bg-card/70 p-6 shadow-[0_28px_80px_-58px_rgba(56,189,248,0.4)] backdrop-blur-md sm:p-8"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="w-full lg:w-80 shrink-0 space-y-8"
           >
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-background/50 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-                  <Sparkles className="h-3.5 w-3.5 text-accent" />
-                  Simulation Controls
-                </div>
-                <h3 className="mt-4 text-2xl font-semibold text-foreground">
-                  Live parameter preview
-                </h3>
-              </div>
+            <div className="p-8 bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] border border-white/10 rounded-4xl backdrop-blur-xl">
+              <h4 className="text-sm font-bold uppercase tracking-widest mb-6 text-purple-500">
+                Simulation Filters
+              </h4>
 
-              <div className="flex gap-2">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-xl border-border/40"
-                  onClick={() => setIsPlaying(!isPlaying)}
-                >
-                  {isPlaying ? (
-                    <Pause className="h-4 w-4" />
-                  ) : (
-                    <Play className="h-4 w-4" />
-                  )}
-                </Button>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-xl border-border/40"
-                  onClick={() => {
-                    setGravity([9.8]);
-                    setMass([1]);
-                    setVelocity([5]);
-                    setIsPlaying(false);
-                  }}
-                >
-                  <RotateCcw className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {simulations.map((simulation, index) => (
-                <button
-                  key={simulation.id}
-                  onClick={() => setActiveSimulation(index)}
-                  className={`rounded-2xl border px-4 py-4 text-left transition-colors ${
-                    activeSimulation === index
-                      ? "border-accent/40 bg-accent/10"
-                      : "border-border/40 bg-background/45 hover:border-border/70 hover:bg-background/70"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary/70 text-foreground">
-                      <simulation.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">
-                        {simulation.label}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {simulation.tag}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            <p className="text-sm leading-6 text-muted-foreground">
-              {activeSimulationData.description}
-            </p>
-
-            {/* Quick Preset Buttons */}
-            {activeSimulationData.id === "physics" && (
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                <motion.button
-                  onClick={() => applyPreset("low-gravity")}
-                  className="rounded-xl border border-border/40 bg-background/45 px-3 py-2 text-xs font-medium text-muted-foreground hover:border-accent/80 hover:bg-accent/10 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Low Gravity
-                </motion.button>
-                <motion.button
-                  onClick={() => applyPreset("balanced")}
-                  className="rounded-xl border border-border/40 bg-background/45 px-3 py-2 text-xs font-medium text-muted-foreground hover:border-primary/80 hover:bg-primary/10 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Balanced
-                </motion.button>
-                <motion.button
-                  onClick={() => applyPreset("high-gravity")}
-                  className="rounded-xl border border-border/40 bg-background/45 px-3 py-2 text-xs font-medium text-muted-foreground hover:border-glow-cyan/80 hover:bg-glow-cyan/10 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  High Gravity
-                </motion.button>
-              </div>
-            )}
-
-            <div className="space-y-6">
-              <div className="space-y-3 rounded-2xl border border-border/40 bg-background/45 p-4 hover:border-primary/40 transition-colors">
-                <div className="flex items-center justify-between text-sm">
-                  <label className="font-medium text-foreground">Gravity</label>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-primary font-semibold">
-                      {gravity[0].toFixed(1)}
-                    </span>
-                    <span className="text-xs text-muted-foreground">m/s²</span>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div
-                    className="absolute top-0 left-0 h-2 rounded-full bg-gradient-to-r from-primary to-primary/30 pointer-events-none"
-                    style={{ width: `${(gravity[0] / 25) * 100}%` }}
-                  />
-                  <Slider
-                    value={gravity}
-                    onValueChange={setGravity}
-                    min={0}
-                    max={25}
-                    step={0.1}
-                    className="relative z-10"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3 rounded-2xl border border-border/40 bg-background/45 p-4 hover:border-accent/40 transition-colors">
-                <div className="flex items-center justify-between text-sm">
-                  <label className="font-medium text-foreground">Mass</label>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-accent font-semibold">
-                      {mass[0].toFixed(1)}
-                    </span>
-                    <span className="text-xs text-muted-foreground">kg</span>
-                  </div>
-                </div>
-                <div className="relative">
-                  <div
-                    className="absolute top-0 left-0 h-2 rounded-full bg-gradient-to-r from-accent to-accent/30 pointer-events-none"
-                    style={{ width: `${(mass[0] / 10) * 100}%` }}
-                  />
-                  <Slider
-                    value={mass}
-                    onValueChange={setMass}
-                    min={0.1}
-                    max={10}
-                    step={0.1}
-                    className="relative z-10"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-3 rounded-2xl border border-border/40 bg-background/45 p-4 hover:border-glow-cyan/40 transition-colors">
-                <div className="flex items-center justify-between text-sm">
-                  <label className="font-medium text-foreground">
-                    Velocity
+              <div className="space-y-6">
+                <div>
+                  <label className="text-xs font-bold text-white/40 uppercase mb-2 block">
+                    Courses
                   </label>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-glow-cyan font-semibold">
-                      {velocity[0].toFixed(1)}
-                    </span>
-                    <span className="text-xs text-muted-foreground">m/s</span>
-                  </div>
+                  <select
+                    value={filters.courses}
+                    onChange={(e) => handleCourseChange(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-500 transition-colors font-bold"
+                  >
+                    {COURSES.map((course) => (
+                      <option
+                        key={course}
+                        value={course}
+                        className="bg-[#050505] font-bold"
+                      >
+                        {course}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="relative">
-                  <div
-                    className="absolute top-0 left-0 h-2 rounded-full bg-gradient-to-r from-glow-cyan to-glow-cyan/30 pointer-events-none"
-                    style={{ width: `${(velocity[0] / 20) * 100}%` }}
-                  />
-                  <Slider
-                    value={velocity}
-                    onValueChange={setVelocity}
-                    min={0}
-                    max={20}
-                    step={0.5}
-                    className="relative z-10"
-                  />
+
+                <div>
+                  <label className="text-xs font-bold text-white/40 uppercase mb-2 block">
+                    Subjects
+                  </label>
+                  <select
+                    value={filters.subjects}
+                    onChange={(e) => handleSubjectChange(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-500 transition-colors font-bold"
+                  >
+                    <option value="" className="bg-[#050505] font-bold">
+                      Select Subject
+                    </option>
+                    {availableSubjects.map((subject) => (
+                      <option
+                        key={subject}
+                        value={subject}
+                        className="bg-[#050505] font-bold"
+                      >
+                        {subject}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-white/40 uppercase mb-2 block">
+                    Topics
+                  </label>
+                  <select
+                    value={filters.topics}
+                    onChange={(e) => handleTopicChange(e.target.value)}
+                    disabled={!filters.subjects}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-500 transition-colors font-bold disabled:opacity-50"
+                  >
+                    <option value="" className="bg-[#050505] font-bold">
+                      Select Topic
+                    </option>
+                    {availableTopics.map((topic: any) => (
+                      <option
+                        key={topic.name}
+                        value={topic.name}
+                        className="bg-[#050505] font-bold"
+                      >
+                        {topic.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
+
+              <button
+                onClick={handleLaunchEngine}
+                disabled={!filters.youtubeLink}
+                className="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
+              >
+                <Play size={16} className="fill-current" /> Launch Engine
+              </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 border-t border-border/30 pt-4">
-              <motion.div
-                className="rounded-2xl border border-primary/40 bg-primary/5 p-4 hover:bg-primary/10 hover:border-primary/60 transition-all cursor-default"
-                whileHover={{ scale: 1.02, y: -2 }}
-              >
-                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                  Force
-                </p>
-                <p className="mt-3 text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                  {calculatedForce}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Newtons (N)
-                </p>
-              </motion.div>
-              <motion.div
-                className="rounded-2xl border border-accent/40 bg-accent/5 p-4 hover:bg-accent/10 hover:border-accent/60 transition-all cursor-default"
-                whileHover={{ scale: 1.02, y: -2 }}
-              >
-                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-medium">
-                  Kinetic Energy
-                </p>
-                <p className="mt-3 text-2xl md:text-3xl font-bold bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">
-                  {calculatedEnergy}
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">Joules (J)</p>
-              </motion.div>
+            <div className="p-8 bg-nazli-purple/70 border border-purple-500/20 rounded-4xl">
+              <h5 className="text-sm font-bold mb-2">Simulation Mode</h5>
+              <p className="text-xs text-white/60 leading-relaxed">
+                Currently viewing as{" "}
+                <span className="text-white font-bold uppercase">{role}</span>.
+              </p>
             </div>
           </motion.div>
 
+          {/* Simulation Viewport */}
           <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="rounded-3xl border border-border/50 bg-card/70 p-6 shadow-[0_28px_80px_-58px_rgba(56,189,248,0.35)] backdrop-blur-md sm:p-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex-1 space-y-8"
           >
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/40 bg-background/50">
-                  <activeSimulationData.icon className="h-5 w-5 text-foreground" />
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    {activeSimulationData.tag}
-                  </p>
-                  <h3 className="text-xl font-semibold text-foreground">
-                    {activeSimulationData.label}
-                  </h3>
-                </div>
-              </div>
+            <div className="aspect-video bg-black rounded-[2.5rem] border border-white/10 overflow-hidden relative group shadow-2xl">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/_DKbZW7BdqA?si=baZnrd3oa9iSAlYo"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full object-cover"
+              ></iframe>
+             
 
-              <div className="flex gap-2">
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-xl border-border/40"
-                  onClick={() =>
-                    setActiveSimulation(
-                      (prev) =>
-                        (prev - 1 + simulations.length) % simulations.length,
-                    )
-                  }
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="rounded-xl border-border/40"
-                  onClick={() =>
-                    setActiveSimulation(
-                      (prev) => (prev + 1) % simulations.length,
-                    )
-                  }
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
+              {/* HUD Elements */}
+              <div className="absolute top-6 left-6 flex items-center gap-3">
+                <div className="px-4 py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />{" "}
+                  Live Simulation
+                </div>
+                <div className="px-4 py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+                  <Globe size={10} /> {filters.topics}
+                </div>
               </div>
             </div>
 
-            <div className="mt-6 rounded-3xl border border-border/40 bg-background/60 p-6">
-              {activeSimulationData.id === "physics" ? (
-                <div className="space-y-6">
-                  {/* Speed Control */}
-                  <div className="flex items-center gap-3 text-sm">
-                    <span className="text-muted-foreground font-medium">
-                      Animation Speed:
+            {/* Materials Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { title: "Movie Video", type: "Video", free: true },
+                { title: "Lab Video", type: "Video", free: false },
+                { title: "Worksheet", type: "PDF", free: true },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="p-6 bg-nazli-purple/70 border border-white/10 rounded-3xl flex items-center justify-between group hover:bg-nazli-purple/80 transition-all"
+                >
+                  <div>
+                    <h5 className="font-bold mb-1">{item.title}</h5>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">
+                      {item.type} • {item.free ? "Free" : "Paid"}
                     </span>
-                    <div className="flex gap-2">
-                      {[0.5, 1, 2].map((s) => (
-                        <motion.button
-                          key={s}
-                          onClick={() => setSpeed(s)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
-                            speed === s
-                              ? "bg-primary/20 border-primary/50 text-primary"
-                              : "bg-background/50 border-border/40 text-muted-foreground hover:border-border/70"
-                          }`}
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          {s}x
-                        </motion.button>
-                      ))}
-                    </div>
                   </div>
-
-                  <div className="relative min-h-[320px] overflow-hidden rounded-2xl border border-dashed border-border/40 bg-secondary/10">
-                    <div className="absolute left-6 right-6 top-8 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                      <span>Launch Preview</span>
-                      <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded">
-                        {isPlaying ? "Animating" : "Static Preview"}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-14 left-6 right-6 h-px bg-border/50" />
-                    <div className="absolute bottom-14 left-6 text-xs text-muted-foreground">
-                      Start
-                    </div>
-                    <div className="absolute bottom-14 right-6 text-xs text-muted-foreground">
-                      Outcome
-                    </div>
-
-                    <motion.div
-                      className="absolute rounded-full bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/35"
-                      style={{
-                        width: markerSize,
-                        height: markerSize,
-                        left: `calc(${markerX}% - ${markerSize / 2}px)`,
-                        top: `calc(${markerY}% - ${markerSize / 2}px)`,
-                      }}
-                      animate={
-                        isPlaying && !prefersReducedMotion
-                          ? { scale: [1, 1.08, 1], y: [0, 6 * speed, 0] }
-                          : undefined
-                      }
-                      transition={{
-                        duration: 1.8 / speed,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }}
-                    />
-
-                    <div className="absolute inset-x-6 bottom-6 grid gap-3 md:grid-cols-3">
-                      <div className="rounded-2xl border border-border/40 bg-background/80 p-4 hover:border-primary/50 transition-colors">
-                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                          Mass
-                        </p>
-                        <p className="mt-2 text-lg font-semibold text-foreground">
-                          {mass[0].toFixed(1)} kg
-                        </p>
-                      </div>
-                      <div className="rounded-2xl border border-border/40 bg-background/80 p-4 hover:border-accent/50 transition-colors">
-                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                          Gravity
-                        </p>
-                        <p className="mt-2 text-lg font-semibold text-foreground">
-                          {gravity[0].toFixed(1)} m/s2
-                        </p>
-                      </div>
-                      <div className="rounded-2xl border border-border/40 bg-background/80 p-4 hover:border-glow-cyan/50 transition-colors">
-                        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                          Velocity
-                        </p>
-                        <p className="mt-2 text-lg font-semibold text-foreground">
-                          {velocity[0].toFixed(1)} m/s
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="rounded-2xl border border-border/40 bg-background/45 p-4 font-mono text-sm text-muted-foreground">
-                    <div>
-                      F = m x g = {mass[0].toFixed(1)} x {gravity[0].toFixed(1)}{" "}
-                      =
-                      <span className="ml-1 text-foreground font-semibold">
-                        {calculatedForce} N
-                      </span>
-                    </div>
-                    <div className="mt-2">
-                      KE = 0.5mv2 = 0.5 x {mass[0].toFixed(1)} x{" "}
-                      {velocity[0].toFixed(1)}2 =
-                      <span className="ml-1 text-foreground font-semibold">
-                        {calculatedEnergy} J
-                      </span>
-                    </div>
-                  </div>
+                  <button className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-purple-500 transition-colors">
+                    {item.free ? <Download size={16} /> : <Play size={16} />}
+                  </button>
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Additional Visualizations for other simulation types */}
-                  <div className="flex min-h-[200px] flex-col items-center justify-center rounded-2xl border border-border/40 bg-background/45 p-6">
-                    <motion.div
-                      className="mb-3 flex h-16 w-16 items-center justify-center rounded-3xl border border-white/10 bg-white/[0.03] text-foreground"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      <activeSimulationData.icon className="h-8 w-8" />
-                    </motion.div>
-                    <p className="text-center text-sm text-muted-foreground mb-4">
-                      {activeSimulationData.description}
-                    </p>
-                    <motion.div
-                      className="w-32 h-1 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full"
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {activeSimulationData.highlights.map((item, idx) => (
-                      <motion.div
-                        key={item}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="flex items-start gap-2 rounded-2xl border border-border/40 bg-background/45 p-3 text-xs text-foreground hover:border-border/70 transition-colors"
-                      >
-                        <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent" />
-                        <span>{item}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-2">
-                {simulations.map((simulation, index) => (
-                  <button
-                    key={simulation.id}
-                    onClick={() => setActiveSimulation(index)}
-                    className={`h-2.5 w-2.5 rounded-full transition-colors ${
-                      activeSimulation === index ? "bg-foreground" : "bg-muted"
-                    }`}
-                    aria-label={`View ${simulation.label}`}
-                  />
-                ))}
-              </div>
-              <p className="max-w-sm text-sm text-muted-foreground">
-                Use this block as the lightweight class demo before a live
-                session or Google Meet handoff.
-              </p>
+              ))}
             </div>
           </motion.div>
         </div>
       </div>
+      <SocialHub />
     </section>
   );
 }

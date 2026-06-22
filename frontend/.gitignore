@@ -21,7 +21,10 @@ node_modules
 /frontend/.env
 /frontend/.env.local
 /frontend/.env.development
-
+frontend/.DS_Store
+frontend/.codex
+frontend/.vscode
+frontend/dist
 
 
 /backend/node_modules

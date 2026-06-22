@@ -1,175 +1,232 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Menu, X, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, type MouseEvent } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import NazliLogo from "@/assets/NazliLogo.png";
 
-type NavItemType = "anchor" | "route" | "external";
+type SectionId = "video-feed" | "courses" | "curriculum" | "simulation" | "apps" | "pricing" | "testimonials" | "articles" | "about" | "contact";
 
 interface NavItem {
   label: string;
-  href: string;
-  type: NavItemType;
+  href: `#${string}`;
+  sectionId?: SectionId;
 }
 
 const navItems: NavItem[] = [
-  { label: "Courses", href: "#courses", type: "anchor" },
-  // { label: "Simulations", href: "#simulation", type: "anchor" },
-  { label: "Pricing", href: "#pricing", type: "anchor" },
-  { label: "Global", href: "#global", type: "anchor" },
-  { label: "Community", href: "/community", type: "route" },
+  { label: "Home", href: "#home" },
+  { label: "Courses", href: "#courses", sectionId: "courses" },
+  { label: "Simulation", href: "#simulation", sectionId: "simulation" },
+  { label: "Apps", href: "#apps", sectionId: "apps" },
+  { label: "Pricing", href: "#pricing", sectionId: "pricing" },
+  { label: "Articles", href: "#articles", sectionId: "articles" },
+  { label: "About", href: "#about", sectionId: "about" },
+  { label: "Contact", href: "#contact", sectionId: "contact" },
 ];
 
-const renderNavLink = (item: NavItem) => {
-  if (item.type === "route") {
-    return { isRoute: true };
-  }
-  return { isRoute: false };
-};
-
-export function Navbar() {
+export function Navbar({
+  onNavigate,
+}: {
+  onNavigate?: (sectionId: SectionId, count?: number) => void;
+} = {}) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState<`#${string}`>("#home");
+
+  const navigateToSection = (href: `#${string}`, sectionId?: SectionId) => {
+    const targetId = href.slice(1);
+
+    // Trigger preloading when user navigates
+    if (sectionId) {
+      onNavigate?.(sectionId, 2);
+      // Also try global preload function if available
+      const preloadFn = (window as any).__preloadLandingSectionsAhead;
+      if (preloadFn) {
+        preloadFn(sectionId, 2);
+      }
+    }
+
+    const scrollToTarget = (attempt: number) => {
+      const target = document.getElementById(targetId);
+
+      if (target) {
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+
+        window.history.replaceState(null, "", href);
+        setActiveLink(href);
+        return;
+      }
+
+      if (attempt < 14) {
+        window.setTimeout(() => scrollToTarget(attempt + 1), 120);
+      }
+    };
+
+    scrollToTarget(0);
+  };
+
+  const handleNavClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: `#${string}`,
+    sectionId?: SectionId,
+  ) => {
+    event.preventDefault();
+    navigateToSection(href, sectionId);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 8);
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+            setActiveLink(`#${entry.target.id}` as `#${string}`);
+          }
+        });
+      },
+      { rootMargin: "-22% 0px -52% 0px", threshold: [0.35, 0.5] },
+    );
+
+    const observedElements = new Set<Element>();
+
+    const syncObservedSections = () => {
+      let allObserved = true;
+      navItems.forEach((item) => {
+        const section = document.querySelector(item.href);
+        if (section && !observedElements.has(section)) {
+          observer.observe(section);
+          observedElements.add(section);
+        }
+        if (!section) {
+          allObserved = false;
+        }
+      });
+
+      return allObserved;
+    };
+
+    const initiallySynced = syncObservedSections();
+    let observerSync: number | null = null;
+
+    if (!initiallySynced) {
+      observerSync = window.setInterval(() => {
+        const isFullySynced = syncObservedSections();
+        if (isFullySynced && observerSync) {
+          window.clearInterval(observerSync);
+          observerSync = null;
+        }
+      }, 1200);
+    }
+
+    return () => {
+      if (observerSync) {
+        window.clearInterval(observerSync);
+      }
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <header className="fixed left-0 right-0 top-10 md:top-11 z-50 px-4 md:px-6">
+      <div
+        className={`mx-auto max-w-7xl rounded-2xl border transition-all duration-200 ${
           isScrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg shadow-black/5"
-            : "bg-transparent"
-        }`}
+            ? "border-white/15 shadow-[0_14px_38px_-22px_rgba(0,0,0,0.8)]"
+            : "border-white/10 bg-nazli-purple/[0.5] hover:bg-nazli-purple/[0.7]"
+        } backdrop-blur-xl`}
       >
-        <div className="container px-4 md:px-6">
-          <div className="flex items-center justify-between h-20">
-            <Link to="/" className="group flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-primary to-accent">
-                <Sparkles className="h-5 w-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">
-                Nazli<span className="text-primary">Tech</span>
-              </span>
-            </Link>
+        <div className="px-4 md:px-6 py-3 flex items-center justify-between gap-3">
+          <a
+            href="#home"
+            onClick={(event) => handleNavClick(event, "#home")}
+            className="relative z-50 shrink-0 transition-transform duration-150 hover:scale-[1.02] active:scale-[0.99]"
+          >
+            <img
+              src={NazliLogo}
+              alt="Nazli Logo"
+              className="h-9 md:h-10 lg:h-20 w-auto object-contain"
+            />
+          </a>
 
-            <div className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => {
-                const { isRoute } = renderNavLink(item);
-                return isRoute ? (
-                  <Link
-                    key={item.label}
-                    to={item.href}
-                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
-            </div>
+          <nav className="hidden lg:flex items-center gap-1 rounded-full border border-white/10 bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] px-2 py-1.5">
+            {navItems.map((item) => {
+              const isActive = activeLink === item.href;
 
-            <div className="hidden md:flex items-center gap-4">
-              {/* <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
-                <Link to="/admin">Admin Portal</Link>
-              </Button> */}
-              <Button
-                asChild
-                className="rounded-xl bg-linear-to-r from-white to-sky-100 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]"
-              >
-                <a href="#pricing">Get Started</a>
-              </Button>
-            </div>
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(event) => handleNavClick(event, item.href, item.sectionId)}
+                  className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-150 ${
+                    isActive
+                      ? "text-white"
+                      : "text-white/65 hover:text-amber-200"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="navbar-active-pill"
+                      className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600/60 to-amber-500/35 border border-white/10"
+                      transition={{
+                        type: "spring",
+                        stiffness: 340,
+                        damping: 28,
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
+                </a>
+              );
+            })}
+          </nav>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          <div className="hidden md:flex items-center gap-3">
+            <a
+              href="https://calendar.app.google/eq7krfDvWy73Gk8o9"
+              className="relative z-10 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </Button>
+              <span className="flex">
+                Book Call <ArrowUpRight size={15} />
+              </span>
+            </a>
+          </div>
+
+          <div className="lg:hidden text-[10px] uppercase tracking-[0.22em] text-white/55 font-semibold">
+            Nazli Tech
           </div>
         </div>
-      </motion.nav>
+      </div>
 
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 pt-20 bg-background/95 backdrop-blur-xl md:hidden"
-          >
-            <div className="container px-4 py-8">
-              <div className="flex flex-col gap-4">
-                {navItems.map((item) => {
-                  const { isRoute } = renderNavLink(item);
-                  return isRoute ? (
-                    <Link
-                      key={item.label}
-                      to={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="border-b border-border/30 py-3 text-lg font-medium text-foreground"
-                    >
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="border-b border-border/30 py-3 text-lg font-medium text-foreground"
-                    >
-                      {item.label}
-                    </a>
-                  );
-                })}
-              </div>
-              <div className="mt-8 flex flex-col gap-4">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="w-full rounded-xl py-6"
+      <div className="fixed bottom-3 left-3 right-3 z-50 lg:hidden">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-white/12 bg-[#09090f]/95 backdrop-blur-xl shadow-[0_18px_40px_-24px_rgba(0,0,0,0.8)] px-2 py-2">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
+            {navItems.map((item) => {
+              const isActive = activeLink === item.href;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(event) => handleNavClick(event, item.href, item.sectionId)}
+                  className={`shrink-0 px-3 py-2 text-xs font-semibold rounded-xl transition-colors duration-150 ${
+                    isActive
+                      ? "bg-gradient-to-r from-purple-600/60 to-amber-500/35 text-white"
+                      : "text-white/70 hover:text-amber-200"
+                  }`}
                 >
-                  <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                    Admin Portal
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  className="w-full rounded-xl bg-linear-to-r from-white to-sky-100 py-6 text-slate-950 shadow-[0_18px_48px_-24px_rgba(56,189,248,0.72)] hover:shadow-[0_24px_60px_-24px_rgba(96,165,250,0.82)]"
-                >
-                  <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>
-                    Get Started
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }

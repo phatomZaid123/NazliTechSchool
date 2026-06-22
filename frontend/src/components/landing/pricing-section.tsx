@@ -1,446 +1,252 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Check,
-  Sparkles,
-  Zap,
-  Crown,
-  Users,
-  BookOpen,
-  Video,
-  Code,
-  FlaskConical,
-  ChefHat,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTypewriterOnce } from "@/hooks/use-typewriter";
+import { motion } from "framer-motion";
+import { Check, Crown, Gem, Medal, Shield, Sparkles } from "lucide-react";
+import { useSectionAudio } from "@/hooks/use-section-audio";
+import pricingAudio from "@/assets/pricingaudio.mp3";
+import SocialHub from "./social-media-section";
 
 const pricingPlans = [
   {
-    id: "starter",
-    name: "Explorer",
-    description: "Perfect for curious minds starting their journey",
-    price: { monthly: 29, yearly: 290 },
-    icon: Zap,
-    color: "from-cyan-500 to-blue-600",
-    glowColor: "rgba(6, 182, 212, 0.3)",
+    id: "silver",
+    name: "Silver",
+    duration: "1 month package",
+    months: 1,
+    price: 120,
+    icon: Shield,
+    color: "from-slate-300 via-slate-400 to-slate-500",
+    cardTone:
+      "from-nazli-purple/20 via-background/82 to-nazli-golden/10 border-nazli-gray/35",
+    iconTint: "text-slate-500",
     features: [
-      "Access to 10+ foundational courses",
-      "Basic physics & chemistry simulations",
-      "Community forum access",
-      "Weekly live Q&A sessions",
-      "Progress tracking dashboard",
-      "Mobile app access",
+      "Ideal for learners getting started",
+      "Flexible and short commitment",
+    
     ],
-    highlighted: false,
   },
   {
-    id: "pro",
-    name: "Innovator",
-    description: "For ambitious learners ready to excel",
-    price: { monthly: 79, yearly: 790 },
+    id: "gold",
+    name: "Gold",
+    duration: "3 month package",
+    months: 3,
+    price: 345,
+    icon: Medal,
+    color: "from-amber-300 via-yellow-400 to-amber-500",
+    cardTone:
+      "from-nazli-golden/22 via-background/80 to-nazli-purple/12 border-nazli-golden/40",
+    iconTint: "text-amber-500",
+    features: [
+      "Balanced pace for sustained growth",
+      "Great for building consistency",
+      
+    ],
+  },
+  {
+    id: "ruby",
+    name: "Ruby",
+    duration: "6 month package",
+    months: 6,
+    price: 660,
+    icon: Gem,
+    color: "from-rose-400 via-red-500 to-rose-600",
+    cardTone:
+      "from-rose-500/20 via-background/80 to-nazli-purple/10 border-rose-400/35",
+    iconTint: "text-rose-600",
+    features: [
+      "Strong medium-term momentum",
+      "Perfect for deeper skill building",
+      
+    ],
+  },
+  {
+    id: "safire",
+    name: "Sapphire",
+    duration: "9 month package",
+    months: 9,
+    price: 945,
+    icon: Sparkles,
+    color: "from-sky-300 via-cyan-500 to-blue-600",
+    cardTone:
+      "from-cyan-500/18 via-background/80 to-nazli-purple/12 border-cyan-400/35",
+    iconTint: "text-blue-600",
+    features: [
+      "Extended track for long-term mastery",
+      "Designed for steady advanced progress",
+    
+    ],
+  },
+  {
+    id: "diamond",
+    name: "Diamond",
+    duration: "12 month package",
+    months: 12,
+    price: 1200,
     icon: Crown,
-    color: "from-purple-500 to-pink-600",
-    glowColor: "rgba(168, 85, 247, 0.4)",
+    color: "from-violet-400 via-fuchsia-500 to-pink-600",
+    cardTone:
+      "from-nazli-purple/28 via-background/75 to-nazli-golden/14 border-violet-400/45",
+    iconTint: "text-pink-600",
     features: [
-      "All Explorer features",
-      "Access to 60+ premium courses",
-      "Advanced lab simulations",
-      "AI-powered personalized learning",
-      "1-on-1 mentor sessions (2/month)",
-      "Project-based certifications",
-      "Priority support",
-      "Offline downloads",
+      "Full-year commitment package",
+      "Best for complete learning journeys",
+     
     ],
-    highlighted: true,
-    badge: "Most Popular",
-  },
-  {
-    id: "enterprise",
-    name: "Institution",
-    description: "Complete solution for schools & organizations",
-    price: { monthly: 199, yearly: 1990 },
-    icon: Users,
-    color: "from-amber-500 to-orange-600",
-    glowColor: "rgba(245, 158, 11, 0.3)",
-    features: [
-      "All Innovator features",
-      "Unlimited team seats",
-      "Custom curriculum builder",
-      "White-label options",
-      "Analytics & reporting dashboard",
-      "Dedicated success manager",
-      "API access",
-      "SLA guarantee",
-    ],
-    highlighted: false,
   },
 ];
 
-const courseCategories = [
-  {
-    id: "programming",
-    name: "Programming",
-    icon: Code,
-    color: "from-emerald-500 to-teal-600",
-    courses: 25,
-    students: "12K+",
-    description: "Python, JavaScript, AI/ML, Web Dev",
-  },
-  {
-    id: "sciences",
-    name: "Sciences",
-    icon: FlaskConical,
-    color: "from-blue-500 to-indigo-600",
-    courses: 18,
-    students: "8K+",
-    description: "Physics, Chemistry, Biology Labs",
-  },
-  {
-    id: "video",
-    name: "Video Production",
-    icon: Video,
-    color: "from-pink-500 to-rose-600",
-    courses: 12,
-    students: "5K+",
-    description: "Editing, Animation, VFX",
-  },
-  {
-    id: "culinary",
-    name: "Culinary Arts",
-    icon: ChefHat,
-    color: "from-amber-500 to-orange-600",
-    courses: 8,
-    students: "3K+",
-    description: "Cooking, Baking, Nutrition",
-  },
-];
+function createPackageMailto(plan: (typeof pricingPlans)[number]) {
+  const recipient = "admissions@nazlitech.org";
+  const subject = `Package Request - ${plan.name} (${plan.months} ${plan.months === 1 ? "Month" : "Months"})`;
+  const body = `Hello Nazli Tech Team,
+
+I would like to enroll in this package:
+- Package: ${plan.name}
+- Duration: ${plan.duration}
+- Currency: EUR (€)
+
+My details:
+- Full name:
+- Student age:
+- Preferred course:
+- Country / Timezone:
+- Preferred start date:
+
+Thank you.`;
+
+  return `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export function PricingSection() {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
-    "monthly",
-  );
-  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("programming");
-  const titleRef = useRef<HTMLHeadingElement>(null);
-
-  const { displayText: titleText, hasStarted: titleStarted } =
-    useTypewriterOnce("Invest in Your Future", 50);
+  const sectionRef = useSectionAudio({
+    audioSrc: pricingAudio,
+    sectionId: "pricing",
+  });
 
   return (
-    <section id="pricing" className="relative py-32 overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+    <section
+      ref={sectionRef as React.RefObject<HTMLElement>}
+      id="pricing"
+      className="relative overflow-hidden py-32 scroll-mt-28"
+    >
+      <div className="container relative z-10 mx-auto max-w-[96rem] px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mx-auto mb-16 max-w-5xl text-center"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-500/30 mb-6"
+            className="code-tag mb-6 inline-flex"
           >
-            <Sparkles className="w-4 h-4 text-purple-400" />
-            <span className="text-sm font-medium text-purple-300">
-              Flexible Plans for Everyone
-            </span>
+            // Packages Billed in Euro (EUR)
           </motion.div>
 
-          <h2
-            ref={titleRef}
-            className="text-4xl md:text-6xl font-bold text-foreground mb-6"
-          >
-            {titleStarted ? titleText : "Invest in Your Future"}
-            {titleStarted && (
-              <span className="animate-pulse text-purple-400">|</span>
-            )}
+          <h2 className="text-5xl md:text-6xl font-black tracking-tight bg-gradient-to-r from-purple-400 to-amber-300 bg-clip-text text-transparent mb-6">
+            Choose Your Learning Package
           </h2>
 
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Choose the perfect plan to unlock your potential. All plans include
-            access to our global learning community.
+          <p className="text-lg text-white max-w-4xl mx-auto leading-[1.7]">
+            Pick a package duration that fits your goals. All plans are billed
+            in euro currency and designed for flexible learning paths. Each package will be tailored to fit your specific need instead of just dumped on you
           </p>
+           
         </motion.div>
 
-        {/* Billing Toggle */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex justify-center mb-12"
-        >
-          <div className="inline-flex items-center gap-4 p-2 rounded-2xl bg-secondary/50 border border-border">
-            <button
-              onClick={() => setBillingCycle("monthly")}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
-                billingCycle === "monthly"
-                  ? "bg-gradient-to-r from-purple-500 to-cyan-500 text-primary-foreground shadow-lg"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle("yearly")}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 relative ${
-                billingCycle === "yearly"
-                  ? "bg-gradient-to-r from-purple-500 to-cyan-500 text-primary-foreground shadow-lg"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Yearly
-              <span className="absolute -top-2 -right-2 px-2 py-0.5 rounded-full bg-emerald-500 text-xs font-bold text-white">
-                -17%
-              </span>
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-24">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5 mb-24 md:mb-35">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              onMouseEnter={() => setHoveredPlan(plan.id)}
-              onMouseLeave={() => setHoveredPlan(null)}
-              className={`relative rounded-3xl p-8 transition-all duration-500 ${
-                plan.highlighted
-                  ? "bg-gradient-to-b from-purple-500/20 to-cyan-500/10 border-2 border-purple-500/50 scale-105"
-                  : "bg-secondary/30 border border-border hover:border-purple-500/30"
-              }`}
-              style={{
-                boxShadow:
-                  hoveredPlan === plan.id
-                    ? `0 0 60px ${plan.glowColor}`
-                    : "none",
-              }}
+              transition={{ delay: index * 0.08 }}
+              whileHover={{ y: plan.id === "diamond" ? -6 : -4, scale: plan.id === "diamond" ? 1.02 : 1.01 }}
+              className={`group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border bg-linear-to-br p-5 transition-all duration-250 hover:shadow-xl hover:shadow-nazli-purple/15 ${plan.id === "diamond" ? "ring-1 ring-nazli-golden/40 shadow-lg shadow-nazli-golden/20" : ""} ${plan.cardTone}`}
             >
-              {plan.badge && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold shadow-lg">
-                    {plan.badge}
-                  </span>
-                </div>
-              )}
-
-              {/* Plan Icon */}
-              <div
-                className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${plan.color} flex items-center justify-center mb-6`}
+              <motion.div
+                aria-hidden="true"
+                animate={{ y: [0, -8, 0], rotate: [0, 4, 0] }}
+                transition={{
+                  duration: 5.5 + index * 0.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }}
+                className={`pointer-events-none absolute -right-7 -top-7 ${plan.iconTint} opacity-25`}
               >
-                <plan.icon className="w-8 h-8 text-white" />
+                <plan.icon className="h-24 w-24" strokeWidth={1.4} />
+              </motion.div>
+
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-nazli-purple/60 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+              />
+
+              <div className="relative z-10 mb-5 flex items-center gap-3">
+                <div
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br ${plan.color} shadow-sm ring-1 ring-white/20`}
+                >
+                  <plan.icon className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold leading-tight text-foreground">
+                  {plan.name}
+                </h3>
               </div>
 
-              {/* Plan Name */}
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                {plan.name}
-              </h3>
-              <p className="text-muted-foreground mb-6">{plan.description}</p>
-
-              {/* Price */}
-              <div className="mb-8">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={billingCycle}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="flex items-baseline gap-2"
-                  >
-                    <span className="text-5xl font-bold text-foreground">
-                      $
-                      {billingCycle === "monthly"
-                        ? plan.price.monthly
-                        : Math.round(plan.price.yearly / 12)}
-                    </span>
-                    <span className="text-muted-foreground">/month</span>
-                  </motion.div>
-                </AnimatePresence>
-                {billingCycle === "yearly" && (
-                  <p className="text-sm text-emerald-400 mt-2">
-                    Billed ${plan.price.yearly}/year
-                  </p>
-                )}
+              <div className="relative z-10 mb-5 rounded-xl border border-border/40 bg-nazli-golden/20 p-4 ">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      Duration
+                    </p>
+                    <p className="mt-2 text-2xl font-semibold leading-none text-foreground">
+                      {plan.months}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                      {plan.months === 1 ? "Month" : "Months"}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+                      Price
+                    </p>
+                    <p className="mt-2 text-2xl font-semibold leading-none bg-gradient-to-r from-nazli-golden to-amber-300 bg-clip-text text-transparent">
+                      €{plan.price}
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-muted-foreground">
+                      EUR
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              {/* Features */}
-              <ul className="space-y-4 mb-8">
+              <p className="relative z-10 mb-4 inline-flex rounded-full bg-foreground/5 px-3 py-1 text-xs font-semibold text-muted-foreground">
+                {plan.duration}
+              </p>
+
+              <ul className="relative z-10 mb-6 flex-1 space-y-3">
                 {plan.features.map((feature, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.05 }}
-                    className="flex items-start gap-3"
-                  >
-                    <div
-                      className={`w-5 h-5 rounded-full bg-gradient-to-r ${plan.color} flex items-center justify-center flex-shrink-0 mt-0.5`}
-                    >
-                      <Check className="w-3 h-3 text-white" />
-                    </div>
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-nazli-golden" />
                     <span className="text-muted-foreground">{feature}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
 
-              {/* CTA Button */}
-              <Button
-                className={`w-full py-6 rounded-lg font-semibold text-lg transition-all duration-300 ${
-                  plan.highlighted
-                    ? "bg-foreground text-background shadow-sm hover:shadow-md"
-                    : "border border-foreground/20 bg-transparent text-foreground hover:bg-foreground/5"
-                }`}
+              <a
+                href={createPackageMailto(plan)}
+                className="relative z-10 mt-auto inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
               >
-                Get Started
-              </Button>
+                Get Package
+              </a>
             </motion.div>
           ))}
         </div>
-
-        {/* Course Categories Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-32"
-        >
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Explore Our Course Portals
-            </h3>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Themed learning experiences designed for different passions and
-              career paths
-            </p>
-          </div>
-
-          {/* Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {courseCategories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`flex items-center gap-3 px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
-                  selectedCategory === category.id
-                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                    : "bg-secondary/50 text-muted-foreground hover:text-foreground border border-border"
-                }`}
-              >
-                <category.icon className="w-5 h-5" />
-                {category.name}
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Category Content */}
-          <AnimatePresence mode="wait">
-            {courseCategories.map(
-              (category) =>
-                selectedCategory === category.id && (
-                  <motion.div
-                    key={category.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className={`relative rounded-3xl p-8 md:p-12 bg-gradient-to-br ${category.color} overflow-hidden`}
-                  >
-                    {/* Decorative Elements */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/20 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
-
-                    <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-                      <div>
-                        <div className="flex items-center gap-3 mb-4">
-                          <category.icon className="w-10 h-10 text-white" />
-                          <h4 className="text-3xl font-bold text-white">
-                            {category.name}
-                          </h4>
-                        </div>
-                        <p className="text-white/80 text-lg mb-6">
-                          {category.description}
-                        </p>
-                        <div className="flex gap-6 mb-8">
-                          <div>
-                            <p className="text-3xl font-bold text-white">
-                              {category.courses}
-                            </p>
-                            <p className="text-white/70">Courses</p>
-                          </div>
-                          <div>
-                            <p className="text-3xl font-bold text-white">
-                              {category.students}
-                            </p>
-                            <p className="text-white/70">Students</p>
-                          </div>
-                        </div>
-                        <Button className="rounded-lg px-8 py-6 font-semibold">
-                          Explore {category.name}
-                        </Button>
-                      </div>
-
-                      {/* Preview Cards */}
-                      <div className="grid grid-cols-2 gap-4">
-                        {[1, 2, 3, 4].map((item) => (
-                          <motion.div
-                            key={item}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: item * 0.1 }}
-                            className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/20"
-                          >
-                            <div className="w-full aspect-video bg-white/30 rounded-xl mb-3" />
-                            <div className="h-3 bg-white/30 rounded w-3/4 mb-2" />
-                            <div className="h-2 bg-white/20 rounded w-1/2" />
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                ),
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Stats Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 p-8 rounded-3xl bg-secondary/30 border border-border"
-        >
-          {[
-            { value: "2,800+", label: "Active Students" },
-            { value: "60+", label: "Expert Courses" },
-            { value: "4.9/5", label: "Average Rating" },
-            { value: "15+", label: "Countries" },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="text-center"
-            >
-              <p className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                {stat.value}
-              </p>
-              <p className="text-muted-foreground mt-1">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+       
       </div>
+      <SocialHub />
     </section>
   );
 }

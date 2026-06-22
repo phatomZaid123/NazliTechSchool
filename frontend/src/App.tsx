@@ -1,27 +1,29 @@
-import { AdminPage } from "@/pages/admin-page";
-import { AdminDashboardRedesigned } from "@/pages/admin-dashboard-redesigned";
 import { LandingPage } from "@/pages/landing-page";
-import { StudentDashboardRedesigned } from "@/pages/student-dashboard-redesigned";
-import { InstructorDashboardRedesigned } from "@/pages/instructor-dashboard-redesigned";
-import { CommunityPage } from "@/pages/community-page";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { StudentDashboard } from "./pages/student-dashboard";
-import { InstructorDashboard } from "./pages/instructor-dashboard";
+import LoadingScreen from "@/components/loading-screen";
+import { CustomCursor } from "@/components/custom-cursor";
+import { ParticleContainer } from "@/components/particle-container";
+import { AudioProvider } from "@/context/audio-context";
+import { useState } from "react";
 
 export default function App() {
+  const [isReady, setIsReady] = useState(false);
+
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      {/* <Route path="/admin" element={<AdminPage />} /> */}
-      <Route path="/admin" element={<AdminDashboardRedesigned />} />
+    <>
+      <CustomCursor />
+      <ParticleContainer />
 
-      <Route path="/student/*" element={<StudentDashboardRedesigned />} />
-
-      {/* <Route path="/student/*" element={<StudentDashboard />} /> */}
-      <Route path="/instructor/*" element={<InstructorDashboardRedesigned />} /
-      >
-      <Route path="/community" element={<CommunityPage />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+      <AudioProvider>
+        <LoadingScreen onComplete={() => setIsReady(true)} />
+        {isReady && (
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/admin" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        )}
+      </AudioProvider>
+    </>
   );
 }
