@@ -9,10 +9,12 @@ next.user-config.*
 
 # Environment variables
 .env*.local
-
+dist/
 
 # Common ignores
 node_modules
+dist
+build
 /frontend/node_modules
 /frontend/dist
 /frontend/build
