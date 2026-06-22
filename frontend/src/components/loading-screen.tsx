@@ -445,7 +445,7 @@ export default function LoadingScreen({
                 <p className="text-3xl font-semibold text-nazli-gray">
                   {boundedProgress}%
                 </p>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-nazli-purple/75">
+                <p className="text-[15px] uppercase tracking-[0.3em] text-nazli-purple/100">
                   Initializing Nazli Tech
                 </p>
               </div>

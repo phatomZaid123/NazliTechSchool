@@ -313,6 +313,47 @@
 
 
 @layer components {
+  .landing-section-kicker {
+    @apply mb-4 inline-flex items-center gap-2 rounded-full border border-nazli-golden/40 bg-nazli-golden/10 px-4 py-1.5 text-[11px] font-bold uppercase text-nazli-golden;
+    font-family: "JetBrains Mono", "Geist Mono", monospace;
+    letter-spacing: 0.18em;
+  }
+
+  .landing-section-heading {
+    @apply text-4xl font-black uppercase leading-none text-white md:text-6xl lg:text-7xl;
+    font-family: "Space Grotesk", "Geist", system-ui, sans-serif;
+    letter-spacing: 0;
+    text-shadow: 0 8px 34px rgba(0, 0, 0, 0.48);
+  }
+
+  .landing-section-heading-xl {
+    @apply text-5xl font-black uppercase leading-none text-white md:text-7xl lg:text-8xl;
+    font-family: "Space Grotesk", "Geist", system-ui, sans-serif;
+    letter-spacing: 0;
+    text-shadow: 0 10px 42px rgba(0, 0, 0, 0.55);
+  }
+
+  .landing-heading-gradient {
+    @apply bg-gradient-to-r from-nazli-golden via-amber-300 to-purple-300 bg-clip-text text-transparent;
+  }
+
+  .landing-section-copy {
+    @apply mx-auto max-w-3xl text-lg leading-[1.7] text-white/82 md:text-xl;
+    letter-spacing: 0;
+  }
+
+  .landing-glass-panel {
+    @apply border border-white/10 bg-nazli-purple/[0.58] shadow-lg shadow-black/20 backdrop-blur-sm transition-all duration-300;
+  }
+
+  .landing-glass-panel:hover {
+    @apply border-nazli-golden/30 bg-nazli-purple/[0.68] shadow-black/35;
+  }
+
+  .landing-primary-cta {
+    @apply inline-flex items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20;
+  }
+
   /* Gradient text utility */
   .gradient-text {
     @apply bg-gradient-to-r bg-clip-text text-transparent;
@@ -926,4 +967,86 @@
     scroll-behavior: auto !important;
   }
 }
+/* Shimmer animation for heading */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
 
+.shimmerText {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Shimmer animation for primary button */
+@keyframes shimmerButton {
+  0% {
+    box-shadow: -10px 0 20px rgba(168, 85, 247, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 10px 0 20px rgba(251, 191, 36, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: -10px 0 20px rgba(168, 85, 247, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.shimmerButton {
+  animation: shimmerButton 2.5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmerButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: slideShimmer 2s infinite;
+}
+
+/* Shimmer animation for golden button */
+@keyframes shimmerButtonGolden {
+  0% {
+    box-shadow: -10px 0 20px rgba(251, 191, 36, 0.4), inset 0 0 20px rgba(251, 191, 36, 0.1);
+  }
+  50% {
+    box-shadow: 10px 0 20px rgba(168, 85, 247, 0.4), inset 0 0 20px rgba(251, 191, 36, 0.2);
+  }
+  100% {
+    box-shadow: -10px 0 20px rgba(251, 191, 36, 0.4), inset 0 0 20px rgba(251, 191, 36, 0.1);
+  }
+}
+
+.shimmerButtonGolden {
+  animation: shimmerButtonGolden 2.5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmerButtonGolden::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.2), transparent);
+  animation: slideShimmer 2s infinite;
+}
+
+@keyframes slideShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

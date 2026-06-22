@@ -64,7 +64,7 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen overflow-hidden pt-28 pb-16 md:py-28 scroll-mt-28"
     >
-      <div className="container relative z-10 px-4 md:px-6 max-w-8xl min-h-[76vh] md:min-h-[78vh] flex items-start md:items-center justify-center">
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6 min-h-[76vh] md:min-h-[78vh] flex items-start md:items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,12 +92,10 @@ export function HeroSection() {
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.2] tracking-tight"
             >
-              {/* <span className="text-nazli-purple neon-glow-golden">Nazli</span> */}
-
               <motion.span
-                className="bg-gradient-to-t from-purple-700 to-amber-500  bg-clip-text text-transparent"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                className="shimmerText bg-gradient-to-r from-purple-400 via-amber-400 to-purple-600 bg-clip-text text-transparent"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
               >
                 Nazli Tech School
@@ -124,7 +122,7 @@ export function HeroSection() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="w-full space-y-4"
           >
-            <p className="text-lg md:text-xl text-nazli-gray leading-relaxed max-w-3xl mx-auto text-center">
+            <p className="text-lg md:text-xl text-nazli-white leading-relaxed max-w-3xl mx-auto text-center">
               Nazli Tech School's{" "}
               <span className="code-tag font-semibold text-nazli-white">
                 Cognoscentia
@@ -146,7 +144,7 @@ export function HeroSection() {
               href="#courses"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-nazli-purple text-nazli-white font-semibold rounded-full hover:bg-opacity-90 transition-all duration-300 neon-glow-purple-box hover:neon-glow-purple"
+              className="shimmerButton px-8 py-4 bg-nazli-purple text-nazli-white font-semibold rounded-full hover:bg-opacity-90 transition-all duration-300"
             >
               <span className="flex items-center justify-center gap-2">
                 Explore Courses
@@ -158,7 +156,7 @@ export function HeroSection() {
               href="#curriculum"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 border-2 bg-nazli-purple/50 border-nazli-golden text-nazli-golden font-semibold rounded-full hover:bg-nazli-purple/80 transition-all duration-300 neon-glow-golden-box"
+              className="shimmerButtonGolden px-8 py-4 border-2 bg-nazli-purple/50 border-nazli-golden text-nazli-golden font-semibold rounded-full hover:bg-nazli-purple/80 transition-all duration-300"
             >
               Our Curriculum
             </motion.a>

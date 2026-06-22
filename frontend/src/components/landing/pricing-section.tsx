@@ -17,7 +17,7 @@ const pricingPlans = [
     color: "from-slate-300 via-slate-400 to-slate-500",
     cardTone:
       "from-nazli-purple/20 via-background/82 to-nazli-golden/10 border-nazli-gray/35",
-    iconTint: "text-slate-200/70",
+    iconTint: "text-slate-500",
     features: [
       "Ideal for learners getting started",
       "Flexible and short commitment",
@@ -34,7 +34,7 @@ const pricingPlans = [
     color: "from-amber-300 via-yellow-400 to-amber-500",
     cardTone:
       "from-nazli-golden/22 via-background/80 to-nazli-purple/12 border-nazli-golden/40",
-    iconTint: "text-amber-300/65",
+    iconTint: "text-amber-500",
     features: [
       "Balanced pace for sustained growth",
       "Great for building consistency",
@@ -51,7 +51,7 @@ const pricingPlans = [
     color: "from-rose-400 via-red-500 to-rose-600",
     cardTone:
       "from-rose-500/20 via-background/80 to-nazli-purple/10 border-rose-400/35",
-    iconTint: "text-rose-300/65",
+    iconTint: "text-rose-600",
     features: [
       "Strong medium-term momentum",
       "Perfect for deeper skill building",
@@ -68,7 +68,7 @@ const pricingPlans = [
     color: "from-sky-300 via-cyan-500 to-blue-600",
     cardTone:
       "from-cyan-500/18 via-background/80 to-nazli-purple/12 border-cyan-400/35",
-    iconTint: "text-cyan-300/65",
+    iconTint: "text-blue-600",
     features: [
       "Extended track for long-term mastery",
       "Designed for steady advanced progress",
@@ -85,7 +85,7 @@ const pricingPlans = [
     color: "from-violet-400 via-fuchsia-500 to-pink-600",
     cardTone:
       "from-nazli-purple/28 via-background/75 to-nazli-golden/14 border-violet-400/45",
-    iconTint: "text-violet-200/70",
+    iconTint: "text-pink-600",
     features: [
       "Full-year commitment package",
       "Best for complete learning journeys",
@@ -128,7 +128,7 @@ export function PricingSection() {
       id="pricing"
       className="relative overflow-hidden py-32 scroll-mt-28"
     >
-      <div className="container relative z-10 mx-auto px-4 ">
+      <div className="container relative z-10 mx-auto max-w-[96rem] px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -155,7 +155,7 @@ export function PricingSection() {
            
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-5 mb-24 md:mb-35">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5 mb-24 md:mb-35">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.id}
@@ -164,7 +164,7 @@ export function PricingSection() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
               whileHover={{ y: plan.id === "diamond" ? -6 : -4, scale: plan.id === "diamond" ? 1.02 : 1.01 }}
-              className={`group relative overflow-hidden rounded-2xl border bg-linear-to-br p-6 transition-all duration-250 hover:shadow-xl hover:shadow-nazli-purple/15 ${plan.id === "diamond" ? "ring-1 ring-nazli-golden/40 shadow-lg shadow-nazli-golden/20" : ""} ${plan.cardTone}`}
+              className={`group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border bg-linear-to-br p-5 transition-all duration-250 hover:shadow-xl hover:shadow-nazli-purple/15 ${plan.id === "diamond" ? "ring-1 ring-nazli-golden/40 shadow-lg shadow-nazli-golden/20" : ""} ${plan.cardTone}`}
             >
               <motion.div
                 aria-hidden="true"
@@ -181,27 +181,27 @@ export function PricingSection() {
 
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(219,172,52,0.18),transparent_45%),radial-gradient(circle_at_10%_100%,rgba(71,0,71,0.22),transparent_40%)] opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 bg-nazli-purple/60 opacity-80 transition-opacity duration-300 group-hover:opacity-100"
               />
 
               <div className="relative z-10 mb-5 flex items-center gap-3">
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-linear-to-br ${plan.color} shadow-sm ring-1 ring-white/20`}
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br ${plan.color} shadow-sm ring-1 ring-white/20`}
                 >
                   <plan.icon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">
+                <h3 className="text-xl font-bold leading-tight text-foreground">
                   {plan.name}
                 </h3>
               </div>
 
-              <div className="relative z-10 mb-5 rounded-2xl border border-border/40 bg-background/60 p-4 backdrop-blur-xs">
+              <div className="relative z-10 mb-5 rounded-xl border border-border/40 bg-nazli-golden/20 p-4 ">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
                       Duration
                     </p>
-                    <p className="mt-2 text-3xl font-black leading-none text-foreground">
+                    <p className="mt-2 text-2xl font-semibold leading-none text-foreground">
                       {plan.months}
                     </p>
                     <p className="mt-1 text-sm font-semibold text-muted-foreground">
@@ -210,9 +210,9 @@ export function PricingSection() {
                   </div>
                   <div className="text-right">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                      Total Price
+                      Price
                     </p>
-                    <p className="mt-2 text-3xl font-black leading-none bg-gradient-to-r from-nazli-golden to-amber-300 bg-clip-text text-transparent">
+                    <p className="mt-2 text-2xl font-semibold leading-none bg-gradient-to-r from-nazli-golden to-amber-300 bg-clip-text text-transparent">
                       €{plan.price}
                     </p>
                     <p className="mt-1 text-sm font-semibold text-muted-foreground">
@@ -226,7 +226,7 @@ export function PricingSection() {
                 {plan.duration}
               </p>
 
-              <ul className="relative z-10 mb-6 space-y-3">
+              <ul className="relative z-10 mb-6 flex-1 space-y-3">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-nazli-golden" />
@@ -237,7 +237,7 @@ export function PricingSection() {
 
               <a
                 href={createPackageMailto(plan)}
-                className="relative z-10 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
+                className="relative z-10 mt-auto inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
               >
                 Get Package
               </a>

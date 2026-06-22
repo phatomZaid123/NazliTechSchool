@@ -36,14 +36,14 @@ export function QuestionsSection() {
       className="relative py-24 overflow-x-hidden scroll-mt-28"
     >
       <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-nazli-golden/10 blur-[120px]" />
-      <div className="container relative z-10 px-4 md:px-6">
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 max-w-6xl mx-auto">
+      <div className="container relative z-10 mx-auto w-full px-4 md:px-6">
+        <div className="grid gap-10 lg:grid-cols-2 ">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             whileHover={{ y: -4 }}
-            className="rounded-2xl border border-nazli-purple/25 hover:border-nazli-purple/40 bg-white/[0.04] hover:bg-white/[0.06] backdrop-blur-xl p-8 transition-all duration-250 shadow-lg shadow-nazli-purple/5 hover:shadow-nazli-purple/10"
+            className="rounded-2xl border border-nazli-purple/25 hover:border-nazli-purple/40 bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] backdrop-blur-xs p-8 transition-all duration-250 shadow-lg shadow-nazli-purple/5 hover:shadow-nazli-purple/10"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-nazli-golden/40 bg-nazli-golden/10 text-sm font-semibold text-nazli-golden">
               <MessageCircle className="w-4 h-4 text-nazli-golden" />
@@ -88,7 +88,7 @@ export function QuestionsSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             whileHover={{ y: -4 }}
-            className="rounded-2xl border border-nazli-golden/35 hover:border-nazli-golden/50 bg-nazli-purple/[0.4] hover:bg-nazli-purple/[0.6] p-8 transition-all duration-250 shadow-lg shadow-nazli-golden/10 hover:shadow-nazli-golden/15"
+            className="rounded-2xl border border-nazli-golden/35 hover:border-nazli-golden/50 bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] p-8 transition-all duration-250 shadow-lg shadow-nazli-golden/10 hover:shadow-nazli-golden/15"
           >
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-4">

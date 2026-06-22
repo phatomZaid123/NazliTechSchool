@@ -47,7 +47,7 @@ export default function Articles() {
       id="articles"
       className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-      {/* <SolarWindBandsBackground /> */}
+     
 
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
@@ -69,11 +69,11 @@ export default function Articles() {
             <input
               type="text"
               placeholder="Search articles..."
-              className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-purple-500 transition-colors pl-12 font-mono"
+              className="w-full bg-nazli-purple/80 border border-white/10 text-white placeholder:text-white/50 rounded-2xl px-6 py-4 outline-none focus:border-purple-500 transition-colors pl-12 font-mono"
             />
             <Search
               size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70"
             />
           </div>
         </motion.div>

@@ -5,7 +5,8 @@ type OverlayStops = {
 };
 
 export const LANDING_OVERLAY_DIMNESS: Record<string, OverlayStops> = {
-  globaloverlay: { top: 0.20, middle: 0.20, bottom: 0.20 },
+  globaloverlay: { top: 0.01 , middle: 0.01, bottom: 0.1 },
+ 
 };
 
 const clampOpacity = (value: number): number => {
@@ -22,4 +23,9 @@ const shade = (opacity: number): string => {
 export const createOverlayGradient = (stops: OverlayStops): string =>
   `linear-gradient(to bottom, ${shade(stops.top)} 0%, ${shade(
     stops.middle,
-  )} 50%, ${shade(stops.bottom)} 100%)`;
+  )} 0%, ${shade(stops.bottom)} 0%)`;
+
+export const getOverlayGradient = (sectionId: string): string =>
+  createOverlayGradient(
+    LANDING_OVERLAY_DIMNESS[sectionId] ?? LANDING_OVERLAY_DIMNESS.globaloverlay,
+  );

@@ -62,6 +62,17 @@ const TPTIcon = () => (
     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm3 7h-2V7h-2v2H9v2h2v3c0 1.657 1.343 3 3 3h2v-2h-2c-.551 0-1-.449-1-1v-3h3v-2z" />
   </svg>
 );
+const QuoraIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.5 17h-3v-2h3v2zm0-3h-3V7h3v7z" />
+  </svg>
+);
+
+const DiscordIcon = () => (
+  <svg viewBox="0 0 127.14 96.36" fill="currentColor" className="w-8 h-8">
+    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0A105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36a77.7,77.7,0,0,0,6.89-11.11A68.58,68.58,0,0,1,23.69,78.8a68.18,68.18,0,0,0,5.64-4.5c28.81,13.36,60.75,13.89,88.5,0a70.56,70.56,0,0,0,5.63,4.5A68.68,68.68,0,0,1,87.54,85.25a77.6,77.6,0,0,0,6.89,11.1A105.58,105.58,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60.55,31,53.88s5-11.75,11.45-11.75S54,47.16,53.89,53.88,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60.55,73.25,53.88s5-11.75,11.45-11.75S96.23,47.16,96.12,53.88,91.08,65.69,84.69,65.69Z" />
+  </svg>
+);
 
 // --- Updated Platform Configuration ---
 const SOCIAL_PLATFORMS = [
@@ -131,12 +142,26 @@ const SOCIAL_PLATFORMS = [
     icon: TPTIcon,
     brandColor: "#55B336",
   },
+  {
+    name: "Quora",
+    handle: "Nazli Tech School",
+    url: " https://nazlitechschoolevolvelearning.quora.com/",
+    icon: QuoraIcon,
+    brandColor: "#B92B27",
+  },
+  {
+    name: "Discord",
+    handle: "Nazli Tech Community",
+    url: "https://discord.gg/PWk7BWrP4",
+    icon: DiscordIcon,
+    brandColor: "#5865F2",
+  },
 ];
 
 const SocialHub = memo(function SocialHub() {
   return (
     <section className="relative z-10 mt-16 w-full px-4 md:mt-20">
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full">
         <div className="mb-10 text-center md:text-left">
           <h4 className="mb-2 text-[11px] font-black uppercase tracking-[0.3em] text-amber-300 sm:text-xs">
             Connect With Us
@@ -149,7 +174,7 @@ const SocialHub = memo(function SocialHub() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-4 gap-2 lg:grid-cols-4 xl:grid-cols-8">
+        <div className="grid grid-cols-4 gap-2 lg:grid-cols-8">
           {SOCIAL_PLATFORMS.map((platform, index) => {
             const Icon = platform.icon;
 
@@ -168,7 +193,7 @@ const SocialHub = memo(function SocialHub() {
               >
                 <div className="animate-border-spin absolute inset-0 bg-gradient-to-r from-purple-600 via-amber-400 to-purple-600 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                <div className="relative z-10 flex h-full w-full flex-col items-center justify-center rounded-[calc(2rem-1px)] border border-white/5 bg-[#0a0a0f] p-6 transition-all duration-300 group-hover:border-transparent">
+                <div className="relative z-10 flex h-full w-full flex-col items-center justify-center rounded-[calc(2rem-1px)] border border-white/5 relative z-10 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20 p-3 transition-all duration-300 group-hover:border-transparent">
                   <div
                     className="mb-4 transition-all duration-300 group-hover:scale-125"
                     style={{ color: "#d8b4fe" }}

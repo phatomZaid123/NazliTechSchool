@@ -11,25 +11,98 @@ export function CustomCursor() {
   const mouseY = useRef(0);
   const displayX = useRef(0);
   const displayY = useRef(0);
+  const isOverIframe = useRef(false);
 
   useEffect(() => {
+    const setCursorVisible = (isVisible: boolean) => {
+      if (!cursorRef.current) return;
+
+      cursorRef.current.style.opacity = isVisible ? "1" : "0";
+    };
+
+    const isIframeElement = (element: Element | null) =>
+      element instanceof HTMLIFrameElement || Boolean(element?.closest("iframe"));
+
+    const updateIframeHoverState = (x: number, y: number) => {
+      const isInsideIframe = isIframeElement(document.elementFromPoint(x, y));
+      isOverIframe.current = isInsideIframe;
+      setCursorVisible(!isInsideIframe);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.current = e.clientX;
       mouseY.current = e.clientY;
+      updateIframeHoverState(e.clientX, e.clientY);
     };
 
     const handleClick = () => {
-      if (audioRef.current) {
+      if (audioRef.current && !isOverIframe.current) {
         audioRef.current.currentTime = 0; // Reset sound to start
         audioRef.current.play();
       }
     };
 
+    const handleMouseEnterIframe = () => {
+      isOverIframe.current = true;
+      setCursorVisible(false);
+    };
+
+    const handleMouseLeaveIframe = (event: Event) => {
+      const pointerEvent = event as PointerEvent;
+      if (
+        typeof pointerEvent.clientX === "number" &&
+        typeof pointerEvent.clientY === "number"
+      ) {
+        updateIframeHoverState(pointerEvent.clientX, pointerEvent.clientY);
+        return;
+      }
+
+      isOverIframe.current = false;
+      setCursorVisible(true);
+    };
+
+    const bindIframeListeners = (root: ParentNode = document) => {
+      root.querySelectorAll("iframe").forEach((iframe) => {
+        iframe.addEventListener("pointerenter", handleMouseEnterIframe);
+        iframe.addEventListener("pointerleave", handleMouseLeaveIframe);
+      });
+    };
+
+    const unbindIframeListeners = (root: ParentNode = document) => {
+      root.querySelectorAll("iframe").forEach((iframe) => {
+        iframe.removeEventListener("pointerenter", handleMouseEnterIframe);
+        iframe.removeEventListener("pointerleave", handleMouseLeaveIframe);
+      });
+    };
+
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("click", handleClick);
+
+    bindIframeListeners();
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof Element) {
+            if (node instanceof HTMLIFrameElement) {
+              node.addEventListener("pointerenter", handleMouseEnterIframe);
+              node.addEventListener("pointerleave", handleMouseLeaveIframe);
+              return;
+            }
+
+            bindIframeListeners(node);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
+      observer.disconnect();
+      unbindIframeListeners();
     };
   }, []);
 

@@ -39,8 +39,8 @@ export function AboutSection() {
       id="about"
       className="relative py-32 overflow-x-hidden scroll-mt-28"
     >
-      <div className="container relative z-10 px-4 md:px-6">
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -90,7 +90,7 @@ export function AboutSection() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-2xl border border-border/40 bg-card/55 p-4 text-sm font-semibold text-muted-foreground"
+                  className="rounded-2xl border border-border/40 bg-nazli-purple/[0.6] p-4 text-sm font-semibold"
                 >
                   <item.icon className="mb-3 h-5 w-5 text-nazli-golden" />
                   {item.label}
@@ -108,23 +108,23 @@ export function AboutSection() {
             {people.map((person, index) => (
               <article
                 key={person.role}
-                className="rounded-3xl border border-border/45 bg-linear-to-br from-card/75 to-background/70 p-6 backdrop-blur-xl transition-colors duration-300 hover:border-nazli-golden/35"
+                className="rounded-3xl border border-border/45 bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] p-6 transition-all duration-300 hover:border-nazli-golden/35"
               >
                 <div className="flex items-start gap-5">
                   <div className="flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-3xl border border-nazli-purple/35 bg-nazli-purple/15 text-center">
                     {person.imagePlaceholder ? (
-                      <div className="h-full w-full flex items-center justify-center rounded-2xl bg-gradient-to-br from-nazli-purple/20 to-nazli-golden/20 text-xs font-semibold text-muted-foreground">
+                      <div className="h-full w-full flex items-center justify-center rounded-2xl bg-gradient-to-br from-nazli-purple/20 to-nazli-golden/20 text-xs font-semibold">
                         <img
                           src={person.imagePlaceholder}
                           alt={person.name}
                           loading="lazy"
                           decoding="async"
                           fetchPriority="low"
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-cover rounded-4xl"
                         />
                       </div>
                     ) : (
-                      <span className="text-2xl font-black text-nazli-golden">
+                      <span className="text-2xl  text-nazli-golden">
                         {index + 1}
                       </span>
                     )}
@@ -154,7 +154,7 @@ export function AboutSection() {
               </article>
             ))}
 
-            <div className="rounded-3xl border border-nazli-golden/35 bg-nazli-golden/10 p-6">
+            <div className="rounded-3xl border border-nazli-golden/35 bg-nazli-golden/20 p-6">
               <p className="text-sm font-semibold leading-relaxed text-foreground">
                 <FaLocationPin className="text-nazli-golden mr-2 inline-block" />{" "}
                 Nazli Tech School operates globally with presence in Rabat,

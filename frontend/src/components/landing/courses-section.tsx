@@ -28,10 +28,12 @@ import {
 } from "react-icons/fa6";
 
 type CoursePricing = {
-  "3m": string;
-  "6m": string;
-  "9m": string;
-  "12m": string;
+  
+ "1month": string;
+ "3months": string;
+ "6months": string;
+ "9months": string;
+ "12months": string;
 };
 
 type CoursePattern =
@@ -135,11 +137,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$299", "6m": "$549", "9m": "$799", "12m": "$999" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "grid",
       hoverFx: "tilt",
-      iconTint: "text-fuchsia-200",
+      iconTint: "text-fuchsia-500",
       surfaceGlow: "rgba(217, 70, 239, 0.35)",
     },
   },
@@ -152,7 +154,7 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$399", "6m": "$699", "9m": "$999", "12m": "$1299" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "circuit",
       hoverFx: "orbit",
@@ -169,11 +171,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$349", "6m": "$599", "9m": "$849", "12m": "$1099" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "scan",
       hoverFx: "twist",
-      iconTint: "text-cyan-100",
+      iconTint: "text-cyan-500",
       surfaceGlow: "rgba(34, 211, 238, 0.36)",
     },
   },
@@ -186,11 +188,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$449", "6m": "$799", "9m": "$1099", "12m": "$1399" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "hex",
       hoverFx: "pulse",
-      iconTint: "text-slate-100",
+      iconTint: "text-slate-500",
       surfaceGlow: "rgba(148, 163, 184, 0.32)",
     },
   },
@@ -203,11 +205,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$249", "6m": "$449", "9m": "$649", "12m": "$799" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "dots",
       hoverFx: "bounce",
-      iconTint: "text-orange-100",
+      iconTint: "text-orange-500",
       surfaceGlow: "rgba(249, 115, 22, 0.35)",
     },
   },
@@ -219,11 +221,11 @@ const COURSES: Course[] = [
     bio: "Rigorous IB curriculum coverage. From system fundamentals to computational thinking and problem solving.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy: "https://www.udemy.com",
-    pricing: { "3m": "$249", "6m": "$449", "9m": "$649", "12m": "$799" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "grid",
       hoverFx: "float",
-      iconTint: "text-blue-100",
+      iconTint: "text-blue-500",
       surfaceGlow: "rgba(59, 130, 246, 0.34)",
     },
   },
@@ -236,11 +238,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$249", "6m": "$449", "9m": "$649", "12m": "$799" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "circuit",
       hoverFx: "tilt",
-      iconTint: "text-emerald-100",
+      iconTint: "text-emerald-500",
       surfaceGlow: "rgba(16, 185, 129, 0.34)",
     },
   },
@@ -253,11 +255,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$299", "6m": "$549", "9m": "$799", "12m": "$999" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "waves",
       hoverFx: "pulse",
-      iconTint: "text-amber-100",
+      iconTint: "text-amber-500",
       surfaceGlow: "rgba(251, 146, 60, 0.34)",
     },
   },
@@ -269,7 +271,7 @@ const COURSES: Course[] = [
     bio: "Expert preparation for international English proficiency exams. Achieve your target scores.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy: "https://www.udemy.com",
-    pricing: { "3m": "$249", "6m": "$449", "9m": "$649", "12m": "$799" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "scan",
       hoverFx: "bounce",
@@ -286,11 +288,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$199", "6m": "$349", "9m": "$499", "12m": "$599" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "dots",
       hoverFx: "float",
-      iconTint: "text-sky-100",
+      iconTint: "text-sky-500",
       surfaceGlow: "rgba(56, 189, 248, 0.34)",
     },
   },
@@ -303,11 +305,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$299", "6m": "$549", "9m": "$799", "12m": "$999" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "hex",
       hoverFx: "orbit",
-      iconTint: "text-green-100",
+      iconTint: "text-green-500",
       surfaceGlow: "rgba(34, 197, 94, 0.34)",
     },
   },
@@ -319,11 +321,11 @@ const COURSES: Course[] = [
     bio: "Extract insights from data. Learn statistical modeling, data visualization, and big data analysis.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy: "https://www.udemy.com",
-    pricing: { "3m": "$349", "6m": "$599", "9m": "$849", "12m": "$1099" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "grid",
       hoverFx: "pulse",
-      iconTint: "text-violet-100",
+      iconTint: "text-violet-500",
       surfaceGlow: "rgba(168, 85, 247, 0.35)",
     },
   },
@@ -336,11 +338,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$299", "6m": "$549", "9m": "$799", "12m": "$999" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "circuit",
       hoverFx: "twist",
-      iconTint: "text-yellow-100",
+      iconTint: "text-yellow-500",
       surfaceGlow: "rgba(234, 179, 8, 0.34)",
     },
   },
@@ -353,11 +355,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$349", "6m": "$599", "9m": "$849", "12m": "$1099" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "scan",
       hoverFx: "orbit",
-      iconTint: "text-cyan-100",
+      iconTint: "text-cyan-500",
       surfaceGlow: "rgba(14, 165, 233, 0.35)",
     },
   },
@@ -370,11 +372,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$249", "6m": "$449", "9m": "$649", "12m": "$799" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "waves",
       hoverFx: "tilt",
-      iconTint: "text-orange-100",
+      iconTint: "text-orange-500",
       surfaceGlow: "rgba(249, 115, 22, 0.35)",
     },
   },
@@ -387,11 +389,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$349", "6m": "$599", "9m": "$849", "12m": "$1099" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "hex",
       hoverFx: "bounce",
-      iconTint: "text-teal-100",
+      iconTint: "text-teal-500",
       surfaceGlow: "rgba(20, 184, 166, 0.35)",
     },
   },
@@ -404,11 +406,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$399", "6m": "$699", "9m": "$999", "12m": "$1299" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "dots",
       hoverFx: "twist",
-      iconTint: "text-pink-100",
+      iconTint: "text-pink-500",
       surfaceGlow: "rgba(236, 72, 153, 0.35)",
     },
   },
@@ -421,11 +423,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$149", "6m": "$249", "9m": "$349", "12m": "$449" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "stripes",
       hoverFx: "float",
-      iconTint: "text-rose-100",
+      iconTint: "text-rose-500",
       surfaceGlow: "rgba(251, 113, 133, 0.34)",
     },
   },
@@ -438,11 +440,11 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "3m": "$299", "6m": "$549", "9m": "$799", "12m": "$999" },
+    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
     theme: {
       pattern: "cross",
       hoverFx: "pulse",
-      iconTint: "text-indigo-100",
+      iconTint: "text-indigo-500",
       surfaceGlow: "rgba(129, 140, 248, 0.35)",
     },
   },
@@ -492,7 +494,7 @@ export default function Courses() {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
               {COURSES.map((course, i) => {
                 const Icon = course.icon;
                 const motionPreset = ICON_MOTION_PRESETS[course.theme.hoverFx];

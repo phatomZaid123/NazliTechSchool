@@ -156,7 +156,7 @@ export function TestimonialsSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-md shadow-[0_18px_60px_-36px_rgba(157,78,221,0.9)]"
+                className="bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] border border-nazli-golden/70 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 "
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center font-bold text-white shadow-[0_8px_20px_-8px_rgba(168,85,247,0.8)]">
@@ -198,7 +198,7 @@ export function TestimonialsSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 border-t border-white/10"
           >
             {stats.map((stat, index) => (
-              <div key={stat.label} className="text-center bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-md shadow-[0_18px_60px_-36px_rgba(157,78,221,0.9)]">
+              <div key={stat.label} className="text-center bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-xs shadow-sm">
                 <p className="mb-2 text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-purple-300 to-cyan-200 bg-clip-text text-transparent">
                   {stat.value}
                 </p>
@@ -245,7 +245,7 @@ export function TestimonialsSection() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-md shadow-[0_18px_60px_-36px_rgba(157,78,221,0.9)]"
+                className="bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300  shadow-sm"
               >
                 <div className="text-5xl mb-6">{format.icon}</div>
                 <h3 className="text-2xl font-bold text-white mb-3">

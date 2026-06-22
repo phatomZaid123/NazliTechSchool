@@ -1,5 +1,0 @@
-   <NebulaDriftBackground /> herobackground
-    <ElectricRootfieldBackground /> coursesbackground
-       <MagneticSandFieldBackground /> curriculumbackground
-              <IsometricNeonCityBackground /> simulationbackground
-<CircuitPulseMatrixBackground /> testimonialbackground

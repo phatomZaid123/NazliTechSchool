@@ -61,7 +61,7 @@ const staticVideoData: VideoItem[] = [
     glowClass: "shadow-purple-500/20",
     badgeBg: "bg-purple-500/20 border-purple-500/40",
     badgeText: "text-purple-400",
-    url: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY", // Real YouTube tech video link
+    url: "https://youtu.be/_DKbZW7BdqA?si=wzhXZyyE73hsvRaB", // Real YouTube tech video link
   },
   {
     id: "2",
@@ -75,7 +75,7 @@ const staticVideoData: VideoItem[] = [
     glowClass: "shadow-blue-500/20",
     badgeBg: "bg-blue-500/20 border-blue-500/40",
     badgeText: "text-blue-400",
-    url: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    url: "https://youtu.be/_DKbZW7BdqA?si=wzhXZyyE73hsvRaB",
   },
   {
     id: "3",
@@ -89,7 +89,7 @@ const staticVideoData: VideoItem[] = [
     glowClass: "shadow-purple-500/20",
     badgeBg: "bg-purple-500/20 border-purple-500/40",
     badgeText: "text-purple-400",
-    url: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    url: "https://youtu.be/_DKbZW7BdqA?si=wzhXZyyE73hsvRaB",
   },
   {
     id: "4",
@@ -103,7 +103,7 @@ const staticVideoData: VideoItem[] = [
     glowClass: "shadow-blue-500/20",
     badgeBg: "bg-blue-500/20 border-blue-500/40",
     badgeText: "text-blue-400",
-    url: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    url: "https://youtu.be/_DKbZW7BdqA?si=wzhXZyyE73hsvRaB",
   },
   {
     id: "5",
@@ -117,7 +117,7 @@ const staticVideoData: VideoItem[] = [
     glowClass: "shadow-purple-500/20",
     badgeBg: "bg-purple-500/20 border-purple-500/40",
     badgeText: "text-purple-400",
-    url: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    url: "https://youtu.be/_DKbZW7BdqA?si=wzhXZyyE73hsvRaB",
   },
 ];
 
@@ -397,8 +397,8 @@ export default function VideoFeedSection() {
               <span className="text-white">
                 in
               </span>
-              <br />
-              <span className="text-nazli-golden">Motion</span>
+              
+              <span className="text-nazli-golden ml-1">Motion</span>
             </h2>
           </div>
 
@@ -410,7 +410,7 @@ export default function VideoFeedSection() {
                 className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
                   filter === f
                     ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20"
-                    : "bg-white/5 text-white/50 hover:bg-white/10 border border-white/5"
+                    : "bg-white/5 text-white/90 hover:bg-white/10 border border-white/5"
                 }`}
               >
                 {f}
