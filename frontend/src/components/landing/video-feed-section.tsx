@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Play,
   Heart,
@@ -7,8 +7,6 @@ import {
   Share2,
   Volume2,
   VolumeX,
-  ChevronLeft,
-  ChevronRight,
   Film,
   Star,
   Rocket,
@@ -156,12 +154,11 @@ export default function VideoFeedSection() {
   const [filter, setFilter] = useState<VideoFilter>("all");
   const [isMuted, setIsMuted] = useState(true);
   const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
   const [isInView, setIsInView] = useState(true);
   const [isPageVisible, setIsPageVisible] = useState(true);
 
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef<Mouse>({ x: null, y: null, radius: 150 });
@@ -342,49 +339,27 @@ export default function VideoFeedSection() {
     };
   }, [enableParticleEffects]);
 
-  // Smooth Auto-scroll carousel
-  useEffect(() => {
-    if (
-      !scrollRef.current ||
-      !isAutoScrolling ||
-      shouldReduceMotion ||
-      !isInView ||
-      !isPageVisible
-    )
-      return;
+  // Marquee scroll speed (px per second)
+  const SCROLL_SPEED = shouldReduceMotion ? 0 : 40;
 
-    const interval = setInterval(() => {
-      if (scrollRef.current) {
-        const maxScroll =
-          scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
-
-        // If at the end, smoothly scroll back to the start
-        if (scrollRef.current.scrollLeft >= maxScroll - 5) {
-          scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
-        } else {
-          // Smoothly slide by the width of one card (~260px)
-          scrollRef.current.scrollBy({ left: 280, behavior: "smooth" });
-        }
-      }
-    }, 3500);
-
-    return () => clearInterval(interval);
-  }, [isAutoScrolling, shouldReduceMotion, isInView, isPageVisible]);
-
-  // Smooth manual scroll
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const offset = direction === "left" ? -280 : 280;
-      scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
-    }
-  };
+  // Total width of one set = (card width + gap) * count  →  (256 + 24) * 5 = 1400px
+  const cardSetWidth = (256 + 24) * filteredVideos.length;
+  const animDuration = SCROLL_SPEED > 0 ? cardSetWidth / SCROLL_SPEED : 0;
 
   return (
     <section
       ref={sectionRef}
       className="relative py-32 overflow-hidden text-white"
     >
-      <div className="container max-w-7xl mx-auto relative z-10 px-6">
+      {/* Inject keyframes once */}
+      <style>{`
+        @keyframes marquee-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-${cardSetWidth}px); }
+        }
+      `}</style>
+
+      <div className="section-glass-wrap container max-w-7xl mx-auto relative z-10 px-6">
         {/* Header and Filter Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <div>
@@ -394,10 +369,7 @@ export default function VideoFeedSection() {
             <h2 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
               <span className="text-white">The</span>{" "}
               <span className="text-purple-500">Vision</span>{" "}
-              <span className="text-white">
-                in
-              </span>
-              
+              <span className="text-white">in</span>
               <span className="text-nazli-golden ml-1">Motion</span>
             </h2>
           </div>
@@ -418,71 +390,79 @@ export default function VideoFeedSection() {
             ))}
           </div>
         </div>
-        {/* Video Carousel Container */}
-        <div className="relative group" id="carousel-wrapper">
-          {/* Navigation Arrows */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => scroll("left")}
-            className="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/80 border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-purple-600/20 hover:border-purple-500/40 backdrop-blur-md"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </motion.button>
 
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => scroll("right")}
-            className="absolute -right-4 md:-right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-black/80 border border-white/10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-purple-600/20 hover:border-purple-500/40 backdrop-blur-md"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </motion.button>
-
-          {/* Scrollable Track */}
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto pb-12 pt-4 px-2 snap-x snap-mandatory"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            onMouseEnter={() => setIsAutoScrolling(false)}
-            onMouseLeave={() => setIsAutoScrolling(true)}
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredVideos.map((video, index) => (
+        {/* Video Marquee Container */}
+        <div
+          id="carousel-wrapper"
+          className="relative overflow-hidden"
+          /* Fade edges */
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+          }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {filteredVideos.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="w-full text-center py-20 border-2 border-dashed border-white/5 rounded-[2rem]"
+            >
+              <p className="text-white/30 font-medium uppercase tracking-widest">
+                No videos found in this category.
+              </p>
+            </motion.div>
+          ) : (
+            /* The moving strip — two identical sets side-by-side for seamless loop */
+            <div
+              className="flex gap-6 pb-12 pt-4"
+              style={{
+                width: `${cardSetWidth * 2}px`,
+                animation:
+                  animDuration > 0
+                    ? `marquee-scroll ${animDuration}s linear infinite`
+                    : "none",
+                animationPlayState: isPaused ? "paused" : "running",
+                willChange: "transform",
+              }}
+            >
+              {/* First set */}
+              {filteredVideos.map((video) => (
                 <motion.div
-                  key={video.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.4 }}
-                  className="shrink-0 snap-center"
-                  onMouseEnter={() => setHoveredVideo(video.id)}
+                  key={`a-${video.id}`}
+                  className="shrink-0"
+                  onMouseEnter={() => setHoveredVideo(`a-${video.id}`)}
                   onMouseLeave={() => setHoveredVideo(null)}
                 >
                   <VideoCard
                     video={video}
-                    isHovered={hoveredVideo === video.id}
+                    isHovered={hoveredVideo === `a-${video.id}`}
                     isMuted={isMuted}
                     onToggleMute={() => setIsMuted(!isMuted)}
                   />
                 </motion.div>
               ))}
-            </AnimatePresence>
-
-            {/* Empty State when filter yields 0 results */}
-            {filteredVideos.length === 0 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="w-full text-center py-20 border-2 border-dashed border-white/5 rounded-[2rem]"
-              >
-                <p className="text-white/30 font-medium uppercase tracking-widest">
-                  No videos found in this category.
-                </p>
-              </motion.div>
-            )}
-          </div>
+              {/* Duplicate set for seamless loop */}
+              {filteredVideos.map((video) => (
+                <motion.div
+                  key={`b-${video.id}`}
+                  className="shrink-0"
+                  onMouseEnter={() => setHoveredVideo(`b-${video.id}`)}
+                  onMouseLeave={() => setHoveredVideo(null)}
+                >
+                  <VideoCard
+                    video={video}
+                    isHovered={hoveredVideo === `b-${video.id}`}
+                    isMuted={isMuted}
+                    onToggleMute={() => setIsMuted(!isMuted)}
+                  />
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

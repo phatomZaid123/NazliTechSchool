@@ -9,15 +9,6 @@ import { ArrowUpRight, Code, Cpu, Puzzle } from "lucide-react";
 
 const APPS = [
   {
-    id: "study-craft",
-    name: "Study Craft AI",
-    desc: "Generates notes, presentations, and questionnaires for users based on the topics or links they input.",
-    icon: "📚",
-    color: "from-blue-500 to-cyan-500",
-    status: "COMING SOON",
-    features: ["AI Note Generation", "Smart Presentations", "Dynamic Quizzes"],
-  },
-  {
     id: "code-crafter",
     name: "CodeCrafter AI",
     desc: "Designed to generate unique programming project ideas in any programming language to design and develop software apps, games, etc.",
@@ -43,6 +34,17 @@ const APPS = [
       "Problem Solving Engine",
     ],
   },
+
+  {
+    id: "study-craft",
+    name: "Study Craft AI",
+    desc: "Generates notes, presentations, and questionnaires for users based on the topics or links they input.",
+    icon: "📚",
+    color: "from-blue-500 to-cyan-500",
+    status: "COMING SOON",
+    features: ["AI Note Generation", "Smart Presentations", "Dynamic Quizzes"],
+  },
+
   {
     id: "ruh",
     name: "Ruh",
@@ -145,7 +147,7 @@ export function AppsSection() {
       id="apps"
       className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="section-glass-wrap max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -211,7 +213,7 @@ export function AppsSection() {
                       href={buildGmailComposeLink(app)}
                       onMouseEnter={() => setIsButtonHovered(true)}
                       onMouseLeave={() => setIsButtonHovered(false)}
-                      className="inline-flex w-full items-center justify-center rounded-lg border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
+                      className="landing-primary-cta w-full !rounded-lg !px-3 !py-2 !text-xs"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -223,9 +225,9 @@ export function AppsSection() {
             );
           })}
         </div>
-      </div>
-      <div>
-        <SocialHub />
+        <div>
+          <SocialHub />
+        </div>
       </div>
     </section>
   );

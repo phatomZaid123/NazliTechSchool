@@ -5,115 +5,74 @@ import { useSectionAudio } from "@/hooks/use-section-audio";
 import simulationAudio from "@/assets/simulationaudio.mp3";
 import SocialHub from "./social-media-section";
 
-// Mock data structure: Courses -> Subjects -> Topics with YouTube links
-const COURSE_DATA = {
-  "AI Prompt Engineering": {
-    "Computer Science": [
-      {
-        name: "Introduction to Prompting",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-      {
-        name: "Advanced Prompt Techniques",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-    Mathematics: [
-      {
-        name: "Math in AI",
-        youtubeLink: "https://youtu.be/jNgP6d9HraI?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-  },
-  "AI and Machine Learning": {
-    "Computer Science": [
-      {
-        name: "ML Basics",
-        youtubeLink: "https://youtu.be/aircAruvnKk?si=6ZCmGQxwgQHqBLax",
-      },
-      {
-        name: "Neural Networks",
-        youtubeLink: "https://youtu.be/aircAruvnKk?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-    Mathematics: [
-      {
-        name: "Linear Algebra for ML",
-        youtubeLink: "https://youtu.be/RowM3UbWGpI?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-  },
-  "High Level Programming": {
-    "Computer Science": [
-      {
-        name: "Python Basics",
-        youtubeLink: "https://youtu.be/kqtZrmDm4A8?si=6ZCmGQxwgQHqBLax",
-      },
-      {
-        name: "Object Oriented Programming",
-        youtubeLink: "https://youtu.be/JeznW_7DlrQ?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-  },
-  "Software Engineering": {
-    "Computer Science": [
-      {
-        name: "Design Patterns",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-      {
-        name: "System Design",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-  },
-  Mathematics: {
-    Mathematics: [
-      {
-        name: "Calculus Derivatives",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-      {
-        name: "Linear Algebra",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-  },
-  Science: {
-    Physics: [
-      {
-        name: "Newton's Laws",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-    Chemistry: [
-      {
-        name: "Chemical Equations",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-      {
-        name: "Organic Chemistry",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-    Biology: [
-      {
-        name: "Human Anatomy",
-        youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
-      },
-    ],
-  },
+// Mock data structure: Subjects -> Topics with YouTube links
+const SUBJECT_DATA = {
+  "Computer Science": [
+    {
+      name: "AI Prompt Engineering",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "AI and Machine Learning",
+      youtubeLink: "https://youtu.be/aircAruvnKk?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "High Level Programming",
+      youtubeLink: "https://youtu.be/kqtZrmDm4A8?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "Software Engineering",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+  ],
+  Mathematics: [
+    {
+      name: "AI Prompt Engineering",
+      youtubeLink: "https://youtu.be/jNgP6d9HraI?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "AI and Machine Learning",
+      youtubeLink: "https://youtu.be/RowM3UbWGpI?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "Calculus Derivatives",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "Linear Algebra",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+  ],
+  Physics: [
+    {
+      name: "Newton's Laws",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+  ],
+  Chemistry: [
+    {
+      name: "Chemical Equations",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+    {
+      name: "Organic Chemistry",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+  ],
+  Biology: [
+    {
+      name: "Human Anatomy",
+      youtubeLink: "https://youtu.be/_DKbZW7BdqA?si=6ZCmGQxwgQHqBLax",
+    },
+  ],
 } as const;
 
-type CourseKey = keyof typeof COURSE_DATA;
-
-const COURSES = Object.keys(COURSE_DATA) as CourseKey[];
+type SubjectKey = keyof typeof SUBJECT_DATA;
+const SUBJECTS = Object.keys(SUBJECT_DATA) as SubjectKey[];
 
 export default function Simulation() {
-  const [role, setRole] = useState<"student" | "educator" | null>(null);
   const [filters, setFilters] = useState({
-    courses: "AI Prompt Engineering",
-    subjects: "",
+    subjects: "Computer Science",
     topics: "",
     youtubeLink: "",
   });
@@ -123,39 +82,18 @@ export default function Simulation() {
     sectionId: "simulation",
   });
 
-  // Get available subjects for selected course
-  const availableSubjects = Object.keys(
-    COURSE_DATA[filters.courses as CourseKey] || {},
-  );
-
-  // Get available topics for selected course and subject
-  const availableTopics = (
-    filters.subjects && filters.courses
-      ? (COURSE_DATA[filters.courses as CourseKey] as any)[filters.subjects] ||
-        []
-      : []
-  ) as any[];
-
-  // Handle course change - reset subject and topic
-  const handleCourseChange = (course: string) => {
-    const subjects = Object.keys(COURSE_DATA[course as CourseKey] || {});
-    setFilters({
-      courses: course,
-      subjects: subjects[0] || "",
-      topics: "",
-      youtubeLink: "",
-    });
-  };
+  // Get available topics for selected subject
+  const availableTopics = (SUBJECT_DATA[filters.subjects as SubjectKey] || []);
 
   // Handle subject change - reset topic
   const handleSubjectChange = (subject: string) => {
     setFilters({
-      ...filters,
       subjects: subject,
       topics: "",
       youtubeLink: "",
     });
   };
+  
 
   // Handle topic change - set youtube link
   const handleTopicChange = (topicName: string) => {
@@ -176,77 +114,33 @@ export default function Simulation() {
     }
   };
 
-  if (!role) {
-    return (
-      <section
-        ref={sectionRef as React.RefObject<HTMLElement>}
-        id="simulation"
-        className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden scroll-mt-28"
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="relative z-10 text-center max-w-2xl"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 uppercase">
-            <span className="text-purple-500">Launch</span>{" "}
-            <span className="text-nazli-golden">Simulation</span>
-          </h1>
-          <p className="text-nazli-white text-xl mb-12">
-            Select your role to initialize a personalized learning simulation
-            with lessons, labs, and guided content paths.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <button
-              onClick={() => setRole("educator")}
-              className="p-10 bg-purple-600 border border-white/10 rounded-[2.5rem] text-left"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
-                <BookOpen size={32} />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Educator</h3>
-              <p className="text-white/80">
-                Access teaching simulations and lesson planning tools.
-              </p>
-            </button>
-
-            <button
-              onClick={() => setRole("student")}
-              className="p-10 bg-indigo-600 border border-white/10 rounded-[2.5rem] text-left"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mb-6">
-                <User size={32} />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Student</h3>
-              <p className="text-white/80">
-                Access study simulations and interactive revision materials.
-              </p>
-            </button>
-          </div>
-        </motion.div>
-        <SocialHub />
-      </section>
-    );
-  }
+  const getEmbedUrl = (url: string) => {
+    if (!url) return "";
+    try {
+      if (url.includes("youtu.be/")) {
+        const videoId = url.split("youtu.be/")[1].split("?")[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+      if (url.includes("youtube.com/watch?v=")) {
+        const videoId = url.split("v=")[1].split("&")[0];
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+      return url;
+    } catch (e) {
+      return url;
+    }
+  };
 
   return (
     <section
       id="simulation"
       className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-      <div className="relative z-10 max-w-7xl mx-auto">
-        <button
-          onClick={() => setRole(null)}
-          className="mb-8 inline-flex items-center gap-2 text-white/65 hover:text-amber-200 transition-colors uppercase text-sm font-bold tracking-widest group"
-        >
-          <ArrowLeft
-            size={16}
-            className="group-hover:-translate-x-1 transition-transform duration-150"
-          />
-          Back to Role Selection
-        </button>
-
+      <div className="section-glass-wrap relative z-10 max-w-7xl mx-auto">
+        <div className="flex p-3 justify-center text-3xl lg:text-5xl gap-3">
+          <h1 className="text-nazli-purple/70">SIMULATION</h1>{" "}
+          <h1 className="text-nazli-golden">VIDEOS</h1>
+        </div>
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Controls Panel */}
           <motion.div
@@ -262,27 +156,6 @@ export default function Simulation() {
               <div className="space-y-6">
                 <div>
                   <label className="text-xs font-bold text-white/40 uppercase mb-2 block">
-                    Courses
-                  </label>
-                  <select
-                    value={filters.courses}
-                    onChange={(e) => handleCourseChange(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-500 transition-colors font-bold"
-                  >
-                    {COURSES.map((course) => (
-                      <option
-                        key={course}
-                        value={course}
-                        className="bg-[#050505] font-bold"
-                      >
-                        {course}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-xs font-bold text-white/40 uppercase mb-2 block">
                     Subjects
                   </label>
                   <select
@@ -290,10 +163,7 @@ export default function Simulation() {
                     onChange={(e) => handleSubjectChange(e.target.value)}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-500 transition-colors font-bold"
                   >
-                    <option value="" className="bg-[#050505] font-bold">
-                      Select Subject
-                    </option>
-                    {availableSubjects.map((subject) => (
+                    {SUBJECTS.map((subject) => (
                       <option
                         key={subject}
                         value={subject}
@@ -330,22 +200,6 @@ export default function Simulation() {
                   </select>
                 </div>
               </div>
-
-              <button
-                onClick={handleLaunchEngine}
-                disabled={!filters.youtubeLink}
-                className="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
-              >
-                <Play size={16} className="fill-current" /> Launch Engine
-              </button>
-            </div>
-
-            <div className="p-8 bg-nazli-purple/70 border border-purple-500/20 rounded-4xl">
-              <h5 className="text-sm font-bold mb-2">Simulation Mode</h5>
-              <p className="text-xs text-white/60 leading-relaxed">
-                Currently viewing as{" "}
-                <span className="text-white font-bold uppercase">{role}</span>.
-              </p>
             </div>
           </motion.div>
 
@@ -356,16 +210,24 @@ export default function Simulation() {
             className="flex-1 space-y-8"
           >
             <div className="aspect-video bg-black rounded-[2.5rem] border border-white/10 overflow-hidden relative group shadow-2xl">
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/_DKbZW7BdqA?si=baZnrd3oa9iSAlYo"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                className="w-full h-full object-cover"
-              ></iframe>
-             
+              {filters.youtubeLink ? (
+                <iframe
+                  width="560"
+                  height="315"
+                  src={getEmbedUrl(filters.youtubeLink)}
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full object-cover"
+                ></iframe>
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-black/80">
+                  <Play className="w-12 h-12 text-white/20 mb-4" />
+                  <span className="text-white/50 text-xl font-bold uppercase tracking-widest">
+                    {filters.topics ? "Coming Soon" : "Select a Topic"}
+                  </span>
+                </div>
+              )}
 
               {/* HUD Elements */}
               <div className="absolute top-6 left-6 flex items-center gap-3">
@@ -382,7 +244,7 @@ export default function Simulation() {
             {/* Materials Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { title: "Movie Video", type: "Video", free: true },
+
                 { title: "Lab Video", type: "Video", free: false },
                 { title: "Worksheet", type: "PDF", free: true },
               ].map((item, i) => (
@@ -404,8 +266,8 @@ export default function Simulation() {
             </div>
           </motion.div>
         </div>
+        <SocialHub />
       </div>
-      <SocialHub />
     </section>
   );
 }

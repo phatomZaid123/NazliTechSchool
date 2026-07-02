@@ -1,16 +1,15 @@
 import { Navbar } from "@/components/landing/navbar";
 import { AnnouncementBar } from "@/components/landing/announcement-bar";
 import { UdemyCoursesModal } from "@/components/landing/udemy-courses-modal";
-import { MascotGuide } from "@/components/landing/mascot-guide";
 import { HeroSection } from "@/components/landing/hero-section";
 import { GlobalBackground } from "@/components/landing/global-background";
 import { Suspense, lazy, useEffect, useState, useRef } from "react";
-
-type SectionId = "video-feed" | "courses" | "curriculum" | "simulation" | "apps" | "pricing" | "testimonials" | "articles" | "about" | "contact";
+type SectionId = "video-feed" | "courses" | "worksheets" | "curriculum" | "simulation" | "apps" | "pricing" | "testimonials" | "articles" | "about" | "contact";
 
 const SECTION_CONFIGS: Record<SectionId, { component: () => Promise<any>; name: string }> = {
   "video-feed": { component: () => import("@/components/landing/video-feed-section"), name: "VideoFeedSection" },
   "courses": { component: () => import("@/components/landing/courses-section"), name: "Courses" },
+  "worksheets": { component: () => import("@/components/landing/worksheets-section"), name: "Worksheets" },
   "curriculum": { component: () => import("@/components/landing/curriculum-section").then((m) => ({ default: m.CurriculumSection })), name: "CurriculumSection" },
   "simulation": { component: () => import("@/components/landing/simulation-section"), name: "SimulationSection" },
   "apps": { component: () => import("@/components/landing/apps-section").then((m) => ({ default: m.AppsSection })), name: "AppsSection" },
@@ -21,11 +20,12 @@ const SECTION_CONFIGS: Record<SectionId, { component: () => Promise<any>; name: 
   "contact": { component: () => import("@/components/landing/questions-section").then((m) => ({ default: m.QuestionsSection })), name: "QuestionsSection" },
 };
 
-const SECTION_ORDER: SectionId[] = ["video-feed", "courses", "curriculum", "simulation", "apps", "pricing", "testimonials", "articles", "about", "contact"];
+const SECTION_ORDER: SectionId[] = ["video-feed", "courses", "worksheets", "curriculum", "simulation", "apps", "pricing", "testimonials", "articles", "about", "contact"];
 
 // Lazy load components that appear below the fold
 const VideoFeedSection = lazy(() => import("@/components/landing/video-feed-section"));
 const Courses = lazy(() => import("@/components/landing/courses-section"));
+const Worksheets = lazy(() => import("@/components/landing/worksheets-section"));
 const SimulationSection = lazy(() => import("@/components/landing/simulation-section"));
 const AppsSection = lazy(() =>
   import("@/components/landing/apps-section").then((m) => ({
@@ -73,7 +73,7 @@ export function LandingPage() {
   // Preload specific section (e.g., on navbar click)
   const preloadSection = (sectionId: SectionId) => {
     if (preloadedSections.has(sectionId)) return;
-    
+
     // Trigger the import to start loading
     SECTION_CONFIGS[sectionId].component();
     setPreloadedSections(prev => new Set(prev).add(sectionId));
@@ -96,14 +96,14 @@ export function LandingPage() {
   const detectAndPreloadNextSections = () => {
     const currentScroll = window.scrollY;
     const direction = currentScroll > lastScrollPositionRef.current ? "down" : "up";
-    
+
     if (direction !== scrollDirectionRef.current) {
       scrollDirectionRef.current = direction;
 
       if (direction === "down") {
         // User is scrolling down, preload next sections
         const viewportMiddle = window.innerHeight / 2;
-        
+
         // Check which section is in view
         SECTION_ORDER.forEach((sectionId) => {
           const element = document.getElementById(sectionId);
@@ -242,7 +242,9 @@ export function LandingPage() {
         <div className="relative z-10 pt-28">
           <Navbar onNavigate={preloadSectionsAhead} />
 
-          <HeroSection />
+          <div id="home">
+            <HeroSection />
+          </div>
           <Suspense fallback={null}>
             <div id="video-feed">
               <VideoFeedSection />
@@ -274,11 +276,7 @@ export function LandingPage() {
             <div id="contact">
               <QuestionsSection />
             </div>
-            {/* <CTASection /> */}
-            {/* <Footer /> */}
           </Suspense>
-
-          {/* <MascotGuide /> */}
         </div>
       </GlobalBackground>
     </main>

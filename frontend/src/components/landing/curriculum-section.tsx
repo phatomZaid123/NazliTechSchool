@@ -24,7 +24,7 @@ export function CurriculumSection() {
       id="curriculum"
       className="relative overflow-x-hidden py-32 scroll-mt-28"
     >
-      <div className="relative z-10 mx-auto max-w-7xl px-6">
+      <div className="section-glass-wrap relative z-10 mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -115,8 +115,9 @@ export function CurriculumSection() {
             </div>
           </motion.div>
         </div>
+              <SocialHub />
       </div>
-      <SocialHub />
+
     </section>
   );
 }

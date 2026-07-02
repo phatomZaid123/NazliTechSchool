@@ -28,12 +28,11 @@ import {
 } from "react-icons/fa6";
 
 type CoursePricing = {
-  
- "1month": string;
- "3months": string;
- "6months": string;
- "9months": string;
- "12months": string;
+  "1month": string;
+  "3months": string;
+  "6months": string;
+  "9months": string;
+  "12months": string;
 };
 
 type CoursePattern =
@@ -129,23 +128,6 @@ const ICON_MOTION_PRESETS: Record<CourseHoverFx, IconMotionPreset> = {
 
 const COURSES: Course[] = [
   {
-    id: "ai-prompt",
-    name: "AI Prompt Engineering",
-    icon: FaBrain,
-    color: "from-fuchsia-500 via-purple-500 to-blue-500",
-    bio: "Master the art of communicating with AI. Learn to craft precise prompts that unlock the full potential of LLMs.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy:
-      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "grid",
-      hoverFx: "tilt",
-      iconTint: "text-fuchsia-500",
-      surfaceGlow: "rgba(217, 70, 239, 0.35)",
-    },
-  },
-  {
     id: "ai-ml",
     name: "AI and Machine Learning",
     icon: FaRobot,
@@ -154,7 +136,13 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
       pattern: "circuit",
       hoverFx: "orbit",
@@ -163,37 +151,95 @@ const COURSES: Course[] = [
     },
   },
   {
-    id: "high-prog",
-    name: "High Level Programming",
-    icon: FaCode,
-    color: "from-cyan-500 via-blue-500 to-indigo-600",
-    bio: "Master Python, Java, JavaScript, HTML, CSS, PHP, SQL, C++, C#, and more. The ultimate developer foundation.",
+    id: "ai-data-sci",
+    name: "AI Data Science",
+    icon: FaBrain,
+    color: "from-green-500 via-lime-500 to-yellow-500",
+    bio: "Harness the power of data. Learn data wrangling, visualization, and machine learning techniques.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
-      pattern: "scan",
-      hoverFx: "twist",
-      iconTint: "text-cyan-500",
-      surfaceGlow: "rgba(34, 211, 238, 0.36)",
+      pattern: "waves",
+      hoverFx: "float",
+      iconTint: "text-green-500",
+      surfaceGlow: "rgba(34, 197, 94, 0.35)",
     },
   },
   {
-    id: "soft-ai-eng",
-    name: "Software and AI Engineering",
-    icon: FaCubesStacked,
-    color: "from-slate-600 via-slate-700 to-slate-900",
-    bio: "University-level engineering principles applied to software and AI systems. Professional grade development.",
+    id: "ai-prac-stem",
+    name: "AI Practical and STEM(General Science)",
+    icon: FaWandMagicSparkles,
+    color: "from-emerald-500 via-teal-500 to-cyan-600",
+    bio: "Practical applications of AI in STEM fields. Exploring Mathematics, Physics, Chemistry, and Biology.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
+    theme: {
+      pattern: "waves",
+      hoverFx: "float",
+      iconTint: "text-emerald-500",
+      surfaceGlow: "rgba(5, 150, 105, 0.35)",
+    },
+  },
+  {
+    id: "ai-pro-dms",
+    name: "AI Programming and Datamanagement Systems",
+    icon: FaDatabase,
+    color: "from-slate-600 via-slate-700 to-slate-900",
+    bio: "Learn the fundamentals of database management systems and how to use them in conjunction with AI.",
+    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    udemy:
+      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
       pattern: "hex",
       hoverFx: "pulse",
       iconTint: "text-slate-500",
-      surfaceGlow: "rgba(148, 163, 184, 0.32)",
+      surfaceGlow: "rgba(100, 116, 139, 0.35)",
+    },
+  },
+  {
+    id: "ai-visual",
+    name: "AI Visual Alchemy Content Creation",
+    icon: FaWandMagicSparkles,
+    color: "from-purple-600 via-indigo-600 to-sky-500",
+    bio: "Next-gen content creation. Mastering Gemini Pro 3.0, Nano Banana, and AI-driven visual arts.",
+    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    udemy:
+      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
+    theme: {
+      pattern: "cross",
+      hoverFx: "pulse",
+      iconTint: "text-indigo-500",
+      surfaceGlow: "rgba(129, 140, 248, 0.35)",
     },
   },
   {
@@ -205,78 +251,18 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
       pattern: "dots",
       hoverFx: "bounce",
       iconTint: "text-orange-500",
       surfaceGlow: "rgba(249, 115, 22, 0.35)",
-    },
-  },
-  {
-    id: "ib-cs",
-    name: "IB Computer Science",
-    icon: FaEarthAmericas,
-    color: "from-blue-600 via-indigo-600 to-violet-700",
-    bio: "Rigorous IB curriculum coverage. From system fundamentals to computational thinking and problem solving.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy: "https://www.udemy.com",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "grid",
-      hoverFx: "float",
-      iconTint: "text-blue-500",
-      surfaceGlow: "rgba(59, 130, 246, 0.34)",
-    },
-  },
-  {
-    id: "igcse-cs",
-    name: "IGCSE Computer Science",
-    icon: FaMicrochip,
-    color: "from-emerald-500 via-teal-500 to-cyan-600",
-    bio: "Foundational computer science for IGCSE students. Binary logic, hardware, and basic programming.",
-    video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    udemy:
-      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "circuit",
-      hoverFx: "tilt",
-      iconTint: "text-emerald-500",
-      surfaceGlow: "rgba(16, 185, 129, 0.34)",
-    },
-  },
-  {
-    id: "math",
-    name: "Intensive Mathematics",
-    icon: FaSquareRootVariable,
-    color: "from-amber-400 via-orange-500 to-rose-500",
-    bio: "Singapore, Asian, and North American curricula. Advanced IB/IGCSE/A-Level math mastery.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy:
-      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "waves",
-      hoverFx: "pulse",
-      iconTint: "text-amber-500",
-      surfaceGlow: "rgba(251, 146, 60, 0.34)",
-    },
-  },
-  {
-    id: "exams",
-    name: "IELTS, TOEFL, EIKEN",
-    icon: FaFileLines,
-    color: "from-pink-500 via-rose-500 to-red-500",
-    bio: "Expert preparation for international English proficiency exams. Achieve your target scores.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy: "https://www.udemy.com",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "scan",
-      hoverFx: "bounce",
-      iconTint: "text-rose-100",
-      surfaceGlow: "rgba(244, 63, 94, 0.33)",
     },
   },
   {
@@ -288,7 +274,13 @@ const COURSES: Course[] = [
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
       pattern: "dots",
       hoverFx: "float",
@@ -297,82 +289,21 @@ const COURSES: Course[] = [
     },
   },
   {
-    id: "science",
-    name: "Science Lab Genius",
-    icon: FaFlaskVial,
-    color: "from-green-500 via-emerald-500 to-teal-600",
-    bio: "Theory and practical science mastery. Hands-on lab experience and deep scientific inquiry.",
-    video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    udemy:
-      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "hex",
-      hoverFx: "orbit",
-      iconTint: "text-green-500",
-      surfaceGlow: "rgba(34, 197, 94, 0.34)",
-    },
-  },
-  {
-    id: "data-sci",
-    name: "Data Science and Modelling",
-    icon: FaChartLine,
-    color: "from-violet-500 via-purple-500 to-fuchsia-600",
-    bio: "Extract insights from data. Learn statistical modeling, data visualization, and big data analysis.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy: "https://www.udemy.com",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "grid",
-      hoverFx: "pulse",
-      iconTint: "text-violet-500",
-      surfaceGlow: "rgba(168, 85, 247, 0.35)",
-    },
-  },
-  {
-    id: "dbms",
-    name: "Database Management",
-    icon: FaDatabase,
-    color: "from-amber-500 via-yellow-500 to-lime-600",
-    bio: "Master the storage and retrieval of data. SQL, NoSQL, and database architecture design.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy:
-      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "circuit",
-      hoverFx: "twist",
-      iconTint: "text-yellow-500",
-      surfaceGlow: "rgba(234, 179, 8, 0.34)",
-    },
-  },
-  {
-    id: "sys-design",
-    name: "System Analysis and Design",
-    icon: FaDiagramProject,
-    color: "from-cyan-500 via-sky-500 to-blue-600",
-    bio: "Learn to create official software development proposals. Architect complex digital systems.",
-    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
-    udemy:
-      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
-    theme: {
-      pattern: "scan",
-      hoverFx: "orbit",
-      iconTint: "text-cyan-500",
-      surfaceGlow: "rgba(14, 165, 233, 0.35)",
-    },
-  },
-  {
     id: "web-dev",
-    name: "Website Design & Dev",
+    name: "Full Stack Website Design & Development",
     icon: FaLaptopCode,
     color: "from-orange-500 via-red-500 to-pink-600",
     bio: "Modern web development from scratch. Master frontend and backend technologies.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
       pattern: "waves",
       hoverFx: "tilt",
@@ -381,15 +312,21 @@ const COURSES: Course[] = [
     },
   },
   {
-    id: "game-dev",
-    name: "Game Design & Dev",
+    id: "game-design",
+    name: "Game Design and Development",
     icon: FaGamepad,
     color: "from-emerald-500 via-teal-500 to-cyan-500",
     bio: "Create your own interactive worlds. Game mechanics, level design, and engine mastery.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
       pattern: "hex",
       hoverFx: "bounce",
@@ -398,54 +335,143 @@ const COURSES: Course[] = [
     },
   },
   {
-    id: "expert-sys",
-    name: "Expert System Design",
-    icon: FaUserSecret,
-    color: "from-fuchsia-500 via-pink-500 to-rose-600",
-    bio: "Build AI systems that mimic human expertise. Knowledge representation and inference engines.",
+    id: "game-dev",
+    name: "Game Design and Development Integrated with AI",
+    icon: FaGamepad,
+    color: "from-emerald-500 via-teal-500 to-cyan-500",
+    bio: "Create your own interactive worlds. Game mechanics, level design, and engine mastery.",
+    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    udemy:
+      "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
+    theme: {
+      pattern: "hex",
+      hoverFx: "bounce",
+      iconTint: "text-teal-500",
+      surfaceGlow: "rgba(20, 184, 166, 0.35)",
+    },
+  },
+
+  {
+    id: "ib-cs",
+    name: "IB Computer Science",
+    icon: FaEarthAmericas,
+    color: "from-blue-600 via-indigo-600 to-violet-700",
+    bio: "Rigorous IB curriculum coverage. From system fundamentals to computational thinking and problem solving.",
+    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    udemy: "https://www.udemy.com",
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
+    theme: {
+      pattern: "grid",
+      hoverFx: "float",
+      iconTint: "text-blue-500",
+      surfaceGlow: "rgba(59, 130, 246, 0.34)",
+    },
+  },
+  {
+    id: "exams",
+    name: "IELTS, TOEFL, EIKEN",
+    icon: FaFileLines,
+    color: "from-pink-500 via-rose-500 to-red-500",
+    bio: "Expert preparation for international English proficiency exams. Achieve your target scores.",
+    video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
+    udemy: "https://www.udemy.com",
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
+    theme: {
+      pattern: "scan",
+      hoverFx: "bounce",
+      iconTint: "text-rose-100",
+      surfaceGlow: "rgba(244, 63, 94, 0.33)",
+    },
+  },
+
+  {
+    id: "igcse-cs",
+    name: "IGCSE Computer Science",
+    icon: FaMicrochip,
+    color: "from-emerald-500 via-teal-500 to-cyan-600",
+    bio: "Foundational computer science for IGCSE students. Binary logic, hardware, and basic programming.",
     video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
-      pattern: "dots",
-      hoverFx: "twist",
-      iconTint: "text-pink-500",
-      surfaceGlow: "rgba(236, 72, 153, 0.35)",
+      pattern: "circuit",
+      hoverFx: "tilt",
+      iconTint: "text-emerald-500",
+      surfaceGlow: "rgba(16, 185, 129, 0.34)",
     },
   },
+
   {
-    id: "3d-pen",
-    name: "3D Pen Printing",
-    icon: FaPenNib,
-    color: "from-rose-500 via-orange-500 to-amber-500",
-    bio: "Bring your drawings to life in 3D. Master the art of spatial creation and physical modeling.",
+    id: "quantum-computing",
+    name: "Quantum Computing and Cryptography",
+    icon: FaMicrochip,
+    color: "from-indigo-500 via-purple-500 to-pink-500",
+    bio: "Explore the future of computing. Quantum algorithms, qubits, and cryptography applications.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
-      pattern: "stripes",
-      hoverFx: "float",
-      iconTint: "text-rose-500",
-      surfaceGlow: "rgba(251, 113, 133, 0.34)",
+      pattern: "circuit",
+      hoverFx: "orbit",
+      iconTint: "text-purple-500",
+      surfaceGlow: "rgba(139, 92, 246, 0.35)",
     },
   },
+
   {
-    id: "ai-visual",
-    name: "AI Visual Alchemy",
-    icon: FaWandMagicSparkles,
-    color: "from-purple-600 via-indigo-600 to-sky-500",
-    bio: "Next-gen content creation. Mastering Gemini Pro 3.0, Nano Banana, and AI-driven visual arts.",
+    id: "soft-ai-eng",
+    name: "Software and AI Engineering(1st Year University Level)",
+    icon: FaCubesStacked,
+    color: "from-slate-600 via-slate-700 to-slate-900",
+    bio: "University-level engineering principles applied to software and AI systems. Professional grade development.",
     video: "https://www.youtube.com/embed/nfgLp0YYEZU?si=GmM37tml2z7ImfVY",
     udemy:
       "https://www.udemy.com/user/alisia-habibi/?__cf_chl_tk=Xvb1Pw6t8vnhmdoKS_B2.pzr2kSqGRvprrE6jAMsO4o-1777195037-1.0.1.1-4oMIJpy4AhKaCOfATFC5IzxPrJlftuh_kmU2FCERVO0",
-    pricing: { "1month": "€120", "3months": "€345", "6months": "€660", "9months": "€945", "12months": "€1200" },
+    pricing: {
+      "1month": "€120",
+      "3months": "€345",
+      "6months": "€660",
+      "9months": "€945",
+      "12months": "€1200",
+    },
     theme: {
-      pattern: "cross",
+      pattern: "hex",
       hoverFx: "pulse",
-      iconTint: "text-indigo-500",
-      surfaceGlow: "rgba(129, 140, 248, 0.35)",
+      iconTint: "text-slate-500",
+      surfaceGlow: "rgba(148, 163, 184, 0.32)",
     },
   },
 ];
@@ -465,7 +491,7 @@ export default function Courses() {
       id="courses"
       className="min-h-screen pt-32 pb-20 px-6 relative overflow-x-hidden scroll-mt-28"
     >
-      <div className="max-w-[90rem] mx-auto relative z-10">
+      <div className="section-glass-wrap max-w-7xl mx-auto relative z-10">
         {!selectedCourse ? (
           <>
             <motion.div
@@ -526,9 +552,8 @@ export default function Courses() {
                     }}
                   >
                     <div
-                      className={`absolute inset-0 bg-gradient-to-br ${course.color} opacity-[0.14] transition-opacity duration-150 ${
-                        isHovered ? "opacity-[0.2]" : ""
-                      }`}
+                      className={`absolute inset-0 bg-gradient-to-br ${course.color} opacity-[0.14] transition-opacity duration-150 ${isHovered ? "opacity-[0.2]" : ""
+                        }`}
                     />
                     <div
                       className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-150"
@@ -550,9 +575,9 @@ export default function Courses() {
                             prefersReducedMotion
                               ? { duration: 0.12 }
                               : {
-                                  duration: 0.2,
-                                  ease: "easeOut",
-                                }
+                                duration: 0.2,
+                                ease: "easeOut",
+                              }
                           }
                           className="text-[1.75rem] leading-none"
                         >
@@ -605,7 +630,7 @@ export default function Courses() {
             <div className="relative rounded-[2.7rem] border border-white/10 bg-white/[0.025] p-6 md:p-10 overflow-hidden">
               <div className="pointer-events-none absolute inset-0">
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${selectedCourse.color} opacity-[0.14]`}
+                  className={`absolute inset-0 bg-gradient-to-br ${selectedCourse.color} opacity-[1px]`}
                 />
                 <div
                   className="absolute inset-0 opacity-[0.15]"
@@ -618,7 +643,7 @@ export default function Courses() {
                 <div
                   className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[14rem] md:text-[22rem] ${selectedCourse.theme.iconTint}`}
                   style={{
-                    opacity: 0.11,
+                    opacity: 0,
                     filter: `drop-shadow(0 0 28px ${selectedCourse.theme.surfaceGlow})`,
                   }}
                 >
@@ -741,10 +766,9 @@ export default function Courses() {
             </div>
           </motion.div>
         )}
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-[90rem]">
-        <SocialHub />
+        <div className="relative z-10 mx-auto max-w-[90rem]">
+          <SocialHub />
+        </div>
       </div>
     </section>
   );

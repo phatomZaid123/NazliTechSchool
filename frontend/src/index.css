@@ -350,6 +350,30 @@
     @apply border-nazli-golden/30 bg-nazli-purple/[0.68] shadow-black/35;
   }
 
+  /* Frosted-glass panel — tightly wraps the inner content of each section */
+  .section-glass-wrap {
+    border-radius: 1.5rem;
+    background: linear-gradient(
+      160deg,
+      rgba(225, 208, 179, 0.07) 0%,
+      rgba(225, 208, 179, 0.03) 50%,
+      rgba(225, 208, 179, 0.07) 100%
+    );
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(3px);
+    border: 1px solid rgba(225, 208, 179, 0.11);
+    box-shadow: inset 0 1px 0 rgba(225, 208, 179, 0.10),
+                inset 0 -1px 0 rgba(225, 208, 179, 0.04),
+                0 4px 32px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-glass-wrap {
+      padding: 2.5rem;
+    }
+  }
+
   .landing-primary-cta {
     @apply inline-flex items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20;
   }

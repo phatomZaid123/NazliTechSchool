@@ -47,9 +47,7 @@ export default function Articles() {
       id="articles"
       className="relative min-h-screen pt-32 pb-20 px-6 overflow-hidden scroll-mt-28"
     >
-     
-
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="section-glass-wrap relative z-10 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,9 +123,6 @@ export default function Articles() {
             </motion.a>
           ))}
         </div>
-      </div>
-
-      <div className="relative z-10">
         <SocialHub />
       </div>
     </section>

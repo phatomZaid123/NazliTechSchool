@@ -161,8 +161,8 @@ const SOCIAL_PLATFORMS = [
 const SocialHub = memo(function SocialHub() {
   return (
     <section className="relative z-10 mt-16 w-full px-4 md:mt-20">
-      <div className="mx-auto w-full">
-        <div className="mb-10 text-center md:text-left">
+      <div className="w-full  ">
+        <div className="mb-10 text-center md:text-center">
           <h4 className="mb-2 text-[11px] font-black uppercase tracking-[0.3em] text-amber-300 sm:text-xs">
             Connect With Us
           </h4>
@@ -174,7 +174,7 @@ const SocialHub = memo(function SocialHub() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-4 gap-2 lg:grid-cols-8">
+        <div className="mx-auto grid max-w-4xl grid-cols-4 gap-2 lg:grid-cols-4">
           {SOCIAL_PLATFORMS.map((platform, index) => {
             const Icon = platform.icon;
 
@@ -188,18 +188,18 @@ const SocialHub = memo(function SocialHub() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                whileHover={{ y: -8 }}
-                className="group relative flex overflow-hidden rounded-[2rem] p-[1px]"
+                whileHover={{ y: -4 }}
+                className="group relative flex overflow-hidden rounded-[1.5rem] p-[1px]"
               >
                 <div className="animate-border-spin absolute inset-0 bg-gradient-to-r from-purple-600 via-amber-400 to-purple-600 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                <div className="relative z-10 flex h-full w-full flex-col items-center justify-center rounded-[calc(2rem-1px)] border border-white/5 relative z-10 inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20 p-3 transition-all duration-300 group-hover:border-transparent">
+                <div className="landing-primary-cta relative z-10 !flex h-full w-full flex-col p-2 group-hover:border-transparent !rounded-[calc(1.5rem-1px)]">
                   <div
-                    className="mb-4 transition-all duration-300 group-hover:scale-125"
+                    className="mb-2 transition-all duration-300 group-hover:scale-110"
                     style={{ color: "#d8b4fe" }}
                   >
                     <div
-                      className="transition-colors group-hover:!text-[var(--brand-color)]"
+                      className="transition-colors group-hover:!text-[var(--brand-color)] scale-75"
                       style={{ "--brand-color": platform.brandColor } as any}
                     >
                       <Icon />
@@ -207,10 +207,10 @@ const SocialHub = memo(function SocialHub() {
                   </div>
 
                   <div className="text-center">
-                    <p className="whitespace-nowrap text-[12px] font-bold text-white">
+                    <p className="whitespace-nowrap text-[10px] md:text-[11px] font-bold text-white">
                       {platform.name}
                     </p>
-                    <p className="max-w-[92px] truncate text-[9px] text-white/30">
+                    <p className="max-w-[80px] truncate text-[8px] text-white/30 hidden md:block">
                       {platform.handle}
                     </p>
                   </div>

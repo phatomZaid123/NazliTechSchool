@@ -12,7 +12,9 @@ interface AudioContextType {
   playAudio: (audioSrc: string, sectionId: string) => void;
   stopCurrentAudio: () => void;
   isMuted: boolean;
+  isPaused: boolean;
   setIsMuted: (muted: boolean) => void;
+  setIsPaused: (paused: boolean) => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -21,10 +23,12 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const currentSectionRef = useRef<string | null>(null);
   // Remember the section that asked to speak while the intro video owns audio focus.
-  const pendingAudioRef = useRef<{ audioSrc: string; sectionId: string } | null>(
-    null,
-  );
+  const pendingAudioRef = useRef<{
+    audioSrc: string;
+    sectionId: string;
+  } | null>(null);
   const [isMuted, setIsMuted] = useState(false);
+  const [isPaused, setIsPausedState] = useState(false);
 
   const stopCurrentAudio = useCallback(() => {
     if (currentAudioRef.current) {
@@ -41,7 +45,19 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const startAudio = useCallback(
     (audioSrc: string, sectionId: string) => {
       if (currentSectionRef.current === sectionId && currentAudioRef.current) {
-        console.log(`[Audio] Audio already playing for section: ${sectionId}`);
+        if (currentAudioRef.current.paused) {
+          console.log(
+            `[Audio] Resuming paused audio for section: ${sectionId}`,
+          );
+          setIsPausedState(false);
+          currentAudioRef.current.play().catch((error) => {
+            console.error(`[Audio] Resume failed for ${sectionId}:`, error);
+          });
+        } else {
+          console.log(
+            `[Audio] Audio already playing for section: ${sectionId}`,
+          );
+        }
         return;
       }
 
@@ -50,6 +66,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       try {
         console.log(`[Audio] Playing audio for section: ${sectionId}`);
         const audio = new Audio(audioSrc);
+        setIsPausedState(false);
 
         audio.onplay = () => {
           console.log(`[Audio] Successfully playing: ${sectionId}`);
@@ -79,7 +96,15 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     (audioSrc: string, sectionId: string) => {
       if (isMuted) {
         console.log(
-          `[Audio] Audio muted - video still playing. Skipping audio for section: ${sectionId}`,
+          `[Audio] Audio muted - video still playing. Queuing section audio for section: ${sectionId}`,
+        );
+        pendingAudioRef.current = { audioSrc, sectionId };
+        return;
+      }
+
+      if (isPaused) {
+        console.log(
+          `[Audio] Audio paused by user - buffering request for section: ${sectionId}`,
         );
         pendingAudioRef.current = { audioSrc, sectionId };
         return;
@@ -89,6 +114,31 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       pendingAudioRef.current = null;
       startAudio(audioSrc, sectionId);
     },
+    [isMuted, isPaused, startAudio],
+  );
+
+  const setPaused = useCallback(
+    (paused: boolean) => {
+      setIsPausedState(paused);
+      if (paused) {
+        if (currentAudioRef.current && !currentAudioRef.current.paused) {
+          currentAudioRef.current.pause();
+        }
+      } else {
+        if (pendingAudioRef.current && !isMuted) {
+          const { audioSrc, sectionId } = pendingAudioRef.current;
+          pendingAudioRef.current = null;
+          startAudio(audioSrc, sectionId);
+          return;
+        }
+
+        if (currentAudioRef.current?.paused && !isMuted) {
+          currentAudioRef.current.play().catch((error) => {
+            console.error(`[Audio] Resume failed after pause:`, error);
+          });
+        }
+      }
+    },
     [isMuted, startAudio],
   );
 
@@ -96,21 +146,36 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     (muted: boolean) => {
       setIsMuted(muted);
       if (muted) {
-        // Muting is treated as exclusive media focus, so no section audio overlaps.
-        stopCurrentAudio();
+        if (currentAudioRef.current && !currentAudioRef.current.paused) {
+          currentAudioRef.current.pause();
+        }
+      } else if (currentAudioRef.current && currentAudioRef.current.paused) {
+        if (!pendingAudioRef.current && !isPaused) {
+          currentAudioRef.current.play().catch((error) => {
+            console.error(`[Audio] Resume failed after unmute:`, error);
+          });
+        }
       }
     },
-    [stopCurrentAudio],
+    [isPaused],
   );
 
   useEffect(() => {
-    if (isMuted || !pendingAudioRef.current) return;
+    if (isMuted || isPaused || !pendingAudioRef.current) return;
 
-    // When the intro releases focus, resume the section the visitor is actually viewing.
     const { audioSrc, sectionId } = pendingAudioRef.current;
     pendingAudioRef.current = null;
     startAudio(audioSrc, sectionId);
-  }, [isMuted, startAudio]);
+  }, [isMuted, isPaused, startAudio]);
+
+  useEffect(() => {
+    if (isMuted || isPaused) return;
+    if (!pendingAudioRef.current && currentAudioRef.current?.paused) {
+      currentAudioRef.current.play().catch((error) => {
+        console.error(`[Audio] Resume failed after unmute effect:`, error);
+      });
+    }
+  }, [isMuted, isPaused]);
 
   return (
     <AudioContext.Provider
@@ -119,7 +184,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         playAudio,
         stopCurrentAudio,
         isMuted,
+        isPaused,
         setIsMuted: setMuted,
+        setIsPaused: setPaused,
       }}
     >
       {children}

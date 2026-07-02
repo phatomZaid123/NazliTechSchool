@@ -110,7 +110,7 @@ export function TestimonialsSection() {
         id="reviews"
         className="py-32 relative overflow-x-hidden scroll-mt-28"
       >
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="section-glass-wrap relative z-10 max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -198,7 +198,10 @@ export function TestimonialsSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 border-t border-white/10"
           >
             {stats.map((stat, index) => (
-              <div key={stat.label} className="text-center bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-xs shadow-sm">
+              <div
+                key={stat.label}
+                className="text-center bg-nazli-purple/[0.6] hover:bg-nazli-purple/[0.7] border border-white/10 rounded-3xl p-8 hover:border-purple-400/60 transition-all duration-300 backdrop-blur-xs shadow-sm"
+              >
                 <p className="mb-2 text-3xl md:text-4xl font-black tracking-tight bg-gradient-to-r from-purple-300 to-cyan-200 bg-clip-text text-transparent">
                   {stat.value}
                 </p>
@@ -208,6 +211,7 @@ export function TestimonialsSection() {
               </div>
             ))}
           </motion.div>
+          <SocialHub />
         </div>
       </section>
 
@@ -216,7 +220,7 @@ export function TestimonialsSection() {
         id="flexibility"
         className="py-32 relative overflow-x-hidden scroll-mt-28"
       >
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="section-glass-wrap max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -266,9 +270,8 @@ export function TestimonialsSection() {
               </motion.div>
             ))}
           </div>
+          <SocialHub />
         </div>
-
-        <SocialHub />
       </section>
     </div>
   );

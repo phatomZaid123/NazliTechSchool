@@ -21,7 +21,6 @@ const pricingPlans = [
     features: [
       "Ideal for learners getting started",
       "Flexible and short commitment",
-    
     ],
   },
   {
@@ -38,7 +37,6 @@ const pricingPlans = [
     features: [
       "Balanced pace for sustained growth",
       "Great for building consistency",
-      
     ],
   },
   {
@@ -55,7 +53,6 @@ const pricingPlans = [
     features: [
       "Strong medium-term momentum",
       "Perfect for deeper skill building",
-      
     ],
   },
   {
@@ -72,7 +69,6 @@ const pricingPlans = [
     features: [
       "Extended track for long-term mastery",
       "Designed for steady advanced progress",
-    
     ],
   },
   {
@@ -89,7 +85,6 @@ const pricingPlans = [
     features: [
       "Full-year commitment package",
       "Best for complete learning journeys",
-     
     ],
   },
 ];
@@ -128,7 +123,7 @@ export function PricingSection() {
       id="pricing"
       className="relative overflow-hidden py-32 scroll-mt-28"
     >
-      <div className="container relative z-10 mx-auto max-w-[96rem] px-4 md:px-6">
+      <div className="section-glass-wrap container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -150,9 +145,10 @@ export function PricingSection() {
 
           <p className="text-lg text-white max-w-4xl mx-auto leading-[1.7]">
             Pick a package duration that fits your goals. All plans are billed
-            in euro currency and designed for flexible learning paths. Each package will be tailored to fit your specific need instead of just dumped on you
+            in euro currency and designed for flexible learning paths. Each
+            package will be tailored to fit your specific need instead of just
+            dumped on you
           </p>
-           
         </motion.div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5 mb-24 md:mb-35">
@@ -163,7 +159,10 @@ export function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08 }}
-              whileHover={{ y: plan.id === "diamond" ? -6 : -4, scale: plan.id === "diamond" ? 1.02 : 1.01 }}
+              whileHover={{
+                y: plan.id === "diamond" ? -6 : -4,
+                scale: plan.id === "diamond" ? 1.02 : 1.01,
+              }}
               className={`group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border bg-linear-to-br p-5 transition-all duration-250 hover:shadow-xl hover:shadow-nazli-purple/15 ${plan.id === "diamond" ? "ring-1 ring-nazli-golden/40 shadow-lg shadow-nazli-golden/20" : ""} ${plan.cardTone}`}
             >
               <motion.div
@@ -237,16 +236,15 @@ export function PricingSection() {
 
               <a
                 href={createPackageMailto(plan)}
-                className="relative z-10 mt-auto inline-flex w-full items-center justify-center rounded-xl border border-nazli-golden/40 bg-linear-to-r from-nazli-purple/85 to-nazli-golden/75 px-4 py-3 text-sm font-bold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:from-nazli-purple hover:to-nazli-golden hover:shadow-lg hover:shadow-nazli-golden/20"
+                className="landing-primary-cta relative z-10 mt-auto w-full"
               >
                 Get Package
               </a>
             </motion.div>
           ))}
         </div>
-       
+        <SocialHub />
       </div>
-      <SocialHub />
     </section>
   );
 }

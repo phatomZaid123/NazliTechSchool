@@ -5,7 +5,8 @@ import { CustomCursor } from "@/components/custom-cursor";
 import { ParticleContainer } from "@/components/particle-container";
 import { AudioProvider } from "@/context/audio-context";
 import { useState } from "react";
-
+import { PausePlayButton } from "@/components/pause-play-button";
+import { FloatingFeedback } from "@/components/floating-feedback";
 export default function App() {
   const [isReady, setIsReady] = useState(false);
 
@@ -16,6 +17,8 @@ export default function App() {
 
       <AudioProvider>
         <LoadingScreen onComplete={() => setIsReady(true)} />
+        <PausePlayButton />
+        <FloatingFeedback />
         {isReady && (
           <Routes>
             <Route path="/" element={<LandingPage />} />

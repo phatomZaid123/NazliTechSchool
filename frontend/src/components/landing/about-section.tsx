@@ -39,7 +39,7 @@ export function AboutSection() {
       id="about"
       className="relative py-32 overflow-x-hidden scroll-mt-28"
     >
-      <div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
+      <div className="section-glass-wrap container relative z-10 mx-auto max-w-7xl px-4 md:px-6">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -80,7 +80,7 @@ export function AboutSection() {
                 { icon: Globe2, label: "Remote-first international learning" },
                 {
                   icon: GraduationCap,
-                  label: "IB, AP, IGCSE, YAK, and NECO aware",
+                  label: "IB, AP, IGCSE,WAEC, and NECO aware",
                 },
                 { icon: Compass, label: "Cognoscentia curriculum direction" },
                 {
@@ -171,8 +171,8 @@ export function AboutSection() {
             </div>
           </motion.div>
         </div>
+        <SocialHub />
       </div>
-      <SocialHub />
     </section>
   );
 }

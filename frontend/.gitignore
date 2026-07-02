@@ -6,10 +6,14 @@ __v0_jsx-dev-runtime.ts
 .v0-trash/
 .vercel/
 next.user-config.*
-
+.agents
 # Environment variables
 .env*.local
 dist/
+.env
+
+frontend/.env
+backend/.env
 
 # Common ignores
 node_modules

@@ -111,8 +111,8 @@ export function CustomCursor() {
 
     const updateCursorPosition = () => {
       // Smooth easing for cursor follow
-      displayX.current += (mouseX.current - displayX.current) * 0.2;
-      displayY.current += (mouseY.current - displayY.current) * 0.2;
+      displayX.current += (mouseX.current - displayX.current) * 0.8;
+      displayY.current += (mouseY.current - displayY.current) * 0.8;
 
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${displayX.current - 20}px, ${displayY.current - 20}px, 0)`;

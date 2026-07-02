@@ -10,7 +10,7 @@ import heroAudio from "@/assets/heroaudio.mp3";
 export function HeroSection() {
   const sentences = [
     "Learn at Your Own Pace",
-    "Master Code, Not Memorization",
+    "Master How To Code, Not Memorization",
     "Build Real-World Projects",
     "Join 10K+ Students Worldwide",
   ];
@@ -64,7 +64,7 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen overflow-hidden pt-28 pb-16 md:py-28 scroll-mt-28"
     >
-      <div className="container relative z-10 mx-auto max-w-7xl px-4 md:px-6 min-h-[76vh] md:min-h-[78vh] flex items-start md:items-center justify-center">
+      <div className="section-glass-wrap container relative z-10 mx-auto max-w-7xl px-4 md:px-6  md:items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -206,10 +206,9 @@ export function HeroSection() {
             />
           </div>
         </motion.div>
-      </div>
-
-      <div className="relative z-10">
-        <SocialHub />
+        <div className="relative z-10">
+          <SocialHub />
+        </div>
       </div>
     </section>
   );
